@@ -10,7 +10,7 @@
 | Deployment | No staging or campus-production deployment recorded |
 | Owner | Campus MIS/IT deployment owner with office sponsors; names pending |
 | Dependencies | Parts 03–12, Part 13 acceptance, Part 15 handover readiness |
-| Updated | 2026-10-16 |
+| Updated | 2026-10-17 |
 
 ## Confirmed deployment model
 
@@ -57,6 +57,8 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 - [ ] Configure persistent private files, worker/scheduler, logs, health checks and disk/job/backup alerts.
 - [ ] Configure account verification/password recovery through an approved campus mail relay or reviewed assisted process; the log mailer is not an operational delivery channel.
 - [ ] Store application key/secrets securely with controlled recovery access; preserve the key across releases.
+- [ ] Synchronize server time (NTP). Queue service days, receipt dates and audit ordering depend on it.
+- [ ] Confirm the supported browser/device baseline with MIS (D20, [Part 13](13-testing-and-campus-acceptance.md)).
 
 ## Release sequence
 
@@ -69,6 +71,40 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 7. Check authentication, one synthetic approved test path, queue display, private files and report access from actual campus clients.
 8. Record deployment timestamp, internal URL, revision, deployer, approver and result in both this document and the index.
 9. Observe the agreed initial support period, reconcile office activity and record incidents/rollback decisions.
+
+```mermaid
+flowchart TB
+    RC["Release candidate<br/>revision and image digest"] --> SG["Campus staging<br/>migrate and smoke test"]
+    SG --> UA["UAT, LAN-only checks,<br/>restore and rollback rehearsal"]
+    UA --> AP{"Named office<br/>and MIS approval?"}
+    AP -->|No| FX[Fix and new candidate]
+    FX --> RC
+    AP -->|Yes| BK["Back up production<br/>verify recovery point"]
+    BK --> PR["Deploy, migrate,<br/>restart workers"]
+    PR --> CK["Checks from real<br/>campus clients"]
+    CK --> LG["Record in release ledger<br/>and index"]
+```
+
+## Go-live cutover (added 2026-10-17)
+
+The first production release replaces part of a working paper process. Plan the switch explicitly so nothing is lost or counted twice.
+
+1. **Decide in-flight work.** Paper requests open on go-live day either finish on paper, or are encoded into the system with source channel `migrated` and a reference to the paper record. Pick one rule per office.
+2. **Record baselines.** Starting OR series and number in use, queue numbering start, list of open paper requests, verified client list version.
+3. **Prepare people.** Staff accounts and roles created and tested, two-factor enrolled, training done (Part 15), help page and privacy notice live.
+4. **Parallel run.** For an agreed period, offices keep the paper log alongside the system and reconcile daily.
+5. **Switch or roll back.** Make the system the primary record only when daily reconciliation matches and both offices agree. Otherwise fall back to the manual process using the fallback log.
+
+```mermaid
+flowchart LR
+    A["Approved release<br/>decisions frozen"] --> B["Load verified clients,<br/>catalog and staff accounts"]
+    B --> C["Record baselines: OR series,<br/>queue start, open paper requests"]
+    C --> D[Parallel run with paper log]
+    D --> E{"Daily reconciliation matches<br/>and offices agree?"}
+    E -->|Yes| F[System becomes primary record]
+    E -->|No| G[Fix, or roll back to manual]
+    G --> D
+```
 
 ## Backup, recovery and continuity
 
@@ -87,6 +123,7 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 - [ ] Backups, restore, monitoring, worker startup and host restart recovery are tested.
 - [ ] No database or debug endpoint is exposed beyond the intended network scope.
 - [ ] Release ledger contains real evidence; status remains not deployed until this is completed.
+- [ ] Cutover baselines are recorded and the parallel-run reconciliation is signed off by both offices.
 
 ## Release ledger
 

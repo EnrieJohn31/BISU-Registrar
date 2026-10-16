@@ -2,7 +2,7 @@
 
 [Back to index](index.md) | [Source brief](project-concept-brief.md) | [Acceptance plan](13-testing-and-campus-acceptance.md)
 
-Updated: 2026-10-15. Every row below is **planned, not business-feature complete**. The developer foundation is documented separately in Part 00. IDs provide stable references for future tickets, tests and acceptance evidence.
+Updated: 2026-10-17. Every row below is **planned, not business-feature complete**. The developer foundation is documented separately in Part 00. IDs provide stable references for future tickets, tests and acceptance evidence.
 
 ## Objectives and module requirements
 
@@ -46,6 +46,32 @@ Updated: 2026-10-15. Every row below is **planned, not business-feature complete
 | C02 | Both self-service and on-campus intake in phases | [06](06-portal-and-request-intake.md), [07](07-queues-counters-and-kiosk.md) | Portal, assisted intake and kiosk UAT |
 | C03 | Staff-maintained/imported verified client list initially | [04](04-client-records-and-imports.md) | Authorized import dry-run and conflict handling |
 | C04 | BISU campus-network hosting; online means LAN access | [14](14-campus-deployment-and-operations.md) | Internal HTTPS, intended-device reachability and Internet-disconnected checks |
+| C07 | Registrar supplier list with per-delivery performance points (owner addition, not in the original brief) | [16](16-vendor.md) | UAT-17–21; formula, transition and permission tests |
+
+## Nonfunctional requirements (added 2026-10-17)
+
+| ID | Requirement | Planned location | Acceptance evidence |
+|---|---|---|---|
+| N01 | Core services work on the campus LAN with the Internet disconnected | [02](02-architecture-and-data-model.md), [14](14-campus-deployment-and-operations.md) | UAT-13 |
+| N02 | Performance and capacity meet targets agreed with MIS | [13](13-testing-and-campus-acceptance.md), [14](14-campus-deployment-and-operations.md) | D13 thresholds; measurement on campus hardware |
+| N03 | Backups, recovery and continuity | [14](14-campus-deployment-and-operations.md) | UAT-16; restore drill against D13 targets |
+| N04 | Security: access control, sessions, throttling, uploads | [03](03-accounts-permissions-and-audit.md), [04](04-client-records-and-imports.md), [06](06-portal-and-request-intake.md), [13](13-testing-and-campus-acceptance.md) | UAT-11; Part 13 security checklist |
+| N05 | Privacy by design: minimization, notice, retention | [03](03-accounts-permissions-and-audit.md), [04](04-client-records-and-imports.md), [12](12-reporting-and-analytics.md) | D09; completed PIA; export audit review |
+| N06 | Usability and accessibility: keyboard, contrast, mobile, kiosk | [06](06-portal-and-request-intake.md), [07](07-queues-counters-and-kiosk.md), [13](13-testing-and-campus-acceptance.md) | Accessibility checks; office walkthroughs |
+| N07 | Works on the supported campus browsers and devices | [13](13-testing-and-campus-acceptance.md), [14](14-campus-deployment-and-operations.md) | D20 device matrix with test dates |
+| N08 | Maintainable after the thesis team leaves | [15](15-training-handover-and-roadmap.md), [94](94-team-schedule-and-risks.md) | D21; developer reference; Definition of Done followed |
+
+## Plan additions from the 2026-10-17 review
+
+| ID | Addition | Planned location | Acceptance evidence |
+|---|---|---|---|
+| A01 | Citizen's Charter alignment: services, steps, processing times | [05](05-services-requirements-and-fees.md), [12](12-reporting-and-analytics.md) | D05; charter-based catalog review; turnaround report |
+| A02 | Client feedback (CSM-aligned, if adopted) | [11](11-release-tracking-and-notifications.md), [12](12-reporting-and-analytics.md) | D19; one-feedback-per-request tests; results report |
+| A03 | Legally required priority lanes | [07](07-queues-counters-and-kiosk.md) | D06; lane alternation walkthrough |
+| A04 | Stalled requests and unclaimed documents | [01](01-requirements-and-workflow.md), [08](08-registrar-workspace.md), [11](11-release-tracking-and-notifications.md), [12](12-reporting-and-analytics.md) | D18; reminder and lapse tests; aging report |
+| A05 | Go-live cutover with a parallel run | [14](14-campus-deployment-and-operations.md) | Recorded baselines; signed reconciliation |
+| A06 | Repository custody and post-thesis ownership | [15](15-training-handover-and-roadmap.md) | D21; transfer record |
+| A07 | Privacy program items: DPO, PIA, notice versions, breach contacts | [03](03-accounts-permissions-and-audit.md), [06](06-portal-and-request-intake.md) | D09; PIA sign-off |
 
 ## Collaboration and benefit evaluation
 

@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Developer with Registrar, Cashier and MIS representatives; names pending |
 | Dependencies | Part 00 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Objective and scope
 
@@ -66,9 +66,61 @@ flowchart TD
 | `completed` | Terminal; corrections use a linked reissue/amendment record | Authorized Registrar |
 | `cancelled`, `rejected` | Terminal; resubmission creates a linked new request | Authorized staff / client where permitted |
 
+### Who does what, end to end
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor C as Student or alumnus
+    participant P as Portal or intake desk
+    participant Q as Queue
+    participant R as Registrar
+    participant K as Cashier
+    C->>P: Sign in with a verified account and choose a service
+    P->>R: Submit request with snapshot and reference
+    P->>Q: Allocate Registrar ticket, reserved or waiting
+    R->>R: Review request and verify records
+    opt Information incomplete
+        R-->>C: Awaiting client, with reason
+        C->>R: Supply missing information
+    end
+    opt Payment required
+        R->>K: Endorse assessment
+        C->>K: Pay through an approved channel
+        K->>K: Verify and record OR reference
+        K-->>R: Financial clearance event
+    end
+    R->>R: Process and generate the document
+    R->>R: Approver approves the exact version
+    R-->>C: Ready for release
+    C->>R: Claim with identity or representative check
+    R-->>C: Release recorded, request completed
+    C-)P: Optional feedback survey
+```
+
 Cancellation is a dedicated action with stage, payment and document checks, not a freely editable status. Initially permit client cancellation only before review; later-stage cancellation requires an authorized office reason. Paid requests must resolve the approved financial cancellation/refund policy before final cancellation. Any changed rule must be recorded in [the decision register](90-decisions-and-open-questions.md).
 
 Use a separate operational hold with reason, owner and timestamps for disputed payment or record issues. It blocks approval/release until resolved without silently rewriting historical progress. Payment voids must re-evaluate financial clearance; after release they create an exception for investigation instead of undoing the completed release.
+
+### Stalled requests and unclaimed documents (proposed, D18)
+
+Without a rule, requests waiting on the client or on payment, and documents nobody claims, pile up indefinitely and distort pending counts.
+
+- `awaiting_client` and `awaiting_payment` past a configurable number of working days: send reminders, then place the request on a staff review list. A staff member may close it as cancelled with reason "lapsed". Requests with recorded or verified payments are never closed automatically.
+- `ready_for_release` past the office's unclaimed period: send reminders, then list it on an unclaimed-documents report for the office's own procedure. It is never marked completed without an actual release.
+- Periods, reminder count and wording are decided under [D18](90-decisions-and-open-questions.md).
+
+### Government service standards to confirm (added 2026-10-17)
+
+These apply to Philippine government offices. Confirm how BISU applies them during the office interviews; the plan makes no legal-compliance claim.
+
+| Standard | Effect on this system | Plan location |
+|---|---|---|
+| Citizen's Charter (RA 11032, Ease of Doing Business Act) | Starting source for services, steps, requirements, fees and processing times in working days | [05](05-services-requirements-and-fees.md), [12](12-reporting-and-analytics.md) |
+| ARTA Client Satisfaction Measurement (CSM) | Optional feedback after completion, and results reporting | [11](11-release-tracking-and-notifications.md), [12](12-reporting-and-analytics.md), D19 |
+| Priority/express lanes for senior citizens (RA 9994) and PWDs (RA 10754) | Queue lanes beyond plain FIFO | [07](07-queues-counters-and-kiosk.md), D06 |
+| Data Privacy Act (RA 10173) and NPC guidance | DPO involvement, PIA, privacy notice, retention, breach response | [03](03-accounts-permissions-and-audit.md), D09 |
+| COA collection reporting | Cashier reconciliation against the official collection report | [09](09-cashier-and-payment-control.md), D07 |
 
 ## Work items
 
@@ -78,6 +130,8 @@ Use a separate operational hold with reason, owner and timestamps for disputed p
 - [ ] Confirm how campus portal submissions made away from the counter receive a ticket and when they join an active queue.
 - [ ] Confirm who approves requests, payments, documents and production rollout.
 - [ ] Review the state transitions above with sample free, paid and returned requests.
+- [ ] Agree reminder, lapse and unclaimed-document periods (D18).
+- [ ] Confirm how the Citizen's Charter, CSM and priority-lane rules apply to these offices, using the [office interview checklist](95-office-interview-checklist.md).
 
 ## Acceptance criteria
 

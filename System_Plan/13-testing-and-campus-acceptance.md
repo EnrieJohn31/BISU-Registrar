@@ -10,11 +10,21 @@
 | Deployment | Not deployed |
 | Owner | Developer/QA with Registrar, Cashier and MIS acceptance owners; names pending |
 | Dependencies | Tests accompany Parts 03–12; final acceptance requires all in-scope features |
-| Updated | 2026-10-16 |
+| Updated | 2026-10-17 |
 
 ## Approach
 
 Test each module when it is built, then validate a complete request across both offices in an isolated campus staging environment. Use synthetic records initially. Real institutional data may be used only under the approved access/process arrangement and must never enter source control or general test logs.
+
+```mermaid
+flowchart TB
+    U["Unit and feature tests<br/>every PR"] --> CI["GitHub CI<br/>Foundation checks"]
+    CI --> MY[MySQL concurrency tests]
+    MY --> ST["Campus staging<br/>UAT-01 to UAT-21"]
+    ST --> NF["Devices, browsers, load,<br/>security, restore"]
+    NF --> SO["Office sign-off<br/>D14"]
+    SO --> REL["Release to production<br/>Part 14"]
+```
 
 ## End-to-end acceptance scenarios
 
@@ -36,6 +46,7 @@ Test each module when it is built, then validate a complete request across both 
 | UAT-14 | LAN/server interruption and restoration | Stale display warning, documented manual fallback, safe retries/reconciliation |
 | UAT-15 | Daily/monthly/semester/academic-year reporting | Approved definitions and totals reconcile with sample transactions |
 | UAT-16 | Backup restored to isolated environment | Database, files and authorized access consistent; issued outputs recoverable |
+| UAT-17–21 | Registrar vendor list and performance points | Scenarios defined in [Part 16](16-vendor.md#acceptance-criteria-and-validation) |
 
 ## Development checks
 
@@ -50,6 +61,8 @@ docker compose -f docker-compose.dev.yml exec app npm run check
 docker compose -f docker-compose.dev.yml exec app npm run build
 ```
 
+For a complete check, run `./check.ps1` from the project root. If Windows blocks scripts, run `powershell -NoProfile -ExecutionPolicy Bypass -File ./check.ps1`.
+
 Build assets before rendering tests if the test harness uses the Vite manifest. Add a separate disposable MySQL test database for unique constraints, migrations, queue claims, payment locks and release races; never point tests that reset tables at operational data. The current starter suite uses SQLite in memory.
 
 ## Nonfunctional checks
@@ -59,6 +72,37 @@ Build assets before rendering tests if the test harness uses the Vite manifest. 
 - Check keyboard navigation, readable contrast, mobile forms, validation focus and screen-reader labels.
 - Check dependency vulnerabilities during implementation/release; record remediation decisions, not blanket guarantees.
 - Exercise worker retry/failure, notification duplication, storage exhaustion, backup failure and audit recording.
+
+### Supported browsers and devices (D20)
+
+The frontend uses Tailwind CSS v4, which targets Chrome/Edge 111+, Firefox 128+ and Safari 16.4+. Older browsers show broken layouts. In iteration I0, MIS inventories office PCs, kiosks, displays and common student phones. Before M2, test on at least one of each real device type. Any required device below the baseline must be upgraded, or the team records an alternative decision.
+
+| Device group | Browser and version | Tested on (date) | Result |
+|---|---|---|---|
+| Registrar office PCs | _from inventory_ | | |
+| Cashier office PCs | _from inventory_ | | |
+| Kiosk | _from inventory_ | | |
+| Queue display | _from inventory_ | | |
+| Typical student phones | _sample_ | | |
+
+### Security checklist (per release)
+
+- [ ] Access control: direct-URL and modified-request tests per role and office (UAT-11).
+- [ ] Injection: queries use Eloquent/bindings; no raw SQL built from input.
+- [ ] XSS: Vue escaping only; no `v-html` with user content; CSV formula escaping (Part 12).
+- [ ] CSRF and session cookies: Laravel defaults kept; secure cookies over internal HTTPS.
+- [ ] Throttling: login, ID lookup, account linking and kiosk actions.
+- [ ] Uploads: type, size and count limits; private storage; authorized downloads.
+- [ ] Headers via the reverse proxy (HSTS on internal HTTPS, frame and content-type options).
+- [ ] `composer audit` and `npm audit` reviewed, with remediation decisions recorded.
+
+### Thesis evaluation (if required by the IT program)
+
+If the IT program requires a software quality evaluation, commonly based on ISO/IEC 25010 characteristics with a Likert-scale questionnaire, agree the instrument, respondent groups (office staff, students/alumni, IT experts), sample size and statistical treatment with the adviser. Run it on staging after UAT. Store only anonymous, aggregated results.
+
+### Defense demo dataset
+
+Maintain a synthetic demo seeder and a scripted walkthrough that resets cleanly: a free request, a paid request, a returned requirement, a release, a report and a vendor rating. Never demo with real records.
 
 ## Release exit criteria
 

@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Lead developer; assignment pending |
 | Dependencies | Parts 00–01; build incrementally with each module |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Architecture
 
@@ -59,6 +59,33 @@ These are proposed additions, not existing folders or classes. Avoid a separate 
 | `releases` | Claimant, authority evidence where required, release actor, time and released document version |
 | `academic_periods` | Campus-approved semester / academic-year boundaries, independent from report calendar filters |
 | `audit_events`, notification deliveries, export jobs | Accountability and retryable outputs; access-controlled payloads |
+| `vendors`, vendor deliveries/ratings, versioned rating criteria, compliance documents | Registrar supplier list and performance points ([Part 16](16-vendor.md)); office-scoped; rating snapshots keep weights used; no money columns |
+| `service_calendar_days` | Per-office working days, holidays and suspensions (for example weather-related); drives queue service days and working-day turnaround |
+| `feedback_responses` | Optional post-completion feedback (CSM-aligned if adopted, D19); anonymous or linked per DPO decision |
+| `privacy_notice_versions`, notice acknowledgements | Which privacy notice version a client saw and when (D09); not a substitute for the lawful basis the DPO determines |
+
+### Core relationships (simplified)
+
+Vendor tables are shown in [Part 16](16-vendor.md). Status-event, hold and attachment tables are omitted for readability.
+
+```mermaid
+erDiagram
+    USERS ||--o{ ACCOUNT_LINKS : "may link"
+    CLIENT_PROFILES ||--o{ ACCOUNT_LINKS : "verified link"
+    CLIENT_PROFILES ||--|{ CLIENT_IDENTIFIERS : has
+    CLIENT_PROFILES ||--o{ DOCUMENT_REQUESTS : owns
+    SERVICES ||--|{ SERVICE_VERSIONS : versions
+    SERVICE_VERSIONS ||--o{ DOCUMENT_REQUESTS : "snapshot at submit"
+    DOCUMENT_REQUESTS ||--|{ REQUEST_STATUS_EVENTS : history
+    DOCUMENT_REQUESTS ||--o{ QUEUE_TICKETS : visits
+    DOCUMENT_REQUESTS ||--o{ ASSESSMENTS : "assessed, revisions kept"
+    ASSESSMENTS ||--o{ PAYMENTS : "settled by"
+    DOCUMENT_TEMPLATES ||--o{ GENERATED_DOCUMENTS : "rendered from"
+    DOCUMENT_REQUESTS ||--o{ GENERATED_DOCUMENTS : versions
+    DOCUMENT_REQUESTS ||--o| RELEASES : "completed by"
+    DOCUMENT_REQUESTS ||--o| FEEDBACK_RESPONSES : "optional feedback"
+    USERS ||--o{ AUDIT_EVENTS : performs
+```
 
 Proposed first-release transaction unit: one service type per request with quantity/copies as allowed. `request_items` leaves room for later expansion, but mixed-service carts and partial release are deferred until their workflow is approved. Assessment revisions and corrections preserve original values.
 
@@ -67,7 +94,7 @@ Proposed first-release transaction unit: one service type per request with quant
 - Use foreign keys and uniqueness constraints, not only frontend validation.
 - Store money as integer minor units with a currency field; do not use floating-point calculations.
 - Snapshot service names, approved fees and document inputs at the appropriate transaction stage.
-- Store timestamps consistently in UTC; propose `Asia/Manila` for campus display/service-day boundaries, pending confirmation.
+- Store timestamps consistently in UTC; propose `Asia/Manila` for campus display/service-day boundaries, pending confirmation. Count working days from `service_calendar_days`, never from weekdays alone.
 - Use non-enumerable public references; a reference alone never grants access to personal records.
 - Use transactions and row locks for payment verification, queue calling and release. Use idempotency keys for retried submissions and financial operations.
 - Add state changes and audit events in the same database transaction; dispatch external work only after commit. Persist delivery intent so retries do not silently lose notifications.

@@ -12,7 +12,7 @@
 | Deployment | Not deployed |
 | Owner | Developer with Registrar intake representative; names pending |
 | Dependencies | Parts 03–05; Part 07 completes ticket allocation |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Features and screens
 
@@ -22,6 +22,22 @@
 - Request detail with public reference, queue ticket, fees, next action and progress timeline.
 - Staff-assisted request form using the same validation and business action as online intake.
 - Draft editing, submission retry protection, allowed cancellation and response to returned requirements.
+- Privacy notice at first use and at account linking, with the version recorded ([Part 03](03-accounts-permissions-and-audit.md)).
+- Help page: office hours, location, how to claim, FAQ and contact; usable before sign-in.
+- Interface language: English by default; Filipino or Cebuano labels for portal and kiosk if the offices ask for them (D01).
+- Upload limits per service (types, size, count); malware scanning of uploads is an MIS decision (D02).
+
+## Intake channels
+
+```mermaid
+flowchart LR
+    W["Campus portal<br/>own device on LAN"] --> S
+    A[Staff-assisted desk] --> S
+    K["Kiosk<br/>later phase"] --> S
+    S["One submit action<br/>validation and idempotency"] --> R["Request, snapshot,<br/>status event"]
+    S --> T["Queue ticket<br/>reserved or waiting"]
+    R --> H[Client history and tracking]
+```
 
 ## Phased channels
 

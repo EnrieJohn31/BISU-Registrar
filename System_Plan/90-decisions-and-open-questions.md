@@ -2,7 +2,17 @@
 
 [Back to index](index.md)
 
-Updated: 2026-10-16. This register distinguishes owner-confirmed scope from proposed implementation defaults and institution-specific rules. Open decisions do not prevent writing or reviewing plans; they gate only the affected implementation or rollout.
+Updated: 2026-10-17. This register distinguishes owner-confirmed scope from proposed implementation defaults and institution-specific rules. Open decisions do not prevent writing or reviewing plans; they gate only the affected implementation or rollout. Which milestone each decision gates is shown in [94](94-team-schedule-and-risks.md#iterations-and-decision-gates); the questions to ask are in [95](95-office-interview-checklist.md).
+
+```mermaid
+flowchart LR
+    O[Open decision] --> I["Ask in office interview<br/>95 checklist"]
+    I --> P["Proposed answer<br/>with evidence"]
+    P --> A{"Approved by a<br/>named owner?"}
+    A -->|No or partial| O
+    A -->|Yes| C["Move to confirmed table<br/>with approver and date"]
+    C --> U["Update affected parts,<br/>traceability, change log"]
+```
 
 ## Confirmed decisions
 
@@ -14,6 +24,7 @@ Updated: 2026-10-16. This register distinguishes owner-confirmed scope from prop
 | C04 | Host on BISU's local campus network; “online” means campus LAN browser access | Project owner, 2026-10-15 | Internal campus production, local assets, LAN access checks; no initial public Internet hosting |
 | C05 | Maintain linked part plans and implementation/deployment navigation in `System_Plan/index.md` | Project owner, 2026-10-15 | Living Markdown plan and status tracker |
 | C06 | Use EnrieJohn31/BISU-Registrar for the full application root and prepare repository/development prerequisites before features | Project owner, 2026-10-16 | Source, Docker and plans published together; CI and local verification required |
+| C07 | Add a Registrar supplier (vendor) list with per-delivery weighted performance points: staff-only, supervisor-confirmed, flag-for-review (no auto-suspension), reference numbers only (no money), document type/expiry tracking without uploads, Registrar-only, built after M2 | Project owner, 2026-10-16 | New [Part 16](16-vendor.md); additions to Parts 02, 03, 12, 13 and 15 |
 
 ## Proposed defaults, awaiting process review
 
@@ -24,7 +35,10 @@ Updated: 2026-10-16. This register distinguishes owner-confirmed scope from prop
 - Campus display/service-day timezone `Asia/Manila`, storage timestamps UTC.
 - Cashier records/verifies existing approved payment channels; no initial payment gateway.
 - In-app notifications first; actual email delivery/account recovery depends on campus arrangements.
-- FIFO within eligible queues until the campus approves priority rules.
+- FIFO within each queue lane; priority lanes for senior citizens and PWDs are legally required, and their design and eligibility checks are part of D06.
+- Stalled requests get reminders and a staff-reviewed lapse closure; requests with payments and unclaimed documents are never closed or completed automatically (D18).
+- Citizen's Charter entries are the starting source for services, requirements, fees and processing times, confirmed by each office (D05).
+- Two-factor authentication required for Cashier, approver, release, supervisor and administrator roles.
 - Remote-from-counter campus submissions receive reserved tickets; attendance/check-in controls active queue placement.
 
 ## Open decision register
@@ -32,19 +46,26 @@ Updated: 2026-10-16. This register distinguishes owner-confirmed scope from prop
 | ID | Decision required | Decision owner to assign | Blocks / affected work | Current state |
 |---|---|---|---|---|
 | D01 | Initial services and first-release scope; confirm phased portal/assisted/kiosk order | Project sponsor + offices | Parts 01, 05–07; release sizing | Open; proposed sequence documented |
-| D02 | Hosting machine/OS, internal hostname, HTTPS trust, VLAN/Wi-Fi access, Internet-independent operation | MIS | Part 14; campus staging/production | LAN hosting confirmed; infrastructure details open |
+| D02 | Hosting machine/OS, internal hostname, HTTPS trust, VLAN/Wi-Fi access, Internet-independent operation, time sync (NTP), upload malware scanning | MIS | Part 14; campus staging/production | LAN hosting confirmed; infrastructure details open |
 | D03 | Proof for identity linkage, unlinked account access, account recovery and staff provisioning | Registrar + MIS | Parts 03–04, 06; real-client access | Open |
 | D04 | Import format/approved columns, source custodian, ID formats, duplicates and correction authority | Registrar records custodian | Part 04; reliable identity source | Maintained/imported list confirmed; format open |
-| D05 | Approved services/requirements, effective fees, waivers, assessment timing and targets | Registrar + Cashier | Parts 05, 08–09 | Open; no fee amounts invented |
-| D06 | Service hours/day, reserved-ticket validity, check-in, queue priorities, no-show/transfer and printing | Both offices | Parts 06–07 | Open |
+| D05 | Approved services/requirements, effective fees, waivers, assessment timing and targets; Citizen's Charter edition used and processing-time classification per service | Registrar + Cashier | Parts 05, 08–09, 12 | Open; no fee amounts invented |
+| D06 | Service hours/day, reserved-ticket validity, check-in, no-show/transfer and printing; legally required priority lanes (seniors, PWDs, others), eligibility checks and lane alternation; suspension-day rollover | Both offices | Parts 06–07 | Open |
 | D07 | Receipt source/numbering, payment channels, verifier duties, partial/overpayments, adjustments/refunds and reconciliation dates | Cashier | Part 09; any real financial use | Open |
 | D08 | Approved templates, record sources, signatories, separation of duties, document numbering and claimant/representative/reissue rules | Registrar | Parts 03, 08, 10–11 | Open |
-| D09 | Privacy notices, permitted data, retention/deletion, audit access and incident responsibilities | Authorized campus privacy/MIS/office owners | Parts 03–04, 10–14; real-data rollout | Open; no legal-compliance claim |
+| D09 | Privacy Impact Assessment, privacy notice text and versions, lawful basis, permitted data, retention/deletion, data subject requests, audit access, breach contacts and incident responsibilities | BISU Data Protection Officer + MIS/office owners | Parts 03–04, 06, 10–14; real-data rollout | Open; no legal-compliance claim |
 | D10 | Counter count, kiosk/display devices, printers, accessibility, shared-device identity method | Offices + MIS | Part 07 and campus equipment testing | Open |
 | D11 | Campus mail relay or assisted account process, notification channels, retry/freshness expectations | MIS + offices | Parts 03, 11, 14 | In-app proposed; actual mail delivery open |
 | D12 | Academic periods, report layouts/metrics, financial date basis and export access | Registrar + Cashier | Part 12 | Open |
 | D13 | Peak users/load, response targets, backup frequency/retention, recovery targets and monitoring ownership | MIS + offices | Parts 13–14 release acceptance | Open; no arbitrary service-level promise |
 | D14 | Named UAT/release approvers, pilot scope, deployment window, training/support/maintenance ownership | Sponsor + MIS + offices | Parts 13–15 | Open |
+| D15 | Vendor rating criteria, weights and anchors, N/A use, review threshold, minimum ratings, scoring period, self-confirmation | Registrar head | Part 16 settings and flag logic | Open; example criteria documented, not adopted |
+| D16 | Vendor fields (minimal contact data, TIN need), compliance document types, expiry warning window, categories | Registrar + privacy/MIS owner | Part 16 vendor form and document tracking | Open |
+| D17 | Whether vendor ratings are internal or shared with BAC/Supply, whether they replace a paper supplier evaluation, report format | Registrar + Supply/BAC | Part 16 reports and any official use | Open |
+| D18 | Reminder and lapse rules for requests stuck in `awaiting_client` / `awaiting_payment`; unclaimed-document period and handling | Registrar (+ Cashier for paid requests) | Parts 01, 08, 11, 12 | Open; proposed: reminders, staff-reviewed closure, never automatic for paid or unclaimed |
+| D19 | Client feedback: adopt the ARTA CSM questions digitally, anonymous or linked, paper alternative, who compiles results | Registrar + Cashier, with the office that submits ARTA reports; DPO for anonymity | Parts 11, 12 | Open |
+| D20 | Supported browser/device baseline for office PCs, kiosks, displays and client phones | MIS | Parts 06, 07, 13, 14; all screens | Open; Tailwind v4 needs Chrome/Edge 111+, Firefox 128+, Safari 16.4+ |
+| D21 | Code and repository ownership, licensing/IP, post-thesis maintainer, transfer timing | Sponsor + MIS + IT Thesis Coordinator | Parts 14–15; handover | Open; repository currently under a personal GitHub account |
 
 ## Decision entry template
 

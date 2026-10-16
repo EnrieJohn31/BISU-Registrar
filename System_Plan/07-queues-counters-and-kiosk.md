@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Registrar/Cashier service supervisors with developer; names pending |
 | Dependencies | Parts 03–06; Cashier handoff integrates with Part 09 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Features and screens
 
@@ -29,11 +29,42 @@ Permitted exceptions: `called → no_show`; `waiting/called → cancelled`; auth
 
 The public request reference is stable across visits. Queue numbers are office/day-specific display identifiers. A ticket may be served while the request continues through payment, preparation or approval.
 
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> reserved: portal submit away from the counter
+    [*] --> waiting: assisted or kiosk check-in
+    reserved --> waiting: check-in on the service day
+    reserved --> expired: validity ends (D06)
+    waiting --> called
+    called --> serving
+    serving --> served
+    called --> no_show
+    no_show --> waiting: authorized requeue, new position
+    waiting --> cancelled
+    called --> cancelled
+    serving --> transferred: closed, linked ticket at the other office
+    served --> [*]
+    expired --> [*]
+    cancelled --> [*]
+    transferred --> [*]
+```
+
+`expired` and `transferred` are proposed names for closed tickets; `transferred` closes the original ticket with a reason while the receiving office gets a linked new ticket.
+
+### Priority lanes (added 2026-10-17)
+
+Philippine law requires express or priority lanes in government offices for senior citizens (RA 9994) and persons with disabilities (RA 10754); offices commonly extend them to pregnant women. Many alumni requesters are senior citizens, so plain FIFO across everyone is likely not acceptable. Proposed: separate lanes per office, FIFO within each lane, and a counter rule for alternating between lanes. Which categories apply, how eligibility is checked at the counter and the alternation rule are part of D06. Displays may show a lane prefix on the ticket number but never the person's category details.
+
+### Service calendar
+
+Queue service days follow `service_calendar_days` ([Part 02](02-architecture-and-data-model.md)): working days, holidays and suspensions such as weather-related work suspensions. When a day is suspended, reserved tickets roll over according to D06, and clients see a notice.
+
 ## Rules to finalize before coding
 
 - Confirm service-day calendar, timezone, opening/closing rules, ticket expiry and check-in window.
 - Determine whether a submitted campus-network request gets today's reserved ticket or a later scheduled service-day ticket.
-- FIFO is the proposed default within an eligible queue. Priority categories, supporting evidence and override permissions require campus approval.
+- FIFO is the proposed default within each lane. Legally required priority lanes (above), supporting evidence and override permissions require campus confirmation.
 - Do not move a not-yet-present campus-network requester ahead of clients already checked in.
 - Prevent two active visits for the same request/office unless an explicit business exception permits it.
 - Show no names, Student/Alumni IDs, requested sensitive document details or financial details on public displays.
@@ -58,6 +89,8 @@ The public request reference is stable across visits. Queue numbers are office/d
 - [ ] A kiosk session reset prevents the next person from seeing prior data.
 - [ ] Queue changes reach campus displays within the agreed freshness target.
 - [ ] A network outage shows stale status clearly and recovery does not create duplicate tickets.
+- [ ] Priority-lane tickets are called according to the approved alternation rule, and displays reveal no category details.
+- [ ] A suspended service day rolls reserved tickets over as agreed and tells affected clients.
 
 ## Decisions / evidence
 

@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { Link, usePage } from '@inertiajs/vue3';
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import { Link } from '@inertiajs/vue3';
+import { ChevronLeft } from '@lucide/vue';
 import { home } from '@/routes';
-
-const page = usePage();
-const name = page.props.name;
 
 defineProps<{
     title?: string;
@@ -13,34 +10,33 @@ defineProps<{
 </script>
 
 <template>
-    <div
-        class="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0"
-    >
-        <div
-            class="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r"
-        >
-            <div class="absolute inset-0 bg-zinc-900" />
+    <div class="grid min-h-dvh lg:grid-cols-2">
+        <!-- Image panel: place an <img class="absolute inset-0 size-full object-cover"> here. -->
+        <div class="relative hidden bg-blue-600 lg:block" />
+
+        <div class="flex flex-col px-6 py-8 sm:px-12 lg:px-16">
             <Link
                 :href="home()"
-                class="relative z-20 flex items-center text-lg font-medium"
+                class="inline-flex w-fit items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-                <AppLogoIcon class="mr-2 size-8 fill-current text-white" />
-                {{ name }}
+                <ChevronLeft class="size-4" />
+                Back to the website
             </Link>
-        </div>
-        <div class="lg:p-8">
+
             <div
-                class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]"
+                class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-8 py-8"
             >
-                <div class="flex flex-col space-y-2 text-center">
-                    <h1 class="text-xl font-medium tracking-tight" v-if="title">
+                <div class="space-y-2" v-if="title || description">
+                    <h1 class="text-3xl font-bold tracking-tight" v-if="title">
                         {{ title }}
                     </h1>
-                    <p class="text-sm text-muted-foreground" v-if="description">
+                    <p class="text-muted-foreground" v-if="description">
                         {{ description }}
                     </p>
                 </div>
-                <slot />
+                <div class="space-y-6">
+                    <slot />
+                </div>
             </div>
         </div>
     </div>
