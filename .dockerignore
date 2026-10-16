@@ -1,0 +1,15 @@
+.git
+.github
+.local-backups
+System_Plan
+docs
+src/.git
+src/.env
+src/.env.*
+src/auth.json
+src/vendor
+src/node_modules
+src/public/build
+src/public/hot
+src/storage
+src/bootstrap/cache

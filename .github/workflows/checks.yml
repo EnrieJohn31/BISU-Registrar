@@ -1,0 +1,64 @@
+name: Foundation checks
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**/*.md']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  foundation:
+    name: Foundation checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Validate Docker configuration
+        run: docker compose -f docker-compose.dev.yml config --quiet
+
+      - name: Build development runtime
+        run: docker compose -f docker-compose.dev.yml build app
+
+      - name: Prepare local environment file
+        run: cp src/.env.example src/.env
+
+      - name: Install locked PHP dependencies
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app composer install --no-interaction --prefer-dist
+
+      - name: Validate Composer manifests
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app composer validate --strict
+
+      - name: Generate disposable test key
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app php artisan key:generate
+
+      - name: Install locked frontend dependencies
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app npm ci --no-audit --no-fund
+
+      - name: Build assets and generate frontend routes
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app npm run build
+
+      - name: Check frontend formatting and lint
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app npm run check
+
+      - name: Check Vue TypeScript
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app npm run types:check
+
+      - name: Check PHP formatting, analysis and tests
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app composer test
+
+      - name: Clean up CI containers
+        if: always()
+        run: docker compose -f docker-compose.dev.yml down --remove-orphans

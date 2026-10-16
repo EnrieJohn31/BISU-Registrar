@@ -1,0 +1,41 @@
+# Local secrets and credentials. The example contains development placeholders only.
+**/.env
+**/.env.*
+!**/.env.example
+**/auth.json
+**/*.pem
+**/*.key
+
+# Local metadata backup; never publish preserved starter Git history/configuration.
+/.local-backups/
+
+# Installed dependencies and build/test output.
+**/vendor/
+**/node_modules/
+/src/public/build/
+/src/public/hot
+/src/public/fonts-manifest.dev.json
+/src/public/storage
+/src/bootstrap/ssr/
+**/.phpunit.cache/
+**/.phpunit.result.cache
+**/coverage/
+
+# Runtime data and exports. Retain Laravel's directory placeholder files.
+/src/bootstrap/cache/*
+!/src/bootstrap/cache/.gitignore
+/src/storage/**
+!/src/storage/**/
+!/src/storage/**/.gitignore
+*.sqlite
+*.sqlite3
+*.sql
+*.dump
+*.bak
+*.log
+
+# OS/editor files.
+.DS_Store
+Thumbs.db
+**/.idea/
+**/.vscode/
