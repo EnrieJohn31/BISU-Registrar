@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Registrar and Cashier report owners with developer; names pending |
 | Dependencies | Parts 03, 06–11; academic-period definitions from Part 02 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Required reports
 
@@ -20,6 +20,21 @@
 - Registrar volume, processing/release statistics and pending-age worklists.
 - Cashier verified collections, adjustments, discrepancies and transaction history.
 - Office dashboards with authorized drill-down and approved CSV/PDF exports.
+- Registrar vendor performance reports, defined in [Part 16](16-vendor.md) and following the same export rules.
+- Processing time against the Citizen's Charter: share of requests completed within the charter's working days, per service ([Part 05](05-services-requirements-and-fees.md)).
+- Client feedback (CSM) results by period and service, if adopted (D19).
+- Aging lists for lapsed requests and unclaimed documents (D18).
+
+```mermaid
+flowchart LR
+    EV[("Status events, payments,<br/>tickets, feedback")] --> QS["Scoped query services<br/>office, date, period"]
+    CAL[("Academic periods and<br/>service calendar")] --> QS
+    QS --> DSH["Dashboards<br/>with definitions shown"]
+    QS --> DRL[Drill-down lists]
+    QS --> EXP["Background exports<br/>CSV or PDF, audited"]
+    DSH -. "totals must match" .- DRL
+    DRL -. "totals must match" .- EXP
+```
 
 ## Metric definitions to approve
 
@@ -32,7 +47,8 @@
 | Most requested services | Submitted request counts by service snapshot; show quantities separately |
 | Pending requests | Nonterminal requests as of the selected cutoff; historical reconstruction requires status events |
 | Collections | Verified payments by agreed business date, with voids/refunds/adjustments separately reconciled; not billed assessments |
-| Turnaround | Submission-to-release duration, with explicit calendar/business-time definition and hold treatment |
+| Turnaround | Submission-to-release duration in working days from the service calendar, with explicit treatment of time spent awaiting the client or payment and of holds; compared with the Citizen's Charter processing time |
+| Client satisfaction | Feedback responses by period and service using the adopted CSM questions; response count always shown next to scores |
 
 Use institution-defined academic periods. Do not infer semester boundaries from month numbers. Cashier must select receipt date versus verification/posting date for official reports; display the chosen rule on the output.
 
@@ -58,4 +74,4 @@ Use institution-defined academic periods. Do not infer semester boundaries from 
 
 ## Decisions / evidence and optimization
 
-Resolve [D12](90-decisions-and-open-questions.md): academic calendar, metric definitions, report formats and approval owners. Begin with indexed queries; introduce cached aggregates only after performance measurement and with a defined refresh/invalidation rule. Completion requires office-approved sample reports and reconciled synthetic totals.
+Resolve [D12](90-decisions-and-open-questions.md): academic calendar, metric definitions, report formats and approval owners. Charter, feedback and aging reports also depend on D05, D18 and D19. Begin with indexed queries; introduce cached aggregates only after performance measurement and with a defined refresh/invalidation rule. Completion requires office-approved sample reports and reconciled synthetic totals.

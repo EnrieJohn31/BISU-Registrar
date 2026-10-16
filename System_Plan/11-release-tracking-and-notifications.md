@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Registrar release owner with developer; names pending |
 | Dependencies | Parts 06–10; audit and ownership controls from Part 03 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Features and screens
 
@@ -20,6 +20,27 @@
 - Release receipt/acknowledgment record, authorized representative details where allowed, and exact document versions handed over.
 - In-app notifications for returned requirements, verified payment where useful, ready-for-release and completed release.
 - Delivery status and retry visibility for any later approved email/SMS channel.
+- Reminders for unclaimed documents and an unclaimed-documents list for staff (D18).
+- Optional client feedback after completion (D19), aligned with ARTA's Client Satisfaction Measurement if the office adopts it. A paper form stays available at the counter. Anonymous or linked is the DPO's decision; results feed Part 12.
+
+## Release at the counter
+
+```mermaid
+sequenceDiagram
+    actor C as Claimant
+    participant RO as Release officer
+    participant S as System
+    C->>RO: Claim reference and ID or authorization
+    RO->>S: Open the ready-for-release request
+    S->>S: Lock and recheck approval, clearance and holds
+    alt All checks pass
+        RO->>S: Record claimant, evidence and document versions
+        S-->>RO: Release saved and request completed in one transaction
+        S-)C: Feedback invitation, optional
+    else A check fails
+        S-->>RO: Blocked with the reason, nothing released
+    end
+```
 
 ## Campus-network behavior
 
@@ -52,7 +73,9 @@ Tracking and in-app notifications are available while clients are connected to t
 - [ ] Representative claims require the approved authority evidence.
 - [ ] Offline/stale views clearly indicate that information may be outdated.
 - [ ] Completed requests retain their release version and claimant history.
+- [ ] Unclaimed documents get reminders and appear on the staff list after the agreed period, without being marked completed.
+- [ ] Feedback can be submitted once per completed request and never changes the request.
 
 ## Decisions / evidence
 
-Pending [D08 and D11](90-decisions-and-open-questions.md): claimant/representative rules, acknowledgment and notification channels. Complete with a claimant walkthrough, unauthorized-release tests and delivery-retry tests.
+Pending [D08, D11, D18 and D19](90-decisions-and-open-questions.md): claimant/representative rules, acknowledgment, notification channels, unclaimed-document handling and client feedback. Complete with a claimant walkthrough, unauthorized-release tests and delivery-retry tests.

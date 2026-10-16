@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-16 · **Current stage:** Planning / requirements review · **Current focus:** Part 01 · **Next development slice:** Parts 02–05 after their affected decisions are resolved.
+**Last updated:** 2026-10-17 · **Current stage:** Planning / requirements review · **Current focus:** Part 01 and the [office interview checklist](95-office-interview-checklist.md) · **Next development slice:** Parts 02–05 after their affected decisions are resolved.
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -14,6 +14,74 @@ This is the navigation and status source for the project. Each part contains the
 - Initially use a verified student/alumni list maintained/imported by authorized staff.
 - Preserve the existing application foundation and document changes, checks and optimization suggestions.
 
+## Plan at a glance
+
+Who uses which module, and how a request moves between offices:
+
+```mermaid
+flowchart TB
+    subgraph People["People on BISU LAN / Wi-Fi"]
+        direction LR
+        CL[Students and alumni] ~~~ RS[Registrar staff] ~~~ CS[Cashier staff] ~~~ AD[Admin and MIS]
+    end
+    subgraph Flow["Request flow"]
+        direction LR
+        PO["Portal and intake<br/>06"] --> QU["Queue<br/>07"] --> RW["Registrar<br/>08"]
+        RW -->|endorse paid request| CW["Cashier<br/>09"]
+        CW -->|financial clearance| RW
+        RW --> DG["Documents<br/>10"] --> RT["Release and tracking<br/>11"]
+    end
+    subgraph Support["Supporting modules"]
+        direction LR
+        AC["Accounts, roles, audit<br/>03"] ~~~ RP["Reports<br/>12"] ~~~ VN["Vendor list<br/>16"]
+    end
+    subgraph Store["Campus storage, backed up"]
+        direction LR
+        DB[(MySQL)] ~~~ FS[(Private files)]
+    end
+    People --> Flow
+    People --> Support
+    Flow --> Store
+    Support --> Store
+```
+
+| Who | Uses |
+|---|---|
+| Students and alumni | Portal (06), queue tickets (07), tracking and claiming (11) |
+| Registrar staff | Queue counters (07), Registrar workspace (08), documents (10), release (11), vendor list (16), reports (12) |
+| Cashier staff | Cashier queue (07), Cashier workspace (09), collection reports (12) |
+| Admin and MIS | Accounts and roles (03), deployment and backups (14) |
+
+Every module stores data in MySQL. Generated documents and attachments go to private files.
+
+Build order by milestone. Each row must be working before the next row goes live:
+
+```mermaid
+flowchart TB
+    subgraph M01["M0–M1 Foundation"]
+        direction LR
+        P00[00 Baseline] --> P01[01 Workflow] --> P02[02 Data model] --> P03[03 Accounts and audit]
+        P03 --> P04[04 Client records]
+        P03 --> P05[05 Services and fees]
+    end
+    subgraph M2["M2 First transaction"]
+        direction LR
+        P06[06 Portal and intake] --> P07a[07 Basic queue] --> P08[08 Registrar] --> P09[09 Cashier]
+    end
+    subgraph M3["M3 Full scope"]
+        direction LR
+        P10["10 Documents<br/>minimal path in M2"] --> P11["11 Release and tracking<br/>minimal path in M2"] --> P12[12 Reports]
+        P07b[07 Kiosk and display] ~~~ P16[16 Vendor list]
+    end
+    subgraph M45["M4–M5 Acceptance"]
+        direction LR
+        P13[13 Testing and UAT] --> P14[14 Deployment] --> P15[15 Handover]
+    end
+    M01 --> M2 --> M3 --> M45
+```
+
+Part 16 technically needs only Parts 02–03, but is scheduled after M2 by decision C07. Iterations, decision gates and target dates are in [94](94-team-schedule-and-risks.md).
+
 ## Where we are now
 
 | Area | Current status | Evidence |
@@ -22,7 +90,7 @@ This is the navigation and status source for the project. Each part contains the
 | Latest foundation validation | 40 tests / 138 assertions, frontend/PHP checks and clean-checkout GitHub CI passed on 2026-10-16 | [Validation report](../docs/FOUNDATION-VALIDATION.md) |
 | Current local runtime | Verified on 2026-10-16; app/auth/Vite HTTP 200, MySQL/Redis healthy | [Foundation validation](../docs/FOUNDATION-VALIDATION.md) |
 | Registrar/Cashier business modules | Not started | Inspected routes/model/migration inventory contains the starter foundation |
-| Planning documentation | Initial draft created; needs process-owner review | This folder; [change log](92-planning-change-log.md) |
+| Planning documentation | Draft reviewed 2026-10-17; gaps filled and diagrams added; needs team and process-owner review | [Plan review](93-plan-review.md); [change log](92-planning-change-log.md) |
 | Campus staging | Not deployed / no deployment recorded | [Deployment register](14-campus-deployment-and-operations.md) |
 | Campus production | Not deployed / no deployment recorded | No internal production URL, release revision or deployment approval recorded |
 
@@ -48,6 +116,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 13 | [Testing and campus acceptance](13-testing-and-campus-acceptance.md) | Not started for modules | Not started | Not deployed |
 | 14 | [Campus deployment and operations](14-campus-deployment-and-operations.md) | Dev Docker only | Operational checks pending | Not deployed |
 | 15 | [Training, handover and improvements](15-training-handover-and-roadmap.md) | Manuals/training not started | Not started | Not handed over |
+| 16 | [Registrar vendor list and performance points](16-vendor.md) | Not started; scope confirmed (C07), build after M2 | Not started | Not deployed |
 
 ## Supporting references
 
@@ -57,6 +126,10 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 - [Decisions and open questions](90-decisions-and-open-questions.md) — confirmed choices, proposed defaults and office decisions still needed.
 - [Requirement traceability](91-requirement-traceability.md) — where each objective, module and output is planned and checked.
 - [Planning change log](92-planning-change-log.md) — changes to scope, assumptions and documentation.
+- [Plan review 2026-10-17](93-plan-review.md) — gaps found, what changed and the team's check-off list.
+- [Team, schedule and risks](94-team-schedule-and-risks.md) — roles, iterations, decision gates, thesis checkpoints, Definition of Done, risk register.
+- [Office interview checklist](95-office-interview-checklist.md) — questions per office mapped to open decisions, and documents to request.
+- [Glossary](96-glossary.md) — terms and abbreviations.
 - [New-part template](99-part-template.md) — use when adding a future module or work package.
 
 ## Delivery sequence and milestones
@@ -68,7 +141,7 @@ Part numbers are navigation order; dependencies determine implementation order. 
 | M0 — Development foundation | 00 | Starter app and setup checks | Local checks and GitHub CI passed on 2026-10-16 |
 | M1 — Agreed rules and secure data foundation | 01–05 | Reviewed workflow; roles, verified client linkage/import and catalog implemented/tested | Planned |
 | M2 — First integrated office transaction | 06–09; minimal approved output/release path from 10–11 | Campus portal + assisted intake; free and paid requests traverse both offices without bypasses | Planned |
-| M3 — Complete functional scope | Remaining 07, 10–12 | Kiosk/display, approved template set, tracking/release, notifications and all required reports validated | Planned |
+| M3 — Complete functional scope | Remaining 07, 10–12; 16 | Kiosk/display, approved template set, tracking/release, notifications, all required reports and the Registrar vendor list validated | Planned |
 | M4 — Campus staging acceptance | 13–14; manuals from 15 | UAT, LAN-only tests, security checks, restore/rollback and office sign-off | Planned |
 | M5 — Campus production and handover | 14–15 | Actual deployment evidence, pilot reconciliation, training and support ownership | Planned |
 
@@ -96,6 +169,8 @@ For governance/manual work, use Reviewed/Accepted rather than inventing a code d
 
 ## Immediate next actions
 
+- Team: check off the [plan review](93-plan-review.md), assign roles and dates in [94](94-team-schedule-and-risks.md), and name owners for every open decision.
+- Take the [office interview checklist](95-office-interview-checklist.md) to the Registrar, Cashier, MIS, DPO and Supply/BAC.
 - Review the office decisions in [Part 01](01-requirements-and-workflow.md) and the [decision register](90-decisions-and-open-questions.md).
 - Confirm identity proof and initial import columns, first services/fee schedule, queue policy and payment/receipt procedures.
 - Have MIS select the campus host, internal hostname and permitted LAN/Wi-Fi access.

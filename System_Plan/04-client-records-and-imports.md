@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Authorized Registrar records custodian with developer; assignment pending |
 | Dependencies | Parts 02–03 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Confirmed direction
 
@@ -36,6 +36,31 @@ Minimum fields: internal client key, identifier type/value, name, client categor
 - Keep email verification separate from official client identity verification.
 - Identifier changes preserve aliases/history and require staff authorization.
 - Client-supplied corrections do not automatically overwrite official verified fields.
+- Rate-limit ID lookups and link attempts per account, IP and kiosk, and alert staff on repeated failures. This prevents someone from guessing IDs to discover who is in the list.
+
+### Import pipeline
+
+```mermaid
+flowchart LR
+    U["Upload CSV<br/>authorized staff"] --> V["Validate type, size,<br/>encoding, columns"]
+    V -->|errors| E[Row-level error report]
+    V --> D["Dry run: new,<br/>changed, conflicts"]
+    D --> R{Reviewer approves?}
+    R -->|No| E
+    R -->|Yes| C["Commit in bounded batches<br/>with audit and provenance"]
+    C --> L[Clients ready for account linking]
+```
+
+### Account linking
+
+```mermaid
+flowchart LR
+    A[Client signs in] --> B["Enters Student or Alumni ID<br/>plus approved proof"]
+    B --> T{"Match and<br/>proof valid?"}
+    T -->|Yes| K["Link verified<br/>and audited"]
+    T -->|No or unsure| M["Manual review queue<br/>neutral message to client"]
+    B -. "too many attempts" .-> X[Throttled and staff alerted]
+```
 
 ## Implementation steps
 
@@ -56,6 +81,7 @@ Minimum fields: internal client key, identifier type/value, name, client categor
 - [ ] Existing requests retain their client association after a legitimate profile correction.
 - [ ] An unverified person with a known ID cannot retrieve private details or link that account.
 - [ ] Staff-assisted intake records both the operator and the represented client.
+- [ ] Repeated lookups or link attempts are throttled and visible to staff.
 
 ## Open decisions and evidence
 

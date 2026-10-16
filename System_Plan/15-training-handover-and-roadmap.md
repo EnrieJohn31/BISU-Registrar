@@ -1,6 +1,6 @@
 # Part 15 — Documentation, training, handover and improvements
 
-[Back to index](index.md) | [Previous](14-campus-deployment-and-operations.md)
+[Back to index](index.md) | [Previous](14-campus-deployment-and-operations.md) | [Next](16-vendor.md)
 
 | Tracking field | Value |
 |---|---|
@@ -10,7 +10,7 @@
 | Deployment | Not deployed / not handed over |
 | Owner | Project coordinator, office trainers and MIS support owner; names pending |
 | Dependencies | Draft alongside Parts 03–12; finalize with Parts 13–14 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Deliverables
 
@@ -31,6 +31,16 @@
 5. Run a limited campus pilot with agreed scope and support coverage; record feedback, issues and reconciled office results.
 6. Hand over repository access, deployment knowledge, template/fee ownership and secret recovery through approved secure channels. Never put passwords in manuals or this folder.
 7. Agree maintenance ownership, release/change process, escalation path and periodic access/backup review.
+8. Settle repository custody and code ownership (D21). The repository currently lives under a team member's personal GitHub account (EnrieJohn31/BISU-Registrar). Before handover, agree who owns the code and repository, such as a BISU- or MIS-controlled GitHub organization. Transfer it with full history, confirm visibility and licensing/IP terms with the adviser and MIS, and rotate any deployment credentials.
+
+```mermaid
+flowchart LR
+    DOC["Manuals and<br/>developer reference"] --> TR["Training and<br/>competency records"]
+    TR --> PI["Limited pilot<br/>with support"]
+    PI --> HO[Signed handover]
+    REP["Repository and secrets<br/>custody transfer, D21"] --> HO
+    HO --> MA["Maintenance owner<br/>and change process"]
+```
 
 ## Handover acceptance
 
@@ -38,6 +48,7 @@
 - [ ] Registrar and Cashier users can complete assigned tasks without developer intervention.
 - [ ] MIS can deploy, operate, restore and diagnose the system using the runbook.
 - [ ] Support responsibility continues after student/thesis-team turnover.
+- [ ] Repository, CI and secrets are under the agreed institutional owner (D21).
 - [ ] Known limitations and accepted defects have owners and next actions.
 - [ ] Manuals match the actual deployed revision and internal hostname.
 - [ ] The index, release ledger and change log reflect actual completion and deployment evidence.
@@ -55,6 +66,10 @@ These are suggestions, not approved initial scope:
 | Payment gateway integration | Campus authorizes a separate electronic collection process | Accounting, connectivity, provider and security requirements |
 | Off-campus access | Institution requests it as a later expansion | New hosting/network, identity, exposure and support review |
 | Multi-campus deployment | A formal expansion is approved | Data segregation, office scope and operational ownership |
+| Vendor self-service view | Suppliers need to see their own score/status | Vendor accounts, off-campus access and disclosure rules ([Part 16](16-vendor.md)) |
+| Vendor list for other offices | Another office wants the Part 16 vendor list | Office owner, criteria and permissions for that office |
+| External document verification | Employers or agencies need to check a certification's control number or QR code | Off-campus access, disclosure rules and DPO review; conflicts with LAN-only (C04) |
+| Online appointment scheduling | Queue data shows long waits at peak periods | D06 policy and campus capacity |
 
 ## Completion evidence
 

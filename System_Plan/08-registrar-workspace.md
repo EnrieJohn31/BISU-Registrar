@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Registrar process owner with developer; names pending |
 | Dependencies | Parts 03–07; Parts 09–11 finish the paid/document/release workflow |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Features and screens
 
@@ -31,6 +31,25 @@
 6. Accept payment-clearance events from Part 09; Registrar cannot set a request to paid by editing its status.
 7. Add processing and approver review connected to the immutable output/version in Part 10.
 8. Enable ready-for-release only when records, required outputs, approval and financial clearance are valid and no active hold exists.
+
+## Worklist flow and holds
+
+```mermaid
+flowchart LR
+    N[Submitted] --> RV["Under review<br/>records and requirement checks"]
+    RV -->|missing items| AC[Awaiting client]
+    AC --> RV
+    RV -->|paid service| AP["Awaiting payment<br/>Cashier"]
+    AP -->|clearance event| PR[Processing]
+    RV -->|free service| PR
+    PR --> AA[Awaiting approval]
+    AA -->|correction| PR
+    AA --> RR[Ready for release]
+    HOLD[["Active hold<br/>payment or records"]] -. blocks .-> AA
+    HOLD -. blocks .-> RR
+```
+
+Staff-verified checks defined by the service version (for example accounting or library clearance, ID presented, SPA) are recorded per request with outcome, verifier, time and reference ([Part 05](05-services-requirements-and-fees.md)). Requests that stall in `awaiting_client` or `awaiting_payment` appear on a lapse-review list per D18 ([Part 01](01-requirements-and-workflow.md)).
 
 ## Operating rules
 

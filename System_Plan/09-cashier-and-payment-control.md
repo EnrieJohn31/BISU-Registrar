@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Cashier process owner with developer; names pending |
 | Dependencies | Parts 03, 05, 07–08; reporting integration in Part 12 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Initial scope
 
@@ -34,6 +34,36 @@ Record and verify payments made through campus-approved payment procedures, atta
 | `paid` | Verified, non-voided payments satisfy the full current assessment |
 | `disputed` | Active discrepancy hold; release blocked pending resolution |
 
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> not_required: zero-fee assessment
+    [*] --> unpaid: assessed balance
+    unpaid --> pending_verification: payment recorded or claimed
+    pending_verification --> paid: verified, balance zero
+    pending_verification --> unpaid: rejected or voided
+    paid --> unpaid: void or adjustment reopens balance
+    unpaid --> disputed: discrepancy hold
+    pending_verification --> disputed: discrepancy hold
+    paid --> disputed: discrepancy hold
+    disputed --> unpaid: resolved, balance due
+    disputed --> paid: resolved, balance zero
+```
+
+### Verification and clearance
+
+```mermaid
+sequenceDiagram
+    participant R as Registrar
+    participant DB as Database
+    participant K as Cashier
+    R->>DB: Endorse assessment with fee snapshot
+    K->>DB: Lock assessment and record OR reference
+    K->>DB: Verify, recalculate balance, write audit in one transaction
+    DB-->>R: Clearance event after commit, deduplicated
+    R->>DB: Request moves to processing exactly once
+```
+
 Payment records have their own `recorded`, `verified` and `voided` states. Refunds, waivers and fee adjustments are separate authorized records, never deletion of the original payment. Initial UI assumes full payment; partial payments, overpayments and refund approval rules remain a decision and cannot silently produce `paid` clearance.
 
 ## Implementation steps
@@ -45,7 +75,7 @@ Payment records have their own `recorded`, `verified` and `voided` states. Refun
 5. Commit payment audit and status events atomically. Publish a durable clearance event only after commit; repeated delivery must not duplicate the Registrar transition.
 6. Add authorized discrepancy holds and correction/reversal records with reasons. Recalculate clearance after any valid adjustment.
 7. Block release if clearance is revoked before handover. If a payment issue is found after completed release, open an exception for authorized follow-up while preserving the historical release.
-8. Reconcile daily verified collections with the official cashier source; surface unmatched records for review.
+8. Reconcile daily verified collections with the official cashier source (for example the Report of Collections and Deposits prepared for COA) using the OR series and agreed cut-off time; surface unmatched records for review. The system's report supports, and does not replace, the official report.
 
 ## Acceptance criteria / checks
 

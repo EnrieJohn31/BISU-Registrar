@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Registrar template/signatory owner with developer; names pending |
 | Dependencies | Parts 03–05, 08–09 |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-17 |
 
 ## Features and screens
 
@@ -20,6 +20,26 @@
 - Generated document history with exact template version and input snapshot.
 
 Start with a small office-approved template set, then expand to the full approved inventory. Do not represent generated forms as officially issued documents until the applicable approval and release steps are complete.
+
+### Proposed lifecycle of one document version
+
+Versions are immutable. Any content change creates a new version; the old one is kept as history.
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> draft_preview
+    draft_preview --> generated: render, store file and checksum
+    generated --> approved: approver approves this exact version
+    generated --> returned: correction needed, new version follows
+    approved --> superseded: content change invalidates approval
+    approved --> released: handed over in Part 11
+    returned --> [*]
+    superseded --> [*]
+    released --> [*]
+```
+
+Risk RK12 ([94](94-team-schedule-and-risks.md)): run a renderer spike in iteration I1 with one real, office-supplied template on the campus fonts and printer, before committing to a PDF library.
 
 ## Implementation steps
 
