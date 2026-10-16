@@ -18,8 +18,8 @@ This is the navigation and status source for the project. Each part contains the
 
 | Area | Current status | Evidence |
 |---|---|---|
-| Laravel/Vue/Docker foundation | Implemented for development | [Part 00](00-current-baseline.md), [existing setup report](../SETUP-VALIDATION.md) |
-| Previous setup validation | 40 tests / 138 assertions and technical checks passed previously | Historical setup report; not rerun as part of planning |
+| Laravel/Vue/Docker foundation | Implemented, repository published and verified for development | [Part 00](00-current-baseline.md), [existing setup report](../SETUP-VALIDATION.md) |
+| Latest foundation validation | 40 tests / 138 assertions, frontend/PHP checks and clean-checkout GitHub CI passed on 2026-10-16 | [Validation report](../docs/FOUNDATION-VALIDATION.md) |
 | Current local runtime | Verified on 2026-10-16; app/auth/Vite HTTP 200, MySQL/Redis healthy | [Foundation validation](../docs/FOUNDATION-VALIDATION.md) |
 | Registrar/Cashier business modules | Not started | Inspected routes/model/migration inventory contains the starter foundation |
 | Planning documentation | Initial draft created; needs process-owner review | This folder; [change log](92-planning-change-log.md) |
@@ -32,7 +32,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 
 | Part | Plan / feature area | Implementation | Validation | Deployment |
 |---|---|---|---|---|
-| 00 | [Current application baseline](00-current-baseline.md) | Foundation and repository tooling implemented | 40 tests / 138 assertions and local technical checks passed; CI pending | Local verified only |
+| 00 | [Current application baseline](00-current-baseline.md) | Foundation and repository tooling implemented/published | Local checks and GitHub CI passed: 40 tests / 138 assertions | Local verified only |
 | 01 | [Requirements and shared workflow](01-requirements-and-workflow.md) | Not started; plan draft | Office review pending | Not deployed |
 | 02 | [Architecture and data model](02-architecture-and-data-model.md) | Not started | Not started | Not deployed |
 | 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Not started beyond auth starter | Not started | Not deployed |
@@ -65,7 +65,7 @@ Part numbers are navigation order; dependencies determine implementation order. 
 
 | Milestone | Parts / scope | Exit condition | State |
 |---|---|---|---|
-| M0 — Development foundation | 00 | Starter app and setup checks | Local checks passed on 2026-10-16; GitHub CI pending |
+| M0 — Development foundation | 00 | Starter app and setup checks | Local checks and GitHub CI passed on 2026-10-16 |
 | M1 — Agreed rules and secure data foundation | 01–05 | Reviewed workflow; roles, verified client linkage/import and catalog implemented/tested | Planned |
 | M2 — First integrated office transaction | 06–09; minimal approved output/release path from 10–11 | Campus portal + assisted intake; free and paid requests traverse both offices without bypasses | Planned |
 | M3 — Complete functional scope | Remaining 07, 10–12 | Kiosk/display, approved template set, tracking/release, notifications and all required reports validated | Planned |
@@ -99,6 +99,10 @@ For governance/manual work, use Reviewed/Accepted rather than inventing a code d
 - Review the office decisions in [Part 01](01-requirements-and-workflow.md) and the [decision register](90-decisions-and-open-questions.md).
 - Confirm identity proof and initial import columns, first services/fee schedule, queue policy and payment/receipt procedures.
 - Have MIS select the campus host, internal hostname and permitted LAN/Wi-Fi access.
-- Finish repository foundation verification/publication, then implement the first secure client/catalog slice after affected workflow decisions are recorded.
+- Repository foundation is verified and published. Implement the first secure client/catalog slice after affected workflow decisions are recorded.
 
 The original planning delivery changed documentation only. Repository preparation on 2026-10-16 adds development tooling, CI and LAN-safe font handling; business feature implementation remains a separate scoped task.
+
+## Published baseline
+
+Repository: https://github.com/EnrieJohn31/BISU-Registrar. Tested foundation revision: 84db53477d2fb22492b1d6789c072c7e7c87f746. [Passing clean-checkout CI](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38878033808). Later documentation-only publication does not implement or deploy business features.

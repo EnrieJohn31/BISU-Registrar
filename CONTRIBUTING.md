@@ -10,7 +10,7 @@ Read [the system index](System_Plan/index.md) and the affected module plan. Keep
 - Use feature/<short-topic>, fix/<short-topic> or chore/<short-topic> branches for subsequent work.
 - Link the relevant plan part and decisions in the pull request. Keep unrelated work in separate changes.
 - Run ./check.ps1 and inspect the diff before requesting review. GitHub's Foundation checks job must pass before merging.
-- Never force-push main or replace an existing repository history. Repository-level branch rules depend on GitHub settings and are recorded separately from this working convention.
+- main is protected: pull requests and passing/up-to-date Foundation checks are required, including for administrators. Resolve review conversations before merge; no second-person approval is required initially. Force pushes and branch deletion are blocked. Never replace existing repository history.
 
 ## Dependencies and schema
 

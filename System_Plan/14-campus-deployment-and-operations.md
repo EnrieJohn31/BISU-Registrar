@@ -10,7 +10,7 @@
 | Deployment | No staging or campus-production deployment recorded |
 | Owner | Campus MIS/IT deployment owner with office sponsors; names pending |
 | Dependencies | Parts 03–12, Part 13 acceptance, Part 15 handover readiness |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-16 |
 
 ## Confirmed deployment model
 
@@ -41,7 +41,7 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 
 | Environment | Current evidence | Planned access |
 |---|---|---|
-| Developer Docker | Configured; previous tests passed; Docker engine unavailable during this planning inspection | Developer loopback ports 8085/5178 |
+| Developer Docker | Verified on 2026-10-16; local and GitHub foundation checks passed; see foundation validation report | Developer loopback ports 8085/5178 |
 | Campus staging | Not configured / no deployment recorded | Restricted MIS/tester LAN segment; synthetic or authorized test data |
 | Campus production | Not configured / no deployment recorded | Approved BISU LAN/Wi-Fi segments through internal HTTPS |
 

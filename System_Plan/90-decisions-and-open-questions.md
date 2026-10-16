@@ -2,7 +2,7 @@
 
 [Back to index](index.md)
 
-Updated: 2026-10-15. This register distinguishes owner-confirmed scope from proposed implementation defaults and institution-specific rules. Open decisions do not prevent writing or reviewing plans; they gate only the affected implementation or rollout.
+Updated: 2026-10-16. This register distinguishes owner-confirmed scope from proposed implementation defaults and institution-specific rules. Open decisions do not prevent writing or reviewing plans; they gate only the affected implementation or rollout.
 
 ## Confirmed decisions
 
@@ -13,6 +13,7 @@ Updated: 2026-10-15. This register distinguishes owner-confirmed scope from prop
 | C03 | Authorized staff maintain/import a verified student/alumni list initially | Project owner, 2026-10-15 | Build imports and controlled verification; no initial external database dependency |
 | C04 | Host on BISU's local campus network; “online” means campus LAN browser access | Project owner, 2026-10-15 | Internal campus production, local assets, LAN access checks; no initial public Internet hosting |
 | C05 | Maintain linked part plans and implementation/deployment navigation in `System_Plan/index.md` | Project owner, 2026-10-15 | Living Markdown plan and status tracker |
+| C06 | Use EnrieJohn31/BISU-Registrar for the full application root and prepare repository/development prerequisites before features | Project owner, 2026-10-16 | Source, Docker and plans published together; CI and local verification required |
 
 ## Proposed defaults, awaiting process review
 

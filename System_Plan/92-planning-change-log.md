@@ -46,3 +46,4 @@ Known issue / next action / optimization suggestion:
 - Removed runtime font CDN requirements in favor of system fonts for campus-LAN operation.
 - Started Docker Desktop; local checks and remote publication evidence are maintained in docs/FOUNDATION-VALIDATION.md.
 - Registrar/Cashier modules and office policies remain planned, not implemented. Campus production remains not deployed.
+- Final 2026-10-16 results: setup preserves .env/key; 40 tests / 138 assertions, frontend/PHP checks and GitHub clean-checkout CI passed. Foundation revision 84db53477d2fb22492b1d6789c072c7e7c87f746; [CI evidence](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38878033808). Main protection requires PR/CI and blocks force pushes/deletion; campus deployment remains pending.

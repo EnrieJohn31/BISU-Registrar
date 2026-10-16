@@ -6,11 +6,11 @@
 |---|---|
 | Plan status | Draft |
 | Implementation | Not started for business modules |
-| Validation | Starter results are historical; module acceptance pending |
+| Validation | Foundation validated locally and in GitHub CI on 2026-10-16; business-module acceptance pending |
 | Deployment | Not deployed |
 | Owner | Developer/QA with Registrar, Cashier and MIS acceptance owners; names pending |
 | Dependencies | Tests accompany Parts 03–12; final acceptance requires all in-scope features |
-| Updated | 2026-10-15 |
+| Updated | 2026-10-16 |
 
 ## Approach
 

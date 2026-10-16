@@ -6,7 +6,7 @@
 |---|---|
 | Plan status | Draft, based on inspected files |
 | Implementation | Foundation implemented; business features not started |
-| Validation | Local build/lint/types/static analysis and 40 tests passed on 2026-10-16; GitHub CI pending |
+| Validation | Local checks and GitHub clean-checkout CI passed on 2026-10-16: 40 tests / 138 assertions |
 | Deployment | Local Docker configured; staging and production not recorded |
 | Owner | Project developer / MIS, assignment pending |
 | Dependencies | None |
@@ -52,7 +52,7 @@ On 2026-10-15 the planning inspection could not contact the Docker Desktop Linux
 - [x] Configure root ignore rules for local secrets, runtime data, dependencies, exports and starter metadata backups; verify the staged file inventory before publication.
 - [ ] Review starter self-registration and account deletion before introducing retained institutional records; see [Part 03](03-accounts-permissions-and-audit.md).
 - [ ] Introduce route authorization and shared page conventions before new modules.
-- [ ] Record a baseline commit/revision and actual test evidence in the index.
+- [x] Record baseline revision 84db53477d2fb22492b1d6789c072c7e7c87f746 and local/GitHub CI evidence in the index and foundation validation report.
 
 ## Acceptance criteria
 
@@ -70,3 +70,5 @@ Retain the existing Inertia application and component library. Investigate WSL2 
 2026-10-15: inspected setup documentation, Composer/npm manifests, routes, model/migration inventory and Compose configuration. No application code changed in this planning task.
 
 2026-10-16: established repository-wide setup/check scripts, root GitHub Actions/Dependabot configuration, contribution instructions and LAN-independent system fonts. Business features remain not started. See [foundation validation](../docs/FOUNDATION-VALIDATION.md).
+
+2026-10-16: published the foundation and verified GitHub clean-checkout CI. [Run evidence](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38878033808). The remaining unchecked business-policy/authorization items belong to the upcoming feature work.
