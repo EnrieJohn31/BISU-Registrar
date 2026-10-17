@@ -93,3 +93,12 @@ Known issue / next action / optimization suggestion:
 - Scope, rating formula, supervisor controls and planned delivery order remain the same. Composer's technical dependency directory is unaffected.
 - Validation: relative file links checked and stale module terms/links searched. Documentation-only; application tests are not rerun for this rename.
 - Publication: new documentation pull request against protected main, following the already merged UI/plan update.
+
+## 2026-10-17 - Part 03 slice 1 design and handoff file (plan only)
+
+- Project owner chose Part 03 as the first build area and asked for a handoff after every completed part.
+- Added the [Part 03 slice 1 design](03-accounts-permissions-and-audit.md#slice-1-design-staff-accounts-roles-and-audit): scope, starter-code facts, RBAC comparison (new D22, native recommended), 10 staff roles, permission catalogue across all parts, field-level data model, authorization flow, staff provisioning without email, account lifecycle, audit design, starter changes, screens, code layout, tests and seven questions to settle before coding.
+- Added [handoff.md](handoff.md): one current handoff, rewritten after each part; history stays in this log. The index's next-actions section now points to it; the Definition of Done (94) and AGENTS.md require updating it.
+- Connected updates: D03 widened (staff account policies), D22 added; Parts 00 and 02 linked to the slice design; index focus and Part 03 row updated.
+- Validation: relative links and anchors checked; new Mermaid diagrams test-rendered with Mermaid 10.9.1 and 11.4.1 in headless Edge. Documentation only; no application code changed.
+- Next action: team answers the slice 1 questions in handoff.md, then slice 1 is coded on a feature branch.
