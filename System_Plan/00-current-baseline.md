@@ -63,7 +63,7 @@ On 2026-10-15 the planning inspection could not contact the Docker Desktop Linux
 
 ## Optimization note
 
-Retain the existing Inertia application and component library. Investigate WSL2 storage or container dependency volumes only if measured Windows bind-mount performance affects development.
+Retain the existing Inertia application and component library. Measured 2026-10-17: with dependencies on the Windows bind mount, each request took 3–7 s because OPcache re-checks the ~800 vendor files a page loads. Moving `vendor/` and `node_modules/` to Docker volumes cut responses to 0.1–0.3 s and `check.ps1` from ~5 min to ~1 min. Moving the whole project into the WSL2 filesystem remains an option if Vite reloads or tests still feel slow.
 
 ## Evidence and change record
 
