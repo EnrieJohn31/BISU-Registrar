@@ -18,7 +18,7 @@ An atomic push with exact expected-tip leases replaced five existing public bran
 | `docs/part-04-client-import-design` | `c095ee0` | `09a56c9` |
 | `feat/part-03-accounts-roles-audit` | `4abd011` | `7d6b0cb` |
 
-The rewrite changed 20 commit objects with identical old/new file trees. Original trailers were in `be55386`, `52b58fa` and `4e897df`. The cleanup did not publish the Part 04 client-record feature. Later prevention tooling is delivered separately through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10); its timeline records final CI/merge status.
+The rewrite changed 20 commit objects with identical old/new file trees. Original trailers were in `be55386`, `52b58fa` and `4e897df`. The cleanup did not publish the Part 04 client-record feature. Later prevention tooling is delivered separately through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10); it merged as `c331ae3` after [required CI passed](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/39033657347).
 
 ## Local branch alignment
 
@@ -34,7 +34,7 @@ All local branches were aligned atomically to the cleaned ancestry. Current file
 
 - AGENTS.md explicitly requires human authors/co-authors and prohibits AI provider/model/tool credits and generated-by signatures.
 - Shared `commit-msg` and `pre-push` hooks reject recognized AI attribution, including Claude/Anthropic, OpenAI/Codex/ChatGPT and other supported tool/provider labels. Ordinary mentions in descriptions and actual human co-authors remain allowed.
-- `install-git-hooks.ps1` activates guards for this checkout; setup runs the installer for new checkouts. Existing custom hook paths are preserved for manual integration. Hooks are local to each clone; required CI provides a second check.
+- `install-git-hooks.ps1` was run and the guards are active in this checkout; setup runs the installer for new checkouts. Existing custom hook paths are preserved for manual integration. Hooks are local to each clone; required CI provides a second check.
 - Required Foundation CI fetches full history, checks primary authors/co-author trailers, and runs 16 behavioral cases. Eleven integration/configuration checks covered actual Git hook invocation, historic-credit reintroduction, AI primary authors, custom-hook preservation and YAML/setup syntax.
 - Repository owners can deliberately alter or bypass controls; automated work must never do so. Existing clones must install the hooks and synchronize the rewritten history. We do not claim an external clone's settings changed automatically.
 

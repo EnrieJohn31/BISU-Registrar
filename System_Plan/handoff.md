@@ -6,7 +6,7 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 ## Current handoff — 2026-10-17
 
-**Git policy (project owner, 2026-10-17): local commits only.** Work on a local branch and commit there. Do **not** push, open pull requests or merge on GitHub unless the owner explicitly asks. Earlier work (PRs #5–#9) was published before this rule; nothing from the current branches has been pushed.
+**Git policy (project owner, 2026-10-17): local commits only.** Work on a local branch and commit there. Do **not** push, open pull requests or merge on GitHub unless the owner explicitly asks. Earlier work (PRs #5–#9) was published before this rule; the owner separately approved the credit-history cleanup and prevention PR #10. Part 04 implementation and the current local-only records remain unpushed.
 
 **Stage:** M1 development. Part 03 slice 1 (staff accounts, roles, audit) is merged. **Part 04 slice 1 (client records) is built and committed on the local branch `feat/part-04-client-records`, ready for you to test.** Imports (slice 2) and account linking (slice 3) are design only. Campus staging and production: not deployed.
 
@@ -14,7 +14,7 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 - **Completed with owner approval:** three published Claude trailers removed by an atomic exact-lease history rewrite; clean main `2e83568`. Every application tree and human identity/time preserved. All original main protection settings restored and verified. Four old signatures were removed from changed commit objects, as approved; recovery bundles/maps remain local.
 - Cleaned the two unpublished credits and aligned local ancestry: policy `878964d` -> `8402d30` -> `069e6cb`; Part 04 implementation `cca3936` -> `d577d76` -> `0ae71f6`. Current client code and local test data are unchanged; Part 04 stays unpushed.
-- **Human authors only:** the owner explicitly requires actual people as authors/co-authors. AGENTS.md records that rule; tested commit/push guards and required-CI attribution checks are delivered through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10). Activate hooks in existing clones with `./install-git-hooks.ps1`; new setup runs it automatically. The CI attribution stage passed; full PR CI/merge status is recorded in its timeline.
+- **Human authors only:** the owner explicitly requires actual people as authors/co-authors. AGENTS.md records that rule; tested commit/push guards and required-CI attribution checks are delivered through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10). Activate hooks in existing clones with `./install-git-hooks.ps1`; new setup runs it automatically. PR #10 merged as `c331ae3` after all required checks passed. Local commit/push hooks are active via the installer; setup installs them in new checkouts.
 - Verified 24 GitHub commits: zero Claude credits, human account author names only; clean-main CI passed. GitHub contributor caches may take about 24 hours to refresh. See the [cleanup/guard record](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md) for mappings, validation and recovery. Owners must not deliberately bypass the guards; other clones need to resynchronize before pushing.
 
 ### Just completed: Part 04 slice 1 — client records

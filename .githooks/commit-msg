@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+hook_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+{
+    printf 'Co-authored-by: %s\n' "$(git var GIT_AUTHOR_IDENT)"
+    cat -- "$1"
+} | sh "$hook_dir/check-attribution.sh"

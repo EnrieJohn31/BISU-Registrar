@@ -11,6 +11,7 @@ function Invoke-Compose {
 }
 
 try {
+    & (Join-Path $PSScriptRoot 'install-git-hooks.ps1')
     & docker info --format '{{.ServerVersion}}'
     if ($LASTEXITCODE -ne 0) { throw 'Start Docker Desktop with Linux containers, then rerun setup.ps1.' }
     Invoke-Compose config --quiet

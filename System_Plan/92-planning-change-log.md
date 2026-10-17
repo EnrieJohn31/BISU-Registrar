@@ -196,3 +196,16 @@ Known issue / next action / optimization suggestion:
 - Owner approved guarded history replacement and confirmed authors/co-authors must be actual people, not AI providers. Published five prepared tips atomically; clean main 2e83568 has identical application content. Every original protection setting restored and verified. Four original signatures removed only on rewritten commit objects, as approved.
 - Aligned local branches without file/index changes; Part 04 implementation now 0ae71f6 on the cleaned base and remains unpushed. Recovery bundles, protection snapshots and commit maps retained locally. No reachable local Claude trailers; GitHub API checked 24 public commits with human author names only; clean-main Foundation CI passed (run 39033220866).
 - Recurrence prevention in separate PR #10: commit-msg/pre-push guards, safe installer/setup integration, required-CI attribution check, 16 behavioral cases and 11 integration/configuration checks. Updated AGENTS.md to explicit human authorship and rewrote handoff/review record. No application feature changes or campus deployment.
+
+## 2026-10-17 - Approved contributor cleanup and future attribution guards
+
+- Owner explicitly approved removing published Claude co-author credit and temporarily adjusting main protection. Atomic, exact-lease updates replaced five existing public tips; clean main is 2e83568. Every rewritten tree matched the original; human identities/times were preserved. Original main protection restored and verified. Backup bundles/maps remain ignored and local.
+- Added commit-msg/pre-push guards, shared attribution checker and 16 behavioral cases; setup installs the local hooks via install-git-hooks.ps1. Existing custom hooks are preserved. Required Foundation CI checks primary authors and co-author trailers across fetched history. AGENTS.md records no automatic AI credits and local-only publication policy.
+- Application code is unchanged. Part 04 implementation stays local and separate from this prevention branch. GitHub contributor displays may take about 24 hours to refresh; original PR/commit references may retain historical objects.
+- Owner clarified that project authors/co-authors must be actual people, not AI providers. Made that rule explicit and added provider-name rejection cases (OpenAI, Anthropic, Google Gemini, Cursor).
+
+## 2026-10-17 - Human-authorship guards merged and activated
+
+- PR #10 merged as c331ae3 after required Foundation checks passed (run 39033657347). Merged only prevention/tooling/docs into the local Part 04 branch; preserved its implementation, private validation and all existing change-log entries.
+- Activated commit-msg/pre-push guards in this checkout. Human authors/co-authors are required; recognized AI provider/tool credits are blocked locally and by required CI. Sixteen behavioral cases and eleven integration/configuration checks passed. Main protection remains restored; no additional history rewrite or production deployment.
+- Part 04 code remains unpushed. Existing clones must synchronize cleaned history and activate hooks; GitHub contributor caches can take about 24 hours to refresh.
