@@ -216,3 +216,9 @@ Known issue / next action / optimization suggestion:
 - Owner asked how to prevent recurrence when using Claude. Verified active commit/push hooks and existing required CI, installed Claude Code 2.1.120, and the official attribution configuration.
 - Added project-scoped .claude/settings.json with empty attribution.commit / attribution.pr strings. Both must be set; omitted fields keep defaults. Avoided attribution:false because the official reference requires v2.1.281+ for that syntax. No global settings or session metadata changed.
 - Updated README, handoff and attribution record. JSON validated and Git whitespace checks passed; application code and guard code unchanged. Local commit only; no push, PR or publication of Part 04 implementation.
+## 2026-10-17 - Requirements checklist for the offices (documentation)
+
+- Project owner asked for an A4 list of what the team must collect before building further, to send to the team.
+- Added [requirements.pdf](requirements.pdf) (3 pages, 29 items in three priorities, plus a documents list and tracking lines) with its editable source [requirements.html](requirements.html), built from the open decisions in [90](90-decisions-and-open-questions.md) and the [office interview checklist](95-office-interview-checklist.md). Each item names the decision or part it unlocks. Ground rules: blank or made-up examples only, official versions, and who/when/which document recorded for every answer.
+- Received so far: Citizen's Charter 2024 (1st Edition), page 115 only (Registration Office, 5.2.1 Enrollment). It shows the charter's structure (office, classification, type of transaction, who may avail, requirements and where to secure each) but not the steps, fees or processing time, and Enrollment is probably outside this system's scope (D01 question).
+- The PDF was produced by printing the HTML from Microsoft Edge; layout checked page by page. Documentation only; no application code or tests changed.

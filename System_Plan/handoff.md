@@ -66,11 +66,12 @@ Sign in at http://localhost:8085 with `processor@bisu.test` (can change records)
 ### Next steps, in order
 
 1. **You test slice 1** with the checklist above and tell me what to change. I will fix it on the same local branch.
-2. **Take the ID question to the Registrar** (D04, questions R3 and R4 in the [office checklist](95-office-interview-checklist.md)). The demo ID rule (3–32 letters, digits or hyphens, case-insensitive) must be replaced by the approved format before any real record is entered. Changing it needs a versioned rule and a reviewed backfill.
-3. **Next build, whichever input arrives first:**
+2. **Send the [requirements checklist](requirements.pdf)** (A4, 3 pages, 29 items in priority order; editable source [requirements.html](requirements.html)) to the team and the offices. Only page 115 of the Citizen's Charter (2024, 1st Edition: Enrollment) has been received; the rest of the charter, the Cashier section and the fee schedule are item 1 on that list. Record each answer as a decision in [90](90-decisions-and-open-questions.md).
+3. **Take the ID question to the Registrar** (D04, questions R3 and R4 in the [office checklist](95-office-interview-checklist.md)). The demo ID rule (3–32 letters, digits or hyphens, case-insensitive) must be replaced by the approved format before any real record is entered. Changing it needs a versioned rule and a reviewed backfill.
+4. **Next build, whichever input arrives first:**
    - **Part 05 (services and fees)** needs the Citizen's Charter, services and fees. I can write its design first, as was done for Parts 03 and 04.
    - **Part 04 slice 2 (imports)** needs the D04 answers, a sample source file, a queue worker and the D09 retention rules.
-4. Publishing: when you want these branches pushed or merged, say so. Merge order: `docs/handoff-local-only-2026-10-17`, then `feat/part-04-client-records`.
+5. Publishing: when you want these branches pushed or merged, say so. Merge order: `docs/handoff-local-only-2026-10-17`, then `feat/part-04-client-records`.
 
 ### Blocked or waiting
 

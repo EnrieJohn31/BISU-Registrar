@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BISU Registrar - Requirements checklist</title>
+<style>
+  @page {
+    size: A4;
+    margin: 14mm 13mm 17mm 13mm;
+    @bottom-left { content: "BISU Registrar · Requirements checklist · 17 October 2026"; font: 8pt "Segoe UI", Arial, sans-serif; color: #666; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt "Segoe UI", Arial, sans-serif; color: #666; }
+  }
+  :root { --ink: #1c1b22; --muted: #5b5a66; --line: #cfcdd8; --brand: #2d1a6b; --soft: #f3f1fa; --warn: #fff7e0; --warn-line: #e3c56b; }
+  * { box-sizing: border-box; }
+  html { font: 9.6pt/1.4 "Segoe UI", Arial, sans-serif; color: var(--ink); }
+  body { margin: 0; }
+  h1 { font-size: 19pt; line-height: 1.15; margin: 0 0 1.5mm; color: var(--brand); letter-spacing: -0.2px; }
+  .sub { color: var(--muted); margin: 0 0 4mm; font-size: 9.6pt; }
+  h2 { font-size: 11.5pt; margin: 6mm 0 2mm; padding: 1.6mm 3mm; background: var(--brand); color: #fff; border-radius: 1.2mm; break-after: avoid; }
+  h2 small { font-weight: 400; font-size: 9pt; opacity: .9; margin-left: 2mm; }
+  h3 { font-size: 10pt; margin: 3.5mm 0 1.2mm; color: var(--brand); break-after: avoid; }
+  p { margin: 0 0 2mm; }
+  .box-note { border: 0.3mm solid var(--warn-line); background: var(--warn); border-radius: 1.5mm; padding: 2.6mm 3.5mm; margin: 0 0 3mm; break-inside: avoid; }
+  .box-note strong { color: #6b4b00; }
+  .box-note ul { margin: 1mm 0 0 4.5mm; padding: 0; }
+  .box-note li { margin: 0 0 0.8mm; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-bottom: 3mm; break-inside: avoid; }
+  .card { border: 0.3mm solid var(--line); border-radius: 1.5mm; padding: 2.4mm 3.2mm; background: var(--soft); }
+  .card h4 { margin: 0 0 1mm; font-size: 9.6pt; color: var(--brand); }
+  .card ul { margin: 0 0 0 4.2mm; padding: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th { text-align: left; background: #e9e6f5; color: var(--brand); font-size: 8.4pt; text-transform: uppercase; letter-spacing: .3px; }
+  th, td { border: 0.25mm solid var(--line); padding: 1.5mm 2mm; vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.n { width: 7mm; text-align: center; color: var(--muted); font-weight: 600; }
+  td.c { width: 8mm; text-align: center; }
+  td.u { width: 33mm; color: var(--muted); font-size: 8.4pt; }
+  tr.office { break-after: avoid; page-break-after: avoid; }
+  tr.office td { background: var(--soft); font-weight: 700; color: var(--brand); font-size: 9pt; padding: 1.2mm 2mm; }
+  .tick { display: inline-block; width: 3.6mm; height: 3.6mm; border: 0.35mm solid #444; border-radius: 0.6mm; vertical-align: -0.6mm; }
+  .tag { display: inline-block; font-size: 7.6pt; padding: 0 1.2mm; border: 0.25mm solid var(--line); border-radius: 1mm; color: var(--muted); background: #fff; margin-left: 1mm; white-space: nowrap; }
+  .docs { columns: 2; column-gap: 6mm; margin: 0; padding: 0; list-style: none; }
+  .docs li { break-inside: avoid; margin: 0 0 1.6mm; display: flex; gap: 2mm; }
+  .sig { margin-top: 4mm; font-size: 9pt; color: var(--muted); }
+  .lines { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 8mm; margin-top: 2mm; }
+  .lines div { border-bottom: 0.25mm solid #888; height: 6mm; font-size: 8pt; color: var(--muted); }
+  .foot { margin-top: 5mm; font-size: 8.4pt; color: var(--muted); border-top: 0.25mm solid var(--line); padding-top: 2mm; }
+</style>
+</head>
+<body>
+
+<h1>Requirements checklist</h1>
+<p class="sub">What we need from the offices before the next build steps · BISU Registrar, Balilihan Campus · Version 1, 17 October 2026</p>
+
+<div class="grid2">
+  <div class="card">
+    <h4>Why we need this</h4>
+    <ul>
+      <li>What is built so far works on <strong>made-up data</strong>. To go further we need the offices' real rules and documents.</li>
+      <li>Without them we would be guessing fees, requirements and ID formats. A guess here means wrong charges and wrong documents.</li>
+      <li>Every item names what it unlocks, so we know what to chase first.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Where we are</h4>
+    <ul>
+      <li><strong>Built (fake data):</strong> staff accounts and roles, audit trail, client records.</li>
+      <li><strong>Waiting on this list:</strong> services and fees, requests, queues, Registrar and Cashier work screens, documents, release, reports, supplier list.</li>
+      <li><strong>Next build:</strong> services and fees (Part 05), then imports of the student/alumni list (Part 04, slice 2).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box-note">
+  <strong>Ground rules for every request</strong>
+  <ul>
+    <li><strong>Never ask for or send real student or alumni records</strong>, payment details or IDs. Ask for <strong>blank forms and made-up examples</strong> only.</li>
+    <li>Ask for the <strong>official, approved version</strong> of each document, not someone's memory of it.</li>
+    <li>For every answer write down <strong>who</strong> said it (name and position), the <strong>date</strong>, and the <strong>document name and page</strong>. Give it to the project lead, who records it in the decision register.</li>
+    <li>Photos or scans are fine if they are clear and contain no personal data.</li>
+  </ul>
+</div>
+
+<!-- ============================ PRIORITY 1 ============================ -->
+<h2>Priority 1 — needed now <small>blocks the next build</small></h2>
+
+<table>
+  <thead><tr><th></th><th>#</th><th>What we need</th><th>Unlocks</th></tr></thead>
+  <tbody>
+    <tr class="office"><td colspan="4">Registrar's Office</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">1</td>
+      <td><strong>The full Citizen's Charter 2024 (1st Edition).</strong> The whole Registration Office section (5.2), the pages after page 115 (steps, fees to be paid, processing time, person responsible), the Cashier's section, and the first pages (list of services, what Simple / Complex / Highly Technical mean). PDF or clear photos.</td>
+      <td class="u">Services and fees<br>(Part 05, D05)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">2</td>
+      <td>Is this edition still the current one, and does it apply to <strong>Balilihan Campus</strong> (the charter lists six campuses)? If the campus has its own section, we need that one.</td>
+      <td class="u">Part 05 (D05)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">3</td>
+      <td>The <strong>document services for the first release</strong> and which are requested most. Please also confirm that <strong>Enrollment is not part of this system</strong>.</td>
+      <td class="u">Scope (D01)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">4</td>
+      <td>For each service: the <strong>requirements for each kind of client</strong>, where the client gets each one, any clearance from another office (accounting, library), forms needed, and how many copies are allowed.</td>
+      <td class="u">Part 05 (D05)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">5</td>
+      <td>The <strong>official Student ID and Alumni ID formats</strong>, with made-up examples: length, letters or digits, hyphens, leading zeros, whether an ID is ever reused, and what happens when one person has both.</td>
+      <td class="u">Client records, imports (D04)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">6</td>
+      <td>The <strong>official student/alumni list</strong>: who keeps it, a blank or made-up sample showing its column names, how often it changes, who fixes duplicates and mistakes, and who may mark a profile as verified.</td>
+      <td class="u">Imports (D04)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">7</td>
+      <td>What proof links a person to their ID, and what happens when someone loses access to their account.</td>
+      <td class="u">Linking accounts (D03)</td></tr>
+
+    <tr class="office"><td colspan="4">Cashier's Office</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">8</td>
+      <td>The <strong>fee for each service</strong>, who approved it (board resolution or fee schedule) and since when. Any waivers or discounts.</td>
+      <td class="u">Parts 05 and 09 (D05, D07)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">9</td>
+      <td>Accepted <strong>payment channels</strong>. How official receipts are issued and numbered. Who records a payment and who verifies it.</td>
+      <td class="u">Cashier screens (D07)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">10</td>
+      <td>Rules for partial payment, overpayment and refunds.</td>
+      <td class="u">Cashier screens (D07)</td></tr>
+
+    <tr class="office"><td colspan="4">IT Thesis Coordinator / adviser</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">11</td>
+      <td><strong>Defense dates</strong>, required deliverables and the evaluation instrument (for example ISO/IEC 25010). Confirm the added scope (supplier list and other plan additions) is accepted.</td>
+      <td class="u">Schedule</td></tr>
+
+    <tr class="office"><td colspan="4">Our team</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">12</td>
+      <td>Name the <strong>project lead</strong> and the other roles, and give every open decision an owner and a date.</td>
+      <td class="u">Team plan</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ PRIORITY 2 ============================ -->
+<h2>Priority 2 — needed before the first full request can work <small>first real transaction</small></h2>
+
+<table>
+  <thead><tr><th></th><th>#</th><th>What we need</th><th>Unlocks</th></tr></thead>
+  <tbody>
+    <tr class="office"><td colspan="4">Registrar's Office</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">13</td>
+      <td><strong>Queue rules:</strong> opening hours, service days, how long a ticket is valid, check-in, no-shows, and how senior citizens, persons with disabilities and pregnant women are served today.</td>
+      <td class="u">Queues (D06)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">14</td>
+      <td><strong>Document templates</strong>, who signs each one, how documents are numbered, security paper, and whether approval is a wet signature or recorded in the system.</td>
+      <td class="u">Documents (D08)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">15</td>
+      <td><strong>Who may claim a document:</strong> the client, or a representative (authorization letter or SPA), and which IDs are required.</td>
+      <td class="u">Release (D08)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">16</td>
+      <td>How long a request may wait for missing papers or payment before it closes. What happens to documents nobody claims, and after how many days.</td>
+      <td class="u">Workflow (D18)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">17</td>
+      <td>The academic calendar, holidays and class or work suspension notices, and who announces them.</td>
+      <td class="u">Queues, reports (D06, D12)</td></tr>
+
+    <tr class="office"><td colspan="4">Cashier's Office</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">18</td>
+      <td>Daily cut-off and reconciliation. A <strong>blank copy of the official collection report</strong> (for example the Report of Collections and Deposits).</td>
+      <td class="u">Cashier reports (D07, D12)</td></tr>
+
+    <tr class="office"><td colspan="4">MIS / IT</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">19</td>
+      <td>The <strong>server</strong> for the system, its internal hostname, network access (VLANs and Wi-Fi), how HTTPS certificates are handled, and whether server time is synchronized.</td>
+      <td class="u">Deployment (D02)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">20</td>
+      <td><strong>Inventory of office PCs, kiosks, display screens and printers</strong>, with operating system and browser versions.</td>
+      <td class="u">All screens (D10, D20)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">21</td>
+      <td>Is there a <strong>mail relay</strong> for account emails? If not, accounts will be activated in person. Backup schedule and who monitors the system.</td>
+      <td class="u">Accounts, operations (D11, D13)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">22</td>
+      <td>Who owns the <strong>code and repository</strong> after the thesis, and can it move to a BISU-controlled GitHub account?</td>
+      <td class="u">Handover (D21)</td></tr>
+
+    <tr class="office"><td colspan="4">Data Protection Officer</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">23</td>
+      <td>Is a <strong>Privacy Impact Assessment</strong> required before real data is used, and is there a template? The approved <strong>privacy notice</strong> text.</td>
+      <td class="u">Using real data (D09)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">24</td>
+      <td>Which data fields may be stored, how long each kind is kept, and how corrections, deletion requests and data breaches are handled.</td>
+      <td class="u">Using real data (D09)</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ PRIORITY 3 ============================ -->
+<h2>Priority 3 — needed later <small>reports, feedback, suppliers</small></h2>
+
+<table>
+  <thead><tr><th></th><th>#</th><th>What we need</th><th>Unlocks</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">25</td>
+      <td><strong>Registrar and Cashier:</strong> blank samples of the daily, monthly, semester and academic-year reports in use today, and who receives them.</td>
+      <td class="u">Reports (D12)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">26</td>
+      <td>How <strong>client feedback</strong> (the paper satisfaction form) is collected today and who compiles the report. Should feedback be anonymous?</td>
+      <td class="u">Feedback (D19)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">27</td>
+      <td><strong>Registrar, supplier list:</strong> rating criteria and weights, the score that triggers a review, how often scores reset, and which supplier details and documents to keep.</td>
+      <td class="u">Supplier list (D15, D16)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">28</td>
+      <td><strong>Supply Office / BAC:</strong> is there an existing supplier evaluation form? Should the Registrar's ratings be shared with you?</td>
+      <td class="u">Supplier list (D16, D17)</td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">29</td>
+      <td>Which <strong>languages</strong> clients should see: English, Filipino, Cebuano or Boholano.</td>
+      <td class="u">Screens (D01)</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ DOCUMENTS ============================ -->
+<h2>Documents to collect <small>blank or made-up data only</small></h2>
+
+<ul class="docs">
+  <li><span class="tick"></span><span>Citizen's Charter 2024, 1st Edition: Registration Office, Cashier and the first pages</span></li>
+  <li><span class="tick"></span><span>Fee schedule and the document that approves it</span></li>
+  <li><span class="tick"></span><span>Current request forms and sample outputs (blank or made-up)</span></li>
+  <li><span class="tick"></span><span>Official receipt and the daily collection process</span></li>
+  <li><span class="tick"></span><span>Sample daily, monthly, semester and academic-year reports (blank)</span></li>
+  <li><span class="tick"></span><span>Academic calendar and holiday list</span></li>
+  <li><span class="tick"></span><span>Office organization chart and list of signatories</span></li>
+  <li><span class="tick"></span><span>Queue logbook or ticket format (blank)</span></li>
+  <li><span class="tick"></span><span>Student/alumni list: blank or made-up sample with column names</span></li>
+  <li><span class="tick"></span><span>Device and browser inventory from MIS</span></li>
+  <li><span class="tick"></span><span>Approved privacy notice and any Privacy Impact Assessment template</span></li>
+  <li><span class="tick"></span><span>Supplier evaluation form, if one exists</span></li>
+</ul>
+
+<p class="sig"><strong>Tracking:</strong> tick each item when received, then note below who is chasing the rest.</p>
+<div class="lines">
+  <div>Project lead</div><div>Date this list was sent to the offices</div>
+  <div>Registrar's Office contact</div><div>Cashier's Office contact</div>
+  <div>MIS contact</div><div>Data Protection Officer contact</div>
+</div>
+
+<p class="foot">Source: System_Plan/95-office-interview-checklist.md and 90-decisions-and-open-questions.md (decision numbers such as D05 refer to the decision register). This list gathers inputs only; it does not approve any office policy, fee or rule.</p>
+
+</body>
+</html>
