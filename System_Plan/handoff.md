@@ -10,6 +10,8 @@ Rewrite this file after each completed step; keep dated history in the change lo
 
 ### Just completed
 
+- Docker development performance published: [PR #8](https://github.com/EnrieJohn31/BISU-Registrar/pull/8) merged as `4d69e06` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/39000107485) passed.
+
 - Part 03 accounts and browser fixes published: [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7) merged as `fa2246a` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38999900147) passed.
 
 - Prepared the [Part 04 detailed design](04-client-records-and-imports.md): proposed data constraints, existing permissions, three delivery slices, reviewed imports/retries, later identity linking, acceptance cases and explicit office gates. No Part 04 application code added; no institutional policy inferred.

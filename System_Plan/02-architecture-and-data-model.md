@@ -5,8 +5,8 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft |
-| Implementation | Not started |
-| Validation | Not started |
+| Implementation | Incremental; Part 03 users/offices/roles/audit implemented; remaining module models planned |
+| Validation | Part 03 checks passed; proposed models require their own migration/concurrency checks |
 | Deployment | Not deployed |
 | Owner | Lead developer; assignment pending |
 | Dependencies | Parts 00–01; build incrementally with each module |

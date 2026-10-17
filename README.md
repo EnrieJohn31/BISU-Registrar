@@ -95,3 +95,6 @@ The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker set
 ## Source attribution
 
 Created from the MIT-licensed [official Laravel Vue starter kit](https://github.com/laravel/vue-starter-kit). Original foundation setup evidence remains in [SETUP-VALIDATION.md](SETUP-VALIDATION.md).
+
+
+Windows Docker source watching uses one-second polling (VITE_USE_POLLING=true in dev Compose). This prevents stale Vite modules when bind-mount file events are missed; ordinary host/Vite use keeps event-based watching. Retain the dependency/metadata watch exclusions to limit polling overhead.
