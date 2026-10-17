@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-17 · **Current stage:** M1 development (accounts slice done locally) · **Current focus:** review and merge Part 03 slice 1; office interviews · **Next development slice:** Part 05 (services and fees) or Part 04 (client records), whichever office answers arrive first · **Where to pick up:** [handoff.md](handoff.md)
+**Last updated:** 2026-10-17 · **Current stage:** M1 development (accounts slice done locally) · **Current focus:** publish reviewed Part 03/Docker changes; review Part 04 design; office interviews · **Next development slice:** Part 04 slice 1 (client records), after design review; imports/linking have separate office gates · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -105,7 +105,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 01 | [Requirements and shared workflow](01-requirements-and-workflow.md) | Not started; plan draft | Office review pending | Not deployed |
 | 02 | [Architecture and data model](02-architecture-and-data-model.md) | Not started | Not started | Not deployed |
 | 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Slice 1 (staff accounts, roles, audit) implemented on local branch; not merged | Slice 1: check.ps1 passed, 97 tests / 498 assertions; MySQL smoke test | Not deployed |
-| 04 | [Verified client records and imports](04-client-records-and-imports.md) | Not started | Not started | Not deployed |
+| 04 | [Verified client records and imports](04-client-records-and-imports.md) | Not started; detailed three-slice design draft prepared | Design checked against Part 03; office approval/tests pending | Not deployed |
 | 05 | [Services, requirements and fees](05-services-requirements-and-fees.md) | Not started | Not started | Not deployed |
 | 06 | [Campus portal and assisted intake](06-portal-and-request-intake.md) | Not started | Not started | Not deployed |
 | 07 | [Queues, counters, display and kiosk](07-queues-counters-and-kiosk.md) | Not started | Not started | Not deployed |

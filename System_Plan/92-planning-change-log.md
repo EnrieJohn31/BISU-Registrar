@@ -144,3 +144,9 @@ Known issue / next action / optimization suggestion:
 - Fixed audit rows closing immediately on Enter, added Space activation, wrapped mobile expiry/long account text and removed Laravel starter sidebar links. Connections to existing Inertia actions and server authorization preserved.
 - Found stale Vite source across Windows Docker bind mounts; added opt-in one-second polling in dev Compose/Vite. Verified served modules update after host edits. No dependency upgrades or production hosting changes.
 - Full check.ps1 passed again: 97 tests / 498 assertions, Larastan level 7, PHP/frontend formatting, lint, Vue TypeScript and build. Rewrote handoff after completion; office UAT and campus deployment still pending.
+
+## 2026-10-17 - Part 04 detailed design prepared
+
+- Owner selected client/import design because no office documents are available. Expanded Part 04 into profiles, reviewed imports and later account-linking slices, with data constraints, fixed draft CSV contract, Laravel/Inertia boundaries, audit/privacy handling, concurrency/replay/recovery and acceptance cases.
+- Checked current Part 03 role/permission map: Registrar office scope is mandatory even though Cashier supervisors also have clients.import; independent review/commit and any broader duties are proposals awaiting office confirmation. No enum/role changes made.
+- Connected architecture/index and rewrote handoff. D03/D04/D09 approval gates remain open; template/limits/proof are not BISU policy. No Part 04 migrations/routes/features or real-data imports added. Existing application checks remain valid for this documentation-only step; Markdown links checked separately.
