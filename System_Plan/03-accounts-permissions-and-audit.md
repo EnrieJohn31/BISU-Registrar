@@ -33,8 +33,8 @@ All roles are proposed pending office review. Multiple roles require explicit as
 | Release officer | View clearance and record verified handover | Cannot bypass required approval or payment |
 | Cashier | Assigned assessments, payment verification, payment history and scoped collections | No academic record editing or general document approval |
 | Supervisor / report viewer | Authorized office reports and exception review | Office-scoped access; full exports separately permissioned |
-| Registrar vendor staff | Maintain the supplier list, record deliveries and submit ratings ([Part 16](16-vendor.md)) | Cannot confirm own ratings or change vendor status |
-| Registrar vendor supervisor | Confirm/return/void ratings, review decisions, rating settings | Every status decision needs a reason; no automatic suspension |
+| Registrar supplier staff | Maintain the supplier list, record deliveries and submit ratings ([Part 16](16-supplier.md)) | Cannot confirm own ratings or change supplier status |
+| Registrar supplier supervisor | Confirm/return/void ratings, review decisions, rating settings | Every status decision needs a reason; no automatic suspension |
 | System administrator | Accounts, roles, configuration and operational access | Business actions need explicit additional permissions |
 
 ### Separation of duties on one paid request
@@ -92,7 +92,7 @@ flowchart LR
 
 ## Required audit events
 
-Account activation/deactivation; role changes; client linkage/verification; imports; request submission and transitions; queue actions; assessments and fee changes; payment recording/verification/reversal; document generation/approval/download where required; release; sensitive exports; configuration changes; vendor records, delivery ratings, rating settings and vendor status changes ([Part 16](16-vendor.md)).
+Account activation/deactivation; role changes; client linkage/verification; imports; request submission and transitions; queue actions; assessments and fee changes; payment recording/verification/reversal; document generation/approval/download where required; release; sensitive exports; configuration changes; supplier records, delivery ratings, rating settings and supplier status changes ([Part 16](16-supplier.md)).
 
 ## Acceptance criteria / checks
 

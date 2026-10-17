@@ -20,7 +20,7 @@
 - Registrar volume, processing/release statistics and pending-age worklists.
 - Cashier verified collections, adjustments, discrepancies and transaction history.
 - Office dashboards with authorized drill-down and approved CSV/PDF exports.
-- Registrar vendor performance reports, defined in [Part 16](16-vendor.md) and following the same export rules.
+- Registrar supplier performance reports, defined in [Part 16](16-supplier.md) and following the same export rules.
 - Processing time against the Citizen's Charter: share of requests completed within the charter's working days, per service ([Part 05](05-services-requirements-and-fees.md)).
 - Client feedback (CSM) results by period and service, if adopted (D19).
 - Aging lists for lapsed requests and unclaimed documents (D18).

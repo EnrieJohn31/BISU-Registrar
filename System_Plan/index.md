@@ -33,7 +33,7 @@ flowchart TB
     end
     subgraph Support["Supporting modules"]
         direction LR
-        AC["Accounts, roles, audit<br/>03"] ~~~ RP["Reports<br/>12"] ~~~ VN["Vendor list<br/>16"]
+        AC["Accounts, roles, audit<br/>03"] ~~~ RP["Reports<br/>12"] ~~~ VN["Supplier list<br/>16"]
     end
     subgraph Store["Campus storage, backed up"]
         direction LR
@@ -48,7 +48,7 @@ flowchart TB
 | Who | Uses |
 |---|---|
 | Students and alumni | Portal (06), queue tickets (07), tracking and claiming (11) |
-| Registrar staff | Queue counters (07), Registrar workspace (08), documents (10), release (11), vendor list (16), reports (12) |
+| Registrar staff | Queue counters (07), Registrar workspace (08), documents (10), release (11), supplier list (16), reports (12) |
 | Cashier staff | Cashier queue (07), Cashier workspace (09), collection reports (12) |
 | Admin and MIS | Accounts and roles (03), deployment and backups (14) |
 
@@ -71,7 +71,7 @@ flowchart TB
     subgraph M3["M3 Full scope"]
         direction LR
         P10["10 Documents<br/>minimal path in M2"] --> P11["11 Release and tracking<br/>minimal path in M2"] --> P12[12 Reports]
-        P07b[07 Kiosk and display] ~~~ P16[16 Vendor list]
+        P07b[07 Kiosk and display] ~~~ P16[16 Supplier list]
     end
     subgraph M45["M4–M5 Acceptance"]
         direction LR
@@ -116,7 +116,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 13 | [Testing and campus acceptance](13-testing-and-campus-acceptance.md) | Not started for modules | Not started | Not deployed |
 | 14 | [Campus deployment and operations](14-campus-deployment-and-operations.md) | Dev Docker only | Operational checks pending | Not deployed |
 | 15 | [Training, handover and improvements](15-training-handover-and-roadmap.md) | Manuals/training not started | Not started | Not handed over |
-| 16 | [Registrar vendor list and performance points](16-vendor.md) | Not started; scope confirmed (C07), build after M2 | Not started | Not deployed |
+| 16 | [Registrar supplier list and performance points](16-supplier.md) | Not started; scope confirmed (C07), build after M2 | Not started | Not deployed |
 
 ## Supporting references
 
@@ -141,7 +141,7 @@ Part numbers are navigation order; dependencies determine implementation order. 
 | M0 — Development foundation | 00 | Starter app and setup checks | Local checks and GitHub CI passed on 2026-10-16 |
 | M1 — Agreed rules and secure data foundation | 01–05 | Reviewed workflow; roles, verified client linkage/import and catalog implemented/tested | Planned |
 | M2 — First integrated office transaction | 06–09; minimal approved output/release path from 10–11 | Campus portal + assisted intake; free and paid requests traverse both offices without bypasses | Planned |
-| M3 — Complete functional scope | Remaining 07, 10–12; 16 | Kiosk/display, approved template set, tracking/release, notifications, all required reports and the Registrar vendor list validated | Planned |
+| M3 — Complete functional scope | Remaining 07, 10–12; 16 | Kiosk/display, approved template set, tracking/release, notifications, all required reports and the Registrar supplier list validated | Planned |
 | M4 — Campus staging acceptance | 13–14; manuals from 15 | UAT, LAN-only tests, security checks, restore/rollback and office sign-off | Planned |
 | M5 — Campus production and handover | 14–15 | Actual deployment evidence, pilot reconciliation, training and support ownership | Planned |
 

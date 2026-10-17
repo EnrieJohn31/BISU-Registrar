@@ -1,6 +1,6 @@
 # Part 15 — Documentation, training, handover and improvements
 
-[Back to index](index.md) | [Previous](14-campus-deployment-and-operations.md) | [Next](16-vendor.md)
+[Back to index](index.md) | [Previous](14-campus-deployment-and-operations.md) | [Next](16-supplier.md)
 
 | Tracking field | Value |
 |---|---|
@@ -66,8 +66,8 @@ These are suggestions, not approved initial scope:
 | Payment gateway integration | Campus authorizes a separate electronic collection process | Accounting, connectivity, provider and security requirements |
 | Off-campus access | Institution requests it as a later expansion | New hosting/network, identity, exposure and support review |
 | Multi-campus deployment | A formal expansion is approved | Data segregation, office scope and operational ownership |
-| Vendor self-service view | Suppliers need to see their own score/status | Vendor accounts, off-campus access and disclosure rules ([Part 16](16-vendor.md)) |
-| Vendor list for other offices | Another office wants the Part 16 vendor list | Office owner, criteria and permissions for that office |
+| Supplier self-service view | Suppliers need to see their own score/status | Supplier accounts, off-campus access and disclosure rules ([Part 16](16-supplier.md)) |
+| Supplier list for other offices | Another office wants the Part 16 supplier list | Office owner, criteria and permissions for that office |
 | External document verification | Employers or agencies need to check a certification's control number or QR code | Off-campus access, disclosure rules and DPO review; conflicts with LAN-only (C04) |
 | Online appointment scheduling | Queue data shows long waits at peak periods | D06 policy and campus capacity |
 

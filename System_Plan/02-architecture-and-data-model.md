@@ -59,14 +59,14 @@ These are proposed additions, not existing folders or classes. Avoid a separate 
 | `releases` | Claimant, authority evidence where required, release actor, time and released document version |
 | `academic_periods` | Campus-approved semester / academic-year boundaries, independent from report calendar filters |
 | `audit_events`, notification deliveries, export jobs | Accountability and retryable outputs; access-controlled payloads |
-| `vendors`, vendor deliveries/ratings, versioned rating criteria, compliance documents | Registrar supplier list and performance points ([Part 16](16-vendor.md)); office-scoped; rating snapshots keep weights used; no money columns |
+| `suppliers`, supplier deliveries/ratings, versioned rating criteria, compliance documents | Registrar supplier list and performance points ([Part 16](16-supplier.md)); office-scoped; rating snapshots keep weights used; no money columns |
 | `service_calendar_days` | Per-office working days, holidays and suspensions (for example weather-related); drives queue service days and working-day turnaround |
 | `feedback_responses` | Optional post-completion feedback (CSM-aligned if adopted, D19); anonymous or linked per DPO decision |
 | `privacy_notice_versions`, notice acknowledgements | Which privacy notice version a client saw and when (D09); not a substitute for the lawful basis the DPO determines |
 
 ### Core relationships (simplified)
 
-Vendor tables are shown in [Part 16](16-vendor.md). Status-event, hold and attachment tables are omitted for readability.
+Supplier tables are shown in [Part 16](16-supplier.md). Status-event, hold and attachment tables are omitted for readability.
 
 ```mermaid
 erDiagram

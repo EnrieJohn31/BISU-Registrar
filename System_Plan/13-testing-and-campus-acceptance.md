@@ -46,7 +46,7 @@ flowchart TB
 | UAT-14 | LAN/server interruption and restoration | Stale display warning, documented manual fallback, safe retries/reconciliation |
 | UAT-15 | Daily/monthly/semester/academic-year reporting | Approved definitions and totals reconcile with sample transactions |
 | UAT-16 | Backup restored to isolated environment | Database, files and authorized access consistent; issued outputs recoverable |
-| UAT-17–21 | Registrar vendor list and performance points | Scenarios defined in [Part 16](16-vendor.md#acceptance-criteria-and-validation) |
+| UAT-17–21 | Registrar supplier list and performance points | Scenarios defined in [Part 16](16-supplier.md#acceptance-criteria-and-validation) |
 
 ## Development checks
 
@@ -102,7 +102,7 @@ If the IT program requires a software quality evaluation, commonly based on ISO/
 
 ### Defense demo dataset
 
-Maintain a synthetic demo seeder and a scripted walkthrough that resets cleanly: a free request, a paid request, a returned requirement, a release, a report and a vendor rating. Never demo with real records.
+Maintain a synthetic demo seeder and a scripted walkthrough that resets cleanly: a free request, a paid request, a returned requirement, a release, a report and a supplier rating. Never demo with real records.
 
 ## Release exit criteria
 

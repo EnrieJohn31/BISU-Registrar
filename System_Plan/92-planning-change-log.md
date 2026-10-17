@@ -62,13 +62,13 @@ Known issue / next action / optimization suggestion:
 - Remaining starter branding: `AppLogoIcon.vue` (sidebar/header mark) and `public/favicon.svg`/`favicon.ico`/`apple-touch-icon.png` still use the starter logo. Replace them when the official BISU logo/seal is supplied; no official marks were invented.
 - Validation: build, `vp check`, `vue-tsc` and 40 tests / 138 assertions passed locally; headless Edge screenshots (dark mode, desktop) rendered the page correctly. Light mode and real mobile widths were not visually checked.
 
-## 2026-10-16 - Registrar vendor list and performance points (plan only)
+## 2026-10-16 - Registrar supplier list and performance points (plan only)
 
-- Project owner reported that the vendor side was missing from the plan; confirmed it was absent from all parts and from the original concept brief, so it is recorded as an owner addition (C07), not a brief requirement.
+- Project owner reported that the supplier side was missing from the plan; confirmed it was absent from all parts and from the original concept brief, so it is recorded as an owner addition (C07), not a brief requirement.
 - Scoping answers: suppliers to the Registrar's Office; per-delivery weighted performance rating (criteria 1–5 → 0–100); staff-only; staff submit, supervisor confirms; low score flags For review with supervisor decision (no auto-suspension); reference numbers only, no money or Cashier link; compliance document type/expiry without uploads; Registrar-only, office-scoped; build after M2.
-- Added [Part 16](16-vendor.md). Connected updates: index (Part 16 row, M3 scope), Part 02 entity row, Part 03 roles and audit events, Part 12 report line, Part 13 UAT-17–21 pointer, Part 15 navigation and future candidates, decision register (C07, D15–D17), traceability (C07).
+- Added [Part 16](16-supplier.md). Connected updates: index (Part 16 row, M3 scope), Part 02 entity row, Part 03 roles and audit events, Part 12 report line, Part 13 UAT-17–21 pointer, Part 15 navigation and future candidates, decision register (C07, D15–D17), traceability (C07).
 - Validation: Markdown-only; links checked. No application code changed; no tests rerun.
-- Next action: Registrar to decide D15 (criteria, weights, threshold, period), D16 (vendor fields, documents) and D17 (procurement relationship).
+- Next action: Registrar to decide D15 (criteria, weights, threshold, period), D16 (supplier fields, documents) and D17 (procurement relationship).
 
 ## 2026-10-17 - Whole-plan review, gap fixes and diagrams (plan only)
 
@@ -82,6 +82,14 @@ Known issue / next action / optimization suggestion:
 
 ## 2026-10-17 - Publish UI and system-plan updates
 
-- Published the BISU welcome/login branding and shared authentication layout together with the expanded vendor, workflow, readiness, interview, schedule/risk and glossary plans.
+- Published the BISU welcome/login branding and shared authentication layout together with the expanded supplier, workflow, readiness, interview, schedule/risk and glossary plans.
 - Validation: check.ps1 passed (Composer validation, asset/route generation, frontend formatting/lint/types, PHP formatting/static analysis, 40 tests / 138 assertions); 303 relative links across 27 plan files resolve.
 - Used a feature branch and pull request for protected-main review. No campus deployment or business-module implementation is claimed.
+
+## 2026-10-17 - Supplier terminology (C08)
+
+- Team requested Supplier as the module name. Normalized the planning vocabulary, including prior summaries, and recorded the terminology change explicitly in C08.
+- Renamed Part 16 to 16-supplier.md. Updated index/navigation, diagrams, roles/audits, proposed suppliers tables and supplier_* identifiers, permissions, action/page paths, reports, UAT references, decision items, interviews, schedule/risks, glossary and traceability.
+- Scope, rating formula, supervisor controls and planned delivery order remain the same. Composer's technical dependency directory is unaffected.
+- Validation: relative file links checked and stale module terms/links searched. Documentation-only; application tests are not rerun for this rename.
+- Publication: new documentation pull request against protected main, following the already merged UI/plan update.
