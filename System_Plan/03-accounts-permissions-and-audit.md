@@ -443,3 +443,10 @@ Resolve identity proof, staff provisioning, role separation, retention and audit
 ## Completion evidence
 
 Pending permission matrix approval, policy tests, reviewed audit samples and implementation revision.
+
+
+## Slice 1 browser review and follow-up fixes
+
+Developer browser QA completed on 2026-10-17 using isolated headless Edge, desktop/mobile viewports and both themes. Staff creation/edit, assignment/revocation, first password change, TOTP reset, deactivation/reactivation, session invalidation, password reissue, access denial and audit details passed. All 19 recorded workflow/layout checks passed with no uncaught page errors; see the [review record](../docs/PART-03-BROWSER-REVIEW.md) for coverage and limits.
+
+Follow-up changes prevent audit rows immediately closing their sheet on Enter, add Space activation, wrap long mobile expiry/account text and remove starter developer links from the staff sidebar. Dev Docker also enables one-second Vite polling after stale modules were observed on the Windows mount. `check.ps1` passed again with 97 tests / 498 assertions and all required analysis/frontend/build checks. Campus staging/production and office UAT remain pending.

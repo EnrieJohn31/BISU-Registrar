@@ -79,7 +79,7 @@ const isOwnAccount =
 
     <div class="flex max-w-5xl flex-col gap-6 p-4">
         <div class="flex flex-wrap items-start justify-between gap-4">
-            <div class="space-y-2">
+            <div class="min-w-0 space-y-2 break-words">
                 <Heading :title="user.name" :description="user.email" />
                 <div class="-mt-6 flex flex-wrap gap-2">
                     <Badge
@@ -103,7 +103,11 @@ const isOwnAccount =
                     >
                         <ShieldAlert /> Two-factor required, not set up
                     </Badge>
-                    <Badge v-if="user.must_change_password" variant="secondary">
+                    <Badge
+                        v-if="user.must_change_password"
+                        variant="secondary"
+                        class="max-w-full whitespace-normal"
+                    >
                         First sign-in pending · temporary password expires
                         {{ formatDateTime(user.temporary_password_expires_at) }}
                     </Badge>

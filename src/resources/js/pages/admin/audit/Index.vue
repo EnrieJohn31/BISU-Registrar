@@ -194,7 +194,8 @@ const display = (value: unknown): string =>
                         class="cursor-pointer"
                         tabindex="0"
                         @click="selected = event"
-                        @keydown.enter="selected = event"
+                        @keydown.enter.prevent="selected = event"
+                        @keydown.space.prevent="selected = event"
                     >
                         <TableCell class="text-sm text-muted-foreground">
                             {{ formatDateTime(event.occurred_at) }}
@@ -257,7 +258,7 @@ const display = (value: unknown): string =>
                     </SheetDescription>
                 </SheetHeader>
 
-                <dl class="grid gap-4 px-4 pb-6 text-sm">
+                <dl class="grid gap-4 px-4 pb-6 text-sm break-words">
                     <div>
                         <dt class="text-muted-foreground">Actor</dt>
                         <dd>
