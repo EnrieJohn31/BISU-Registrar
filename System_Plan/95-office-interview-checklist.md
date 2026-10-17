@@ -32,7 +32,7 @@ flowchart LR
 | R11 | Where do the academic calendar, holidays and work-suspension notices come from? | D12, D06 |
 | R12 | How is client feedback collected now (paper CSM form)? Who compiles ARTA reports? | D19 |
 | R13 | Which language(s) should clients see: English, Filipino, Cebuano/Boholano? | D01 |
-| R14 | Vendor list: rating criteria and weights, review threshold, scoring period, vendor fields, documents | D15, D16 |
+| R14 | Supplier list: rating criteria and weights, review threshold, scoring period, supplier fields, documents | D15, D16 |
 
 ## Cashier's Office
 
@@ -72,14 +72,14 @@ flowchart LR
 | # | Question | Decision |
 |---|---|---|
 | S1 | Is there an existing supplier evaluation form? Should Registrar ratings be shared with you? | D17 |
-| S2 | Which vendor documents matter (business permit, PhilGEPS registration, others)? | D16 |
+| S2 | Which supplier documents matter (business permit, PhilGEPS registration, others)? | D16 |
 
 ## IT Thesis Coordinator / adviser
 
 | # | Question | Decision |
 |---|---|---|
 | T1 | Defense dates and required deliverables (manuscript chapters, evaluation instrument such as ISO/IEC 25010) | 94 schedule |
-| T2 | Is the added scope (vendor list, review additions) accepted for the thesis? | C07, 93 |
+| T2 | Is the added scope (supplier list, review additions) accepted for the thesis? | C07, 93 |
 | T3 | Who signs UAT and acceptance for each office? | D14 |
 | T4 | Code ownership and licensing expectations for a campus-deployed thesis system | D21 |
 

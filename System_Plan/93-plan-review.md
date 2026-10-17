@@ -72,7 +72,7 @@ flowchart TB
 | [13](13-testing-and-campus-acceptance.md) | Testing path to release |
 | [14](14-campus-deployment-and-operations.md) | Release pipeline; go-live cutover |
 | [15](15-training-handover-and-roadmap.md) | Handover flow |
-| [16](16-vendor.md) | Vendor rating process |
+| [16](16-supplier.md) | Supplier rating process |
 | [90](90-decisions-and-open-questions.md) | How a decision moves through the plan |
 | [94](94-team-schedule-and-risks.md) | Iteration loop; milestone decision gates |
 | [95](95-office-interview-checklist.md) | From interview answer to plan change |

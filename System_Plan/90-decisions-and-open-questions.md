@@ -24,7 +24,8 @@ flowchart LR
 | C04 | Host on BISU's local campus network; “online” means campus LAN browser access | Project owner, 2026-10-15 | Internal campus production, local assets, LAN access checks; no initial public Internet hosting |
 | C05 | Maintain linked part plans and implementation/deployment navigation in `System_Plan/index.md` | Project owner, 2026-10-15 | Living Markdown plan and status tracker |
 | C06 | Use EnrieJohn31/BISU-Registrar for the full application root and prepare repository/development prerequisites before features | Project owner, 2026-10-16 | Source, Docker and plans published together; CI and local verification required |
-| C07 | Add a Registrar supplier (vendor) list with per-delivery weighted performance points: staff-only, supervisor-confirmed, flag-for-review (no auto-suspension), reference numbers only (no money), document type/expiry tracking without uploads, Registrar-only, built after M2 | Project owner, 2026-10-16 | New [Part 16](16-vendor.md); additions to Parts 02, 03, 12, 13 and 15 |
+| C07 | Add a Registrar supplier list with per-delivery weighted performance points: staff-only, supervisor-confirmed, flag-for-review (no auto-suspension), reference numbers only (no money), document type/expiry tracking without uploads, Registrar-only, built after M2 | Project owner, 2026-10-16 | New [Part 16](16-supplier.md); additions to Parts 02, 03, 12, 13 and 15 |
+| C08 | Use Supplier/Suppliers for the Registrar module previously called Vendor/Vendors; rename the plan and proposed identifiers consistently | Project team, relayed by project owner, 2026-10-17 | Part 16 is 16-supplier.md; scope, ratings and office responsibilities are unchanged |
 
 ## Proposed defaults, awaiting process review
 
@@ -59,9 +60,9 @@ flowchart LR
 | D12 | Academic periods, report layouts/metrics, financial date basis and export access | Registrar + Cashier | Part 12 | Open |
 | D13 | Peak users/load, response targets, backup frequency/retention, recovery targets and monitoring ownership | MIS + offices | Parts 13–14 release acceptance | Open; no arbitrary service-level promise |
 | D14 | Named UAT/release approvers, pilot scope, deployment window, training/support/maintenance ownership | Sponsor + MIS + offices | Parts 13–15 | Open |
-| D15 | Vendor rating criteria, weights and anchors, N/A use, review threshold, minimum ratings, scoring period, self-confirmation | Registrar head | Part 16 settings and flag logic | Open; example criteria documented, not adopted |
-| D16 | Vendor fields (minimal contact data, TIN need), compliance document types, expiry warning window, categories | Registrar + privacy/MIS owner | Part 16 vendor form and document tracking | Open |
-| D17 | Whether vendor ratings are internal or shared with BAC/Supply, whether they replace a paper supplier evaluation, report format | Registrar + Supply/BAC | Part 16 reports and any official use | Open |
+| D15 | Supplier rating criteria, weights and anchors, N/A use, review threshold, minimum ratings, scoring period, self-confirmation | Registrar head | Part 16 settings and flag logic | Open; example criteria documented, not adopted |
+| D16 | Supplier fields (minimal contact data, TIN need), compliance document types, expiry warning window, categories | Registrar + privacy/MIS owner | Part 16 supplier form and document tracking | Open |
+| D17 | Whether supplier ratings are internal or shared with BAC/Supply, whether they replace a paper supplier evaluation, report format | Registrar + Supply/BAC | Part 16 reports and any official use | Open |
 | D18 | Reminder and lapse rules for requests stuck in `awaiting_client` / `awaiting_payment`; unclaimed-document period and handling | Registrar (+ Cashier for paid requests) | Parts 01, 08, 11, 12 | Open; proposed: reminders, staff-reviewed closure, never automatic for paid or unclaimed |
 | D19 | Client feedback: adopt the ARTA CSM questions digitally, anonymous or linked, paper alternative, who compiles results | Registrar + Cashier, with the office that submits ARTA reports; DPO for anonymity | Parts 11, 12 | Open |
 | D20 | Supported browser/device baseline for office PCs, kiosks, displays and client phones | MIS | Parts 06, 07, 13, 14; all screens | Open; Tailwind v4 needs Chrome/Edge 111+, Firefox 128+, Safari 16.4+ |

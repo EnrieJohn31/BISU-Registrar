@@ -38,8 +38,8 @@ Updated: 2026-10-17. Terms and abbreviations used across the plan.
 | Snapshot | A copy of service, fee or document inputs saved at a transaction step so later edits don't change history |
 | SPA | Special Power of Attorney, used for representative claims |
 | Staging | A campus test environment that mirrors production but holds no live transactions |
+| Supplier | A business supplying goods or services to the Registrar's Office (Part 16) |
 | TOR | Transcript of Records |
 | UAT | User acceptance testing by the offices |
-| Vendor | A supplier to the Registrar's Office (Part 16) |
 | Wayfinder | Laravel tool that generates typed frontend route helpers |
 | Working day | A service-calendar day the office is open; Citizen's Charter processing times count working days |

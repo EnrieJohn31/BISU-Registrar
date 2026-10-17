@@ -46,7 +46,7 @@ Updated: 2026-10-17. Every row below is **planned, not business-feature complete
 | C02 | Both self-service and on-campus intake in phases | [06](06-portal-and-request-intake.md), [07](07-queues-counters-and-kiosk.md) | Portal, assisted intake and kiosk UAT |
 | C03 | Staff-maintained/imported verified client list initially | [04](04-client-records-and-imports.md) | Authorized import dry-run and conflict handling |
 | C04 | BISU campus-network hosting; online means LAN access | [14](14-campus-deployment-and-operations.md) | Internal HTTPS, intended-device reachability and Internet-disconnected checks |
-| C07 | Registrar supplier list with per-delivery performance points (owner addition, not in the original brief) | [16](16-vendor.md) | UAT-17–21; formula, transition and permission tests |
+| C07 | Registrar supplier list with per-delivery performance points (owner addition, not in the original brief) | [16](16-supplier.md) | UAT-17–21; formula, transition and permission tests |
 
 ## Nonfunctional requirements (added 2026-10-17)
 

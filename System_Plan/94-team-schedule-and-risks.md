@@ -39,7 +39,7 @@ One person may hold several roles. Each part's Owner field should name a team me
 flowchart LR
     I0[I0 Requirements] --> I1["I1 = M1<br/>Secure foundation"]
     I1 --> I2["I2 = M2<br/>First transaction"]
-    I2 --> I3["I3 = M3<br/>Full scope + vendor"]
+    I2 --> I3["I3 = M3<br/>Full scope + supplier"]
     I3 --> I4["I4 = M4<br/>Staging acceptance"]
     I4 --> I5["I5 = M5<br/>Pilot + handover"]
     G1{{"D01 D03 D04 D05 D09 D20"}} -. gate .-> I1
@@ -56,7 +56,7 @@ A gate means the listed decisions must be recorded before that iteration's affec
 | I0 Requirements | Office interviews, collect documents, record gating decisions, device inventory | Decisions in 90; Part 01 workflow reviewed with both offices | _fill_ | _fill_ |
 | I1 Secure foundation (M1) | Roles/audit, client records/import, service catalog, renderer spike with one real template | Tests pass; office demo of import and catalog | _fill_ | _fill_ |
 | I2 First transaction (M2) | Portal and assisted intake, basic queue, Registrar, Cashier, minimal output/release | UAT-01, 02, 03 on synthetic data | _fill_ | _fill_ |
-| I3 Full scope (M3) | Kiosk/display, templates, tracking/notifications, reports, feedback, vendor list | Remaining UAT on staging-like data | _fill_ | _fill_ |
+| I3 Full scope (M3) | Kiosk/display, templates, tracking/notifications, reports, feedback, supplier list | Remaining UAT on staging-like data | _fill_ | _fill_ |
 | I4 Staging acceptance (M4) | Campus staging, UAT, security, devices, restore drill | Part 13 exit criteria | _fill_ | _fill_ |
 | I5 Pilot and handover (M5) | Cutover, pilot, training, repository transfer | Part 14 ledger; Part 15 handover signed | _fill_ | _fill_ |
 
@@ -88,7 +88,7 @@ Likelihood and impact use High / Medium / Low. Review this table at each iterati
 | ID | Risk | Likelihood | Impact | Mitigation | Owner |
 |---|---|---|---|---|---|
 | RK01 | Office decisions arrive late (21 open decisions, owners not named) | High | High | Use the 95 checklist in I0; gate by milestone; keep proposed defaults configurable; escalate through the sponsor | Project lead |
-| RK02 | Scope is larger than the thesis timeline (full brief plus vendor list) | High | High | M2 is the minimum for final defense; vendor after M2; kiosk last | Project lead + adviser |
+| RK02 | Scope is larger than the thesis timeline (full brief plus supplier list) | High | High | M2 is the minimum for final defense; supplier after M2; kiosk last | Project lead + adviser |
 | RK03 | No maintainer after the team graduates | Medium | High | D21 decided early; MIS involved from I1; developer reference kept current | Project lead + MIS |
 | RK04 | Repository sits under a personal GitHub account | Medium | High | Transfer to a BISU/MIS-controlled organization with history (D21) | Project lead |
 | RK05 | Campus PCs or kiosks run browsers too old for Tailwind v4 / Vue 3 | Medium | High | Inventory devices in I0 (D20); test on real devices before M2 | Frontend lead + MIS |
