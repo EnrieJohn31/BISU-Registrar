@@ -102,3 +102,11 @@ Known issue / next action / optimization suggestion:
 - Connected updates: D03 widened (staff account policies), D22 added; Parts 00 and 02 linked to the slice design; index focus and Part 03 row updated.
 - Validation: relative links and anchors checked; new Mermaid diagrams test-rendered with Mermaid 10.9.1 and 11.4.1 in headless Edge. Documentation only; no application code changed.
 - Next action: team answers the slice 1 questions in handoff.md, then slice 1 is coded on a feature branch.
+
+## 2026-10-17 - Part 03 slice 1 implemented (local branch)
+
+- Project owner approved all slice 1 recommendations (C09) and asked for development on a local branch only, with nothing pushed, plus local test accounts in a git-ignored Credentials.md.
+- Implemented on `feat/part-03-accounts-roles-audit`: offices, role assignments with history, audit events (four additive migrations); native enum roles and permission catalogue; account actions with audit; middleware for deactivated accounts, staff idle timeout, forced temporary-password change and required two-factor; admin screens for users, roles, status, credentials and the audit trail; `bisu:create-admin`; `DevelopmentAccountsSeeder`. Self-service account deletion removed; shared `auth` props use an explicit allow-list.
+- Design change: sensitive roles require confirmed TOTP two-factor; a passkey alone does not count (it does not protect password sign-in). Recorded in C09 and Part 03.
+- Validation: `./check.ps1` passed (97 tests / 498 assertions, 57 new; Larastan level 7; lint, formatting, `vue-tsc`, build). Migrations applied, rolled back and re-applied on development MySQL. End-to-end smoke test on the development stack passed. New screens not visually reviewed.
+- Next action: team reviews and visually checks the screens using the test accounts, then merges after the supplier-rename PR; offices confirm the role catalogue and D03 values.

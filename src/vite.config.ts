@@ -67,6 +67,8 @@ export default defineConfig({
         ignorePatterns: [
             '.github/**',
             'composer.json',
+            // Local, git-ignored test account list written by DevelopmentAccountsSeeder.
+            'Credentials.md',
             'resources/js/components/ui/*',
             'resources/views/mail/*',
         ],

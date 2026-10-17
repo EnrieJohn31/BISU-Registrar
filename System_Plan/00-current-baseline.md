@@ -50,8 +50,8 @@ On 2026-10-15 the planning inspection could not contact the Docker Desktop Linux
 - [x] Preserve the current migrations and authentication flows; all 5 existing migrations remain applied and authentication/settings tests pass. Future schema work must remain additive where practical.
 - [x] Establish the application repository root covering `src/`, Docker files and `System_Plan/`. Connect to https://github.com/EnrieJohn31/BISU-Registrar.git; preserve starter Git metadata under ignored `.local-backups/2026-10-16-starter/`. Publication evidence is in the foundation validation report.
 - [x] Configure root ignore rules for local secrets, runtime data, dependencies, exports and starter metadata backups; verify the staged file inventory before publication.
-- [ ] Review starter self-registration and account deletion before introducing retained institutional records; see [Part 03](03-accounts-permissions-and-audit.md). Proposal drafted in Part 03 slice 1 (registration creates role-less accounts; self-deletion replaced by office-handled closure); awaiting team decision.
-- [ ] Introduce route authorization and shared page conventions before new modules. Designed in [Part 03 slice 1](03-accounts-permissions-and-audit.md#how-every-request-is-authorized); not implemented.
+- [x] Review starter self-registration and account deletion before introducing retained institutional records; see [Part 03](03-accounts-permissions-and-audit.md). Done in slice 1 (C09): self-registration creates role-less accounts behind a config flag; self-deletion removed.
+- [x] Introduce route authorization and shared page conventions before new modules. Done in [Part 03 slice 1](03-accounts-permissions-and-audit.md#how-every-request-is-authorized): policies with route `can`, audited admin refusals, allow-listed shared props.
 - [x] Record baseline revision 84db53477d2fb22492b1d6789c072c7e7c87f746 and local/GitHub CI evidence in the index and foundation validation report.
 
 ## Acceptance criteria
