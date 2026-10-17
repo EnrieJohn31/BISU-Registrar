@@ -107,6 +107,8 @@ The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker set
 
 AI author/co-author credits are disabled for this project. Keep actual human authorship. Setup activates the local commit/push guards; existing checkouts can run `./install-git-hooks.ps1` (PowerShell) or `git config --local core.hooksPath .githooks` (Git Bash/Linux/macOS). Existing custom hooks are preserved for manual integration. The required Foundation checks also reject AI attribution, including if local hooks were bypassed or were not installed.
 
+Claude Code automatic commit/PR attribution is disabled for this project in `.claude/settings.json` with empty `attribution.commit` and `attribution.pr` strings. The Git hooks and required CI remain independent backup checks. Start a new Claude Code session in this checkout to ensure the project settings are loaded; other tools remain subject to the same Git/CI policy.
+
 The guard recognizes AI credit trailers and primary authors; ordinary mentions of tools in a commit description and real human co-authors remain allowed. Run `sh .githooks/test-attribution.sh` to verify its behavior. Only repository owners can deliberately override or change these controls; automated work must never do that.
 
 ## Source attribution

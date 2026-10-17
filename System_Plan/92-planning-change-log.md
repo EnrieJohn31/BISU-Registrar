@@ -209,3 +209,10 @@ Known issue / next action / optimization suggestion:
 - PR #10 merged as c331ae3 after required Foundation checks passed (run 39033657347). Merged only prevention/tooling/docs into the local Part 04 branch; preserved its implementation, private validation and all existing change-log entries.
 - Activated commit-msg/pre-push guards in this checkout. Human authors/co-authors are required; recognized AI provider/tool credits are blocked locally and by required CI. Sixteen behavioral cases and eleven integration/configuration checks passed. Main protection remains restored; no additional history rewrite or production deployment.
 - Part 04 code remains unpushed. Existing clones must synchronize cleaned history and activate hooks; GitHub contributor caches can take about 24 hours to refresh.
+
+
+## 2026-10-17 - Disable Claude Code default commit/PR attribution (local configuration)
+
+- Owner asked how to prevent recurrence when using Claude. Verified active commit/push hooks and existing required CI, installed Claude Code 2.1.120, and the official attribution configuration.
+- Added project-scoped .claude/settings.json with empty attribution.commit / attribution.pr strings. Both must be set; omitted fields keep defaults. Avoided attribution:false because the official reference requires v2.1.281+ for that syntax. No global settings or session metadata changed.
+- Updated README, handoff and attribution record. JSON validated and Git whitespace checks passed; application code and guard code unchanged. Local commit only; no push, PR or publication of Part 04 implementation.

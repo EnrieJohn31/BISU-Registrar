@@ -38,6 +38,10 @@ All local branches were aligned atomically to the cleaned ancestry. Current file
 - Required Foundation CI fetches full history, checks primary authors/co-author trailers, and runs 16 behavioral cases. Eleven integration/configuration checks covered actual Git hook invocation, historic-credit reintroduction, AI primary authors, custom-hook preservation and YAML/setup syntax.
 - Repository owners can deliberately alter or bypass controls; automated work must never do so. Existing clones must install the hooks and synchronize the rewritten history. We do not claim an external clone's settings changed automatically.
 
+## Claude Code default attribution
+
+Installed Claude Code is 2.1.120. The [official settings reference](https://code.claude.com/docs/en/settings-reference#attribution) confirms it adds commit/PR attribution by default and accepts empty `attribution.commit` and `attribution.pr` strings to suppress both. Added those project-scoped values in `.claude/settings.json`, validated the JSON, and kept the independent Git/CI guards active. No global configuration, historical disclosure records or session metadata was changed. A fresh Claude Code session in this project ensures it reads the configuration. This follow-up remains local until the owner asks to publish.
+
 ## Verification / recovery
 
 - Original and rewritten commit trees compared equal; no reachable Claude trailers remained across aligned local refs.

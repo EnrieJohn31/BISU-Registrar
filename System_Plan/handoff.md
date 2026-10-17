@@ -17,6 +17,12 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 - **Human authors only:** the owner explicitly requires actual people as authors/co-authors. AGENTS.md records that rule; tested commit/push guards and required-CI attribution checks are delivered through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10). Activate hooks in existing clones with `./install-git-hooks.ps1`; new setup runs it automatically. PR #10 merged as `c331ae3` after all required checks passed. Local commit/push hooks are active via the installer; setup installs them in new checkouts.
 - Verified 24 GitHub commits: zero Claude credits, human account author names only; clean-main CI passed. GitHub contributor caches may take about 24 hours to refresh. See the [cleanup/guard record](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md) for mappings, validation and recovery. Owners must not deliberately bypass the guards; other clones need to resynchronize before pushing.
 
+### Claude Code automatic attribution disabled - 2026-10-17
+
+- Confirmed the installed Claude Code version is 2.1.120 and checked the official settings reference. Added project-scoped `.claude/settings.json` with empty `attribution.commit` and `attribution.pr` strings. This suppresses Claude Code's default commit co-author and PR attribution text; existing commit/push hooks and required CI remain the backup checks. Human author/co-author policy is unchanged.
+- Uses the compatible string settings, not the newer Boolean `attribution: false`, which requires v2.1.281+. No global settings or session records were changed. A new Claude Code session in this project ensures the settings are read. These configuration/documentation changes are committed locally only; no new GitHub publication or Part 04 feature push.
+- JSON values validated and whitespace checked. No application code changed; existing application/guard checks remain applicable. Reference: [official attribution settings](https://code.claude.com/docs/en/settings-reference#attribution).
+
 ### Just completed: Part 04 slice 1 — client records
 
 The owner approved the design's safe positions as decision [C10](90-decisions-and-open-questions.md). Details, rules and code are in the [implementation record](04-client-records-and-imports.md#slice-1-implementation-record); evidence is in [PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
