@@ -5,11 +5,11 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft; slice 1 recommendations approved (C09) |
-| Implementation | Slice 1 implemented on local branch `feat/part-03-accounts-roles-audit` (2026-10-17); not merged. See [implementation record](#slice-1-implementation-record) |
-| Validation | Slice 1: `check.ps1` passed (97 tests / 498 assertions) and a MySQL smoke test passed, 2026-10-17. No office acceptance yet |
+| Implementation | Slice 1 implemented and merged in [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7), revision `fa2246a` (2026-10-17). See [implementation record](#slice-1-implementation-record) |
+| Validation | Slice 1: `check.ps1` passed (97 tests / 498 assertions) and MySQL smoke/browser checks passed, 2026-10-17; required GitHub CI passed. No office acceptance yet |
 | Deployment | Not deployed |
 | Owner | Backend lead with MIS and authorized office reviewers; names pending |
-| Dependencies | Parts 01–02; slice 1 needs D22 and the team answers listed in [handoff.md](handoff.md) |
+| Dependencies | Parts 01–02; slice 1 defaults approved in C09; office and later identity/privacy gates in [handoff.md](handoff.md) |
 | Updated | 2026-10-17 |
 
 ## Features and screens
@@ -369,7 +369,7 @@ The project owner approved every recommendation below on 2026-10-17 (C09). Offic
 
 ### Slice 1 implementation record
 
-Implemented 2026-10-17 on the local branch `feat/part-03-accounts-roles-audit` (not pushed, not merged, not deployed).
+Implemented 2026-10-17; published with browser fixes in [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7), merge `fa2246a`, after required CI passed. Campus staging/production remain not deployed.
 
 **Migrations (additive):** `2026_10_17_000001_create_offices_table` (seeds REGISTRAR and CASHIER), `…000002_add_account_status_columns_to_users_table`, `…000003_create_user_roles_table`, `…000004_create_audit_events_table`. All four were applied, rolled back and re-applied on the development MySQL database.
 
@@ -399,7 +399,7 @@ Implemented 2026-10-17 on the local branch `feat/part-03-accounts-roles-audit` (
 - the temporary-password redirect, and refused sign-in for deactivated accounts
 - audit rows with microsecond timestamps
 
-The new screens were not reviewed visually in a browser.
+The later [browser review](#slice-1-browser-review-and-follow-up-fixes) completed the visual/keyboard checks and follow-up fixes; this remains developer QA, not office acceptance.
 
 ## Privacy program items (added 2026-10-17; confirm with the BISU Data Protection Officer)
 
@@ -442,4 +442,11 @@ Resolve identity proof, staff provisioning, role separation, retention and audit
 
 ## Completion evidence
 
-Pending permission matrix approval, policy tests, reviewed audit samples and implementation revision.
+Slice 1 code, automated checks, browser/audit samples and publication evidence are recorded above. Office permission/policy approval and whole-part privacy/client-linking acceptance remain pending; later modules must test their own ownership and business audits.
+
+
+## Slice 1 browser review and follow-up fixes
+
+Developer browser QA completed on 2026-10-17 using isolated headless Edge, desktop/mobile viewports and both themes. Staff creation/edit, assignment/revocation, first password change, TOTP reset, deactivation/reactivation, session invalidation, password reissue, access denial and audit details passed. All 19 recorded workflow/layout checks passed with no uncaught page errors; see the [review record](../docs/PART-03-BROWSER-REVIEW.md) for coverage and limits.
+
+Follow-up changes prevent audit rows immediately closing their sheet on Enter, add Space activation, wrap long mobile expiry/account text and remove starter developer links from the staff sidebar. Dev Docker also enables one-second Vite polling after stale modules were observed on the Windows mount. `check.ps1` passed again with 97 tests / 498 assertions and all required analysis/frontend/build checks. Campus staging/production and office UAT remain pending.

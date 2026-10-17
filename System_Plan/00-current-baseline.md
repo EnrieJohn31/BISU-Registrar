@@ -5,12 +5,12 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft, based on inspected files |
-| Implementation | Foundation implemented; business features not started |
-| Validation | Local checks and GitHub clean-checkout CI passed on 2026-10-16: 40 tests / 138 assertions |
+| Implementation | Foundation + Part 03 staff account slice implemented; client/transaction modules not started |
+| Validation | Foundation: 40 tests / 138 assertions (2026-10-16); Part 03: 97 tests / 498 assertions, browser QA and GitHub CI passed (2026-10-17) |
 | Deployment | Local Docker configured; staging and production not recorded |
 | Owner | Project developer / MIS, assignment pending |
 | Dependencies | None |
-| Updated | 2026-10-16 |
+| Updated | 2026-10-17 |
 
 ## Purpose
 
@@ -23,8 +23,8 @@ Establish the starting point so future work extends the existing application and
 | Backend | Laravel 13; setup lockfile resolved framework 13.36.0; PHP 8.4 in Docker |
 | Frontend | Vue 3, Inertia 3, TypeScript, Tailwind CSS 4, shadcn-vue, Vite |
 | Authentication | Starter login, registration, email verification, password recovery, account settings, two-factor/passkey support |
-| Screens | Starter welcome, dashboard placeholders, authentication and settings |
-| Database | MySQL 8.4; users, sessions, cache, jobs, passkeys and two-factor migrations |
+| Screens | BISU-branded welcome/authentication, role-aware dashboard, staff Users/role/credential screens and audit viewer |
+| Database | MySQL 8.4; starter migrations plus offices, account status, role assignments and audit events; 9 migrations applied locally |
 | Docker | app, node/Vite, MySQL and Redis services in `../docker-compose.dev.yml` |
 | URLs | Configured local app: `http://localhost:8085`; Vite: `http://localhost:5178` |
 | Application location | `../src/`; Docker files and setup script live at project root |
@@ -37,7 +37,7 @@ On 2026-10-15 the planning inspection could not contact the Docker Desktop Linux
 ## Features that still need implementation
 
 - Client identity linkage and verified student/alumni records.
-- Office roles, permission enforcement and business audit events.
+- Later modules must enforce their own office/ownership rules and business audits; Part 03 staff roles and audit foundation are implemented.
 - Service catalog, fees, document requests and request histories.
 - Registrar and Cashier workspaces and their coordinated workflow.
 - Office queues, counters, tickets and public display.

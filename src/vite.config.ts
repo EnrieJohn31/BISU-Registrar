@@ -31,6 +31,8 @@ export default defineConfig({
         strictPort: true,
         hmr: { host: 'localhost', port: 5178 },
         watch: {
+            usePolling: process.env.VITE_USE_POLLING === 'true',
+            interval: 1000,
             ignored: [
                 '**/.agents/**',
                 '**/.claude/**',

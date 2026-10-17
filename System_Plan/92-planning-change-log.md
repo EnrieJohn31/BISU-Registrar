@@ -125,3 +125,45 @@ Known issue / next action / optimization suggestion:
 - Change (dev only): `vendor` and `node_modules` named volumes for the app and node services, `PHP_CLI_SERVER_WORKERS=4` for parallel requests, and `check.ps1` now checks dependencies inside the container. CI and `setup.ps1` already install inside the container, so they need no change. Production deployment is unaffected.
 - Result: `/login` 0.21–0.25 s and `/up` 0.11 s from the host; Vite ready in ~1 s; browser load 2–3 s with no errors; `check.ps1` passed in 66 s (97 tests / 498 assertions).
 - Branch `chore/docker-dev-performance`, local only, not pushed.
+
+
+## 2026-10-17 - Supplier rename published
+
+- Merged [PR #5](https://github.com/EnrieJohn31/BISU-Registrar/pull/5), revision `22d284d`, after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38991009396) passed. Supplier terminology and linked plan references are now on main; scope remains C07/C08.
+- Rewrote handoff with the completed publication, ongoing Part 03 browser review and owner-selected Part 04 design preparation (no office documents available yet).
+- Campus staging/production remain not deployed; office policies and acceptance remain pending.
+
+## 2026-10-17 - Part 03 design published
+
+- [PR #6](https://github.com/EnrieJohn31/BISU-Registrar/pull/6) merged as `2cd523e` after [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38999332148) passed. Published the staff account/role/audit design and rolling-handoff convention before its implementation.
+- Rewrote handoff for the completed step; implementation/browser review and Part 04 draft preparation continue. Campus deployment and office acceptance remain pending.
+
+## 2026-10-17 - Part 03 browser review completed
+
+- Completed isolated headless Edge review at desktop/mobile widths and light/dark themes with synthetic accounts. All 19 workflow/layout checks passed, including TOTP reset and temporary-password reissue; disposable accounts deactivated afterward. Redacted local screenshots inspected; [review record](../docs/PART-03-BROWSER-REVIEW.md) documents limits.
+- Fixed audit rows closing immediately on Enter, added Space activation, wrapped mobile expiry/long account text and removed Laravel starter sidebar links. Connections to existing Inertia actions and server authorization preserved.
+- Found stale Vite source across Windows Docker bind mounts; added opt-in one-second polling in dev Compose/Vite. Verified served modules update after host edits. No dependency upgrades or production hosting changes.
+- Full check.ps1 passed again: 97 tests / 498 assertions, Larastan level 7, PHP/frontend formatting, lint, Vue TypeScript and build. Rewrote handoff after completion; office UAT and campus deployment still pending.
+
+## 2026-10-17 - Part 04 detailed design prepared
+
+- Owner selected client/import design because no office documents are available. Expanded Part 04 into profiles, reviewed imports and later account-linking slices, with data constraints, fixed draft CSV contract, Laravel/Inertia boundaries, audit/privacy handling, concurrency/replay/recovery and acceptance cases.
+- Checked current Part 03 role/permission map: Registrar office scope is mandatory even though Cashier supervisors also have clients.import; independent review/commit and any broader duties are proposals awaiting office confirmation. No enum/role changes made.
+- Connected architecture/index and rewrote handoff. D03/D04/D09 approval gates remain open; template/limits/proof are not BISU policy. No Part 04 migrations/routes/features or real-data imports added. Existing application checks remain valid for this documentation-only step; Markdown links checked separately.
+
+## 2026-10-17 - Part 03 accounts and browser fixes published
+
+- Part 03 accounts and browser fixes published: [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7) merged as `fa2246a` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38999900147) passed.
+- Rewrote handoff after the completed publication. Campus staging/production remain not deployed; office policy and acceptance decisions remain open.
+
+
+## 2026-10-17 - Docker development performance published
+
+- Docker development performance published: [PR #8](https://github.com/EnrieJohn31/BISU-Registrar/pull/8) merged as `4d69e06` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/39000107485) passed.
+- Rewrote handoff after the completed publication. Campus staging/production remain not deployed; office policy and acceptance decisions remain open.
+
+## 2026-10-17 - Final status reconciliation and source-watching follow-up
+
+- Reconciled Part 00/02/03/index/README with the merged accounts implementation and completed browser QA; preserved historical foundation results. Handoff rewritten with completed work, publication evidence, explicit next slice and outstanding office gates.
+- Recorded Edge 155.0.4283.45 and successful Enter/Space audit-panel regression. Source polling is the only runtime-code follow-up after the full local checks; all code changes were included in that passed check run.
+- Final follow-up combines the small Docker source-watch fix, review evidence and Part 04 design documentation; protected-main CI/merge evidence is linked from handoff. No client features implemented, no production deployment, no credential or nul artifact staged. Existing Dependabot updates remain outside scope.
