@@ -6,7 +6,11 @@ This file is **rewritten, not appended**, after every completed plan part or imp
 
 ## Current handoff — 2026-10-17
 
-**Stage:** M1 development. **Just finished:** Part 03 slice 1 (staff accounts, roles, audit trail). **Working branch:** `feat/part-03-accounts-roles-audit`, local only, committed, **not pushed**. It sits on top of `docs/part-03-accounts-design-2026-10-17` and the open supplier-rename branch.
+**Stage:** M1 development. **Just finished:** Part 03 slice 1 (staff accounts, roles, audit trail), then a development-speed fix. **Working branches (local only, not pushed):**
+- `feat/part-03-accounts-roles-audit`: the slice
+- `chore/docker-dev-performance`: on top of the slice, the dependency volumes below
+
+Both sit on top of `docs/part-03-accounts-design-2026-10-17` and the open supplier-rename branch.
 
 ### Just completed: Part 03 slice 1
 
@@ -37,6 +41,18 @@ Run the seeder (see README, "Daily commands"). Sign-in details are written to `s
 - two-factor secrets and recovery codes for the sensitive roles
 
 The file explains how to get a current two-factor code.
+
+### Development speed and recovery (2026-10-17)
+
+- **Slow pages and black screens:** caused by PHP and Vite reading their dependencies through the Windows bind mount. `vendor/` and `node_modules/` now live in Docker volumes, so:
+  - pages answer in 0.1–0.3 s instead of 3–7 s
+  - Vite starts in about 1 s instead of up to ~45 s of blank page
+  - `check.ps1` takes about 1 minute instead of about 5
+- **Installing packages:** do it inside the container (`docker compose -f docker-compose.dev.yml exec app composer require ...` or `... exec app npm install ...`), or rerun `./setup.ps1`. Anyone pulling this change must run `./setup.ps1` once to fill the new volumes.
+- **If the frontend shows a black page:** the Vite container is probably stopped or still starting (`check.ps1` stops it while building and restarts it at the end). From the project root, run:
+
+    docker compose -f docker-compose.dev.yml up -d node
+    docker compose -f docker-compose.dev.yml logs --tail 30 node
 
 ### Decisions needed
 

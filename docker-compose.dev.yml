@@ -6,8 +6,15 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "127.0.0.1:8085:8000"
+    environment:
+      # Let the development server answer parallel requests instead of queueing them.
+      PHP_CLI_SERVER_WORKERS: "4"
     volumes:
       - ./src:/var/www/html
+      # Dependencies live on Docker-native volumes. Read through the Windows bind
+      # mount, they made every request take seconds (OPcache re-checks each file).
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
     depends_on:
       db:
         condition: service_healthy
@@ -22,6 +29,8 @@ services:
       - "127.0.0.1:5178:5178"
     volumes:
       - ./src:/var/www/html
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
     depends_on:
       - app
   db:
@@ -47,3 +56,5 @@ services:
       retries: 10
 volumes:
   mysql-data:
+  vendor:
+  node_modules:
