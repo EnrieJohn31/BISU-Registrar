@@ -103,7 +103,7 @@ Proposed first-release transaction unit: one service type per request with quant
 
 ## Work items
 
-- [ ] Produce field-level schema and ER diagram for the first development slice. Drafted for slice 1 (accounts, roles, audit) in [Part 03](03-accounts-permissions-and-audit.md#slice-1-data-model-additive-migrations); awaiting team review.
+- [x] Produce field-level schema and ER diagram for the first development slice. Done for slice 1 (accounts, roles, audit) in [Part 03](03-accounts-permissions-and-audit.md#slice-1-data-model-additive-migrations) and implemented.
 - [ ] Review indexes for client ID lookup, office/state/date worklists, request references and reporting.
 - [ ] Define response shapes and shared TypeScript types for each screen.
 - [ ] Define database constraints and transaction boundaries before controllers.

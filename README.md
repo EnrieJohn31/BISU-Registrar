@@ -63,6 +63,15 @@ docker compose -f docker-compose.dev.yml down
 
 Stopping containers preserves the database volume. Never use down -v for routine shutdown because it deletes the database volume. When dependencies change, rerun setup rather than installing host-platform packages into Docker's node_modules.
 
+Local test accounts (one per role, plus client, first-sign-in and deactivated examples). The seeder refuses to run in production and writes the sign-in details, including two-factor secrets, to `src/Credentials.md`, which git ignores:
+
+```powershell
+docker compose -f docker-compose.dev.yml exec app php artisan migrate
+docker compose -f docker-compose.dev.yml exec app php artisan db:seed --class=DevelopmentAccountsSeeder
+```
+
+On a campus server, MIS creates the first administrator with `php artisan bisu:create-admin` instead.
+
 To add a component after a feature is scoped:
 
 ```powershell

@@ -4,9 +4,9 @@
 
 | Tracking field | Value |
 |---|---|
-| Plan status | Draft; [slice 1 design](#slice-1-design-staff-accounts-roles-and-audit) ready for team review (2026-10-17) |
-| Implementation | Not started beyond starter authentication |
-| Validation | Not started for business permissions |
+| Plan status | Draft; slice 1 recommendations approved (C09) |
+| Implementation | Slice 1 implemented on local branch `feat/part-03-accounts-roles-audit` (2026-10-17); not merged. See [implementation record](#slice-1-implementation-record) |
+| Validation | Slice 1: `check.ps1` passed (97 tests / 498 assertions) and a MySQL smoke test passed, 2026-10-17. No office acceptance yet |
 | Deployment | Not deployed |
 | Owner | Backend lead with MIS and authorized office reviewers; names pending |
 | Dependencies | Parts 01–02; slice 1 needs D22 and the team answers listed in [handoff.md](handoff.md) |
@@ -54,7 +54,7 @@ flowchart LR
 
 ### Staff session security (proposed)
 
-- Require two-factor authentication (already available through Fortify) for Cashier, approver, release, supervisor and administrator roles.
+- Require confirmed two-factor authentication (already available through Fortify) for Cashier, approver, release, supervisor, report exporter, supplier supervisor and administrator roles. A passkey alone does not count: it does not protect password sign-in.
 - Idle session timeout on staff accounts, shorter on shared office PCs; signing out clears the session completely.
 - Keep Fortify login throttling. Add rate limits on Student/Alumni ID lookup, account linking and kiosk actions ([Part 04](04-client-records-and-imports.md)).
 - Deactivate staff accounts promptly when people change roles or leave; review active roles each semester.
@@ -115,7 +115,7 @@ Recommendation: native. The matrix must be approved by the offices, and changes 
 
 Clients are not a role. A person acts as a client only through a verified account link (Part 04). Staff roles are assigned explicitly, and each assignment is scoped to an office.
 
-| Role code | Office scope | Requires 2FA or passkey |
+| Role code | Office scope | Requires two-factor (TOTP) |
 |---|---|---|
 | `system_admin` | Campus-wide | Yes |
 | `intake_staff` | Registrar | No |
@@ -340,24 +340,24 @@ These states are derived from `must_change_password`, `temporary_password_expire
 
 ### Slice 1 tests
 
-- [ ] Each role holds exactly the approved permissions (a matrix test the offices' approval is checked against).
-- [ ] `system_admin` cannot perform any business action; there is no "super admin" bypass.
-- [ ] Non-admins get 403 on every admin route by direct URL; denials are audited.
-- [ ] Role assign/revoke requires a reason, writes an audit event and keeps history; a duplicate active assignment is rejected by the database.
-- [ ] Nobody can assign roles to themselves; the last active administrator cannot be removed or deactivated.
-- [ ] A deactivated user cannot sign in by password, two-factor or passkey; an open session ends on its next request; remember-me no longer works.
-- [ ] A temporary password forces a change, expires, and stops working after the change.
-- [ ] Sensitive roles without two-factor or a passkey are sent to enroll before anything else.
-- [ ] A revoked role stops working on the next request.
-- [ ] Audit rows cannot be updated or deleted through the model; secrets never appear in `changes`.
-- [ ] Events from one request share a correlation id.
-- [ ] Self-registered accounts have no roles; self-deletion is gone.
-- [ ] Staff idle timeout ends staff sessions; client sessions are unaffected.
-- [ ] The TypeScript permission list matches the PHP enum.
+- [x] Each role holds exactly the approved permissions (a matrix test the offices' approval is checked against).
+- [x] `system_admin` cannot perform any business action; there is no "super admin" bypass.
+- [x] Non-admins get 403 on every admin route by direct URL; denials are audited.
+- [x] Role assign/revoke requires a reason, writes an audit event and keeps history; a duplicate active assignment is rejected by the database.
+- [x] Nobody can assign roles to themselves; the last active administrator cannot be removed or deactivated.
+- [x] A deactivated user cannot sign in by password, two-factor or passkey; an open session ends on its next request; remember-me no longer works.
+- [x] A temporary password forces a change, expires, and stops working after the change.
+- [x] Sensitive roles without two-factor or a passkey are sent to enroll before anything else.
+- [x] A revoked role stops working on the next request.
+- [x] Audit rows cannot be updated or deleted through the model; secrets never appear in `changes`.
+- [x] Events from one request share a correlation id.
+- [x] Self-registered accounts have no roles; self-deletion is gone.
+- [x] Staff idle timeout ends staff sessions; client sessions are unaffected.
+- [x] The TypeScript permission list matches the PHP enum.
 
-### Questions to settle before coding
+### Questions settled before coding (C09, 2026-10-17)
 
-These are also listed in [handoff.md](handoff.md).
+The project owner approved every recommendation below on 2026-10-17 (C09). Office and MIS confirmation of the timeout, two-factor roles and expiry is still pending under D03.
 
 1. **D22:** native enum-based roles (recommended) or spatie/laravel-permission?
 2. Remove self-service account deletion now (recommended), with clients asking the office to close their account?
@@ -366,6 +366,40 @@ These are also listed in [handoff.md](handoff.md).
 5. Temporary password expiry: 72 hours? Or a printed one-time activation code instead?
 6. Who will be the first system administrator (an MIS person is recommended)?
 7. Take the role and permission catalogue to the Registrar and Cashier meeting for approval of names and holders (D03, D07, D08).
+
+### Slice 1 implementation record
+
+Implemented 2026-10-17 on the local branch `feat/part-03-accounts-roles-audit` (not pushed, not merged, not deployed).
+
+**Migrations (additive):** `2026_10_17_000001_create_offices_table` (seeds REGISTRAR and CASHIER), `…000002_add_account_status_columns_to_users_table`, `…000003_create_user_roles_table`, `…000004_create_audit_events_table`. All four were applied, rolled back and re-applied on the development MySQL database.
+
+**Main code:**
+- `app/Enums/{Role,Permission,OfficeCode,AuditAction,AuditOutcome}.php`
+- `app/Models/{Office,UserRole,AuditEvent}.php`; `User` gained role and permission methods
+- `app/Actions/Accounts/*` (provision, assign/revoke role, deactivate/reactivate, temporary password, reset two-factor, update details, complete password change)
+- `app/Support/Audit/{AuditRecorder,CorrelationId}.php`; `app/Support/Accounts/{AdministratorGuard,TemporaryPassword,UserSessions}.php`
+- Middleware: AssignCorrelationId, EnsureAccountActive, StaffIdleTimeout, EnsurePasswordChanged, RequireTwoFactorForSensitiveRoles, AuditDeniedAccess
+- `routes/admin.php`, admin and password-change controllers, policies, form requests
+- `bisu:create-admin` command; `DevelopmentAccountsSeeder` (local only, writes the git-ignored `src/Credentials.md`)
+- Pages: `admin/users/{Index,Create,Show,TemporaryPassword}`, `admin/audit/Index`, `auth/ChangePassword`, new Dashboard; sidebar Administration group
+
+**Changes from the design, with reasons:**
+
+| Design said | Implemented | Why |
+|---|---|---|
+| Sensitive roles need "two-factor or a passkey" | Confirmed two-factor (TOTP) only | A passkey does not protect password sign-in: a passkey holder can still sign in with just the password |
+| Offices seeded by a seeder | Inserted by the offices migration | Fixed reference data must exist in every environment, including tests |
+| Temporary password shown once | Rendered directly in the response, with `Cache-Control: no-store` | Never stored in the session, so it is not left in the sessions table |
+| Denied attempts audited for admin routes | `AuditDeniedAccess` middleware on the admin route group | Records real refusals only, not UI permission checks |
+| Deactivation blocks passkey sign-in | Passkey sign-in refused up front (`Passkeys::authorizeLoginUsing`), plus the next-request check | Blocks every sign-in path immediately |
+
+**Validation (2026-10-17):** `./check.ps1` passed: Composer validation, build, formatting, lint, `vue-tsc`, Pint, Larastan level 7, and 97 tests / 498 assertions (57 new). An end-to-end smoke test against the development stack (MySQL, database sessions) confirmed:
+- password sign-in, and the two-factor challenge with a generated code
+- admin pages load for administrators and return 403 for other staff
+- the temporary-password redirect, and refused sign-in for deactivated accounts
+- audit rows with microsecond timestamps
+
+The new screens were not reviewed visually in a browser.
 
 ## Privacy program items (added 2026-10-17; confirm with the BISU Data Protection Officer)
 
@@ -394,12 +428,12 @@ Account activation/deactivation; role changes; client linkage/verification; impo
 
 - [ ] Direct URLs and modified HTTP requests cannot bypass role or ownership rules.
 - [ ] Client A cannot access Client B's requests, files, notifications or exports.
-- [ ] Disabled users lose access, and role changes invalidate stale permission state.
+- [x] Disabled users lose access, and role changes invalidate stale permission state. (Slice 1)
 - [ ] Public queue responses and logs contain no student IDs or full client details.
 - [ ] Every business-changing action writes its audit event atomically.
 - [ ] Staff provisioning and recovery have an accountable operator and documented process.
 - [ ] Tests cover role escalation, unauthorized downloads and account deletion with retained records.
-- [ ] Two-factor is enforced for the roles listed above; idle sessions expire on shared office PCs.
+- [x] Two-factor is enforced for the roles listed above; idle sessions expire on shared office PCs. (Slice 1)
 - [ ] The privacy notice version shown to each client is recorded; the PIA is completed before real data.
 
 ## Dependencies / open decisions

@@ -39,3 +39,6 @@
 Thumbs.db
 **/.idea/
 **/.vscode/
+
+# Local test account credentials written by DevelopmentAccountsSeeder.
+Credentials.md
