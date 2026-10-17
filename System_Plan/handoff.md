@@ -12,10 +12,10 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 ### Commit attribution cleanup - 2026-10-17
 
-- Removed Claude co-author trailers from the two unpublished commits; human authors/commit times and every application file remain unchanged. Local commit replacements: `878964d` -> `8402d30`, `cca3936` -> `d577d76`. Added the no-AI-credit instruction to AGENTS.md for future work.
-- Backed up all Git refs in an ignored `.local-backups/contributor-cleanup-*` bundle. Prepared an isolated published-history rewrite: three published trailers removed, 20 commit objects rewritten with identical file trees. It covers five existing published branch tips, including main; Part 04 implementation remains private/local.
-- **Not published:** main protection currently enforces administrator checks, requires PR/CI and blocks force-pushes. Removing the GitHub credit needs explicit approval for a temporary protection adjustment and a guarded history replacement. Four old GitHub signatures cannot remain valid on rewritten commits; existing clones will need to resynchronize. Prepared map and recovery bundle remain local. Full review: [attribution cleanup](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md).
-- Slice 1 code, developer QA, owner-testing checklist and the local-commits-only policy below still apply. No application checks were rerun because only commit metadata/instructions/documentation changed.
+- **Completed with owner approval:** three published Claude trailers removed by an atomic exact-lease history rewrite; clean main `2e83568`. Every application tree and human identity/time preserved. All original main protection settings restored and verified. Four old signatures were removed from changed commit objects, as approved; recovery bundles/maps remain local.
+- Cleaned the two unpublished credits and aligned local ancestry: policy `878964d` -> `8402d30` -> `069e6cb`; Part 04 implementation `cca3936` -> `d577d76` -> `0ae71f6`. Current client code and local test data are unchanged; Part 04 stays unpushed.
+- **Human authors only:** the owner explicitly requires actual people as authors/co-authors. AGENTS.md records that rule; tested commit/push guards and required-CI attribution checks are delivered through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10). Activate hooks in existing clones with `./install-git-hooks.ps1`; new setup runs it automatically. The CI attribution stage passed; full PR CI/merge status is recorded in its timeline.
+- Verified 24 GitHub commits: zero Claude credits, human account author names only; clean-main CI passed. GitHub contributor caches may take about 24 hours to refresh. See the [cleanup/guard record](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md) for mappings, validation and recovery. Owners must not deliberately bypass the guards; other clones need to resynchronize before pushing.
 
 ### Just completed: Part 04 slice 1 — client records
 

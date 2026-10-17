@@ -1,47 +1,48 @@
-# Contributor attribution cleanup - 2026-10-17
+# Contributor attribution cleanup — 2026-10-17
 
 [Current handoff](../System_Plan/handoff.md)
 
-## Finding
+## Result
 
-Five commit messages carried `Co-Authored-By: Claude ... <noreply@anthropic.com>` trailers. Human author/committer fields already belong to the project owner. The trailers grant co-author credit; they do not grant repository access. GitHub's contributors API currently returns only the owner's account, while the published commit messages still contain three Claude credits.
+The project owner approved the GitHub history rewrite and temporary main-protection adjustment, then clarified that all project authors/co-authors must be actual people, never AI providers/tools/models. Claude credits were removed from two local commits and three published commits. Application file trees, human author identities and timestamps were preserved.
 
-## Local work completed
+An atomic push with exact expected-tip leases replaced five existing public branch tips. Every original main protection setting was restored and verified immediately afterward: administrator enforcement, required PR/CI, strict checks, conversation resolution, no force pushes/deletion and the original other flags. Four old signatures were removed because changing commit objects invalidates them. No signature was forged.
 
-| Original local commit | Replacement | Files |
+## Published history replacements
+
+| Branch | Before cleanup | Cleaned tip |
 |---|---|---|
-| `878964d` (local-only policy) | `8402d30` | Identical tree |
-| `cca3936` (Part 04 slice 1) | `d577d76` | Identical tree |
-
-Both local branch pointers were updated atomically after a full Git bundle backup. Author, committer and timestamps were preserved. Application/index content and the unrelated `src/nul` were untouched. AGENTS.md now records the owner's preference against AI co-author/generated-by credits; this is an instruction, not a global tool-configuration change.
-
-## Published cleanup prepared, not applied
-
-Original published trailers are in `be55386`, `52b58fa` and `4e897df`. Removing them changes descendant commit IDs. An isolated bare mirror has been prepared and checked: 20 rewritten commit objects, three removed trailers, every old/new file tree identical, no Claude trailers in its reachable commit messages, and Git fsck passed. Four inherited signatures were removed because modifying signed commit objects invalidates them; no signature was forged.
-
-### Proposed published branch replacements
-
-| Branch | Current tip | Prepared tip |
-|---|---|---|
+| `main` | `ce9cc61` | `2e83568` |
 | `chore/docker-dev-performance` | `6cbaf74` | `7ea31e4` |
 | `docs/part-03-accounts-design-2026-10-17` | `9f11525` | `1b6bbf2` |
 | `docs/part-04-client-import-design` | `c095ee0` | `09a56c9` |
 | `feat/part-03-accounts-roles-audit` | `4abd011` | `7d6b0cb` |
-| `main` | `ce9cc61` | `2e83568` |
 
-Main would retain exactly its current application/documentation tree. Only its commit metadata/ancestry changes. The local Part 04 implementation and these new cleanup notes must remain local under the owner's Git policy. Old PR/commit links can retain the original objects; this is not a server-side purge of historical PR references.
+The rewrite changed 20 commit objects with identical old/new file trees. Original trailers were in `be55386`, `52b58fa` and `4e897df`. The cleanup did not publish the Part 04 client-record feature. Later prevention tooling is delivered separately through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10); its timeline records final CI/merge status.
 
-## Approval boundary / execution plan
+## Local branch alignment
 
-1. Owner reviews this metadata-only replacement and approves temporarily adjusting main protection to allow the repository administrator's guarded rewrite. Current main: PR required, Foundation checks required, administrators enforced, force-pushes blocked.
-2. Re-read remote refs and protection; stop if branch tips changed. Keep a recovery bundle and the original protection settings. Update only the five listed existing remote branches with explicit expected-tip leases, atomically where supported. Never mirror-push all local branches or publish Part 04 implementation.
-3. Restore and verify every protection setting immediately, including if the rewrite fails. Update local branches by the reviewed mapping without changing their file trees or discarding untracked work. Verify the public tips and run/check CI on the replacement main revision.
-4. Recheck GitHub contributor displays after its cache refresh. Existing collaborators need to rebase/resynchronize their clones; old SHA links/signature displays change. GitHub says statistics can take about 24 hours to refresh; contact GitHub Support if still stale afterward.
+| Local work | Original | First local cleanup | After cleaned-base alignment |
+|---|---|---|---|
+| Local-only policy | `878964d` | `8402d30` | `069e6cb` |
+| Part 04 slice 1 | `cca3936` | `d577d76` | `0ae71f6` |
+| Attribution cleanup record | `614eb42` | — | `c9315d7` |
 
-## Recovery / validation
+All local branches were aligned atomically to the cleaned ancestry. Current file/index content and the unrelated untracked `src/nul` were preserved. Part 04 implementation stays on `feat/part-04-client-records`, unpushed; its existing tests/browser validation still apply because the implementation did not change.
 
-Bundle, local/published commit maps and isolated mirror are under ignored `.local-backups/contributor-cleanup-2026-10-17T12-30-04-860Z`. The mirror's default push URL is deliberately disabled. No remote changes or branch-protection updates have been made.
+## Recurrence prevention
 
-Validation performed: each rewritten commit tree compared to the original; current index/working-tree content unchanged after the local rewrite; no matching trailers in prepared reachable history; Git object/ref integrity checked. Application tests are not needed for a metadata/documentation-only operation; the existing Part 04 implementation validation remains applicable.
+- AGENTS.md explicitly requires human authors/co-authors and prohibits AI provider/model/tool credits and generated-by signatures.
+- Shared `commit-msg` and `pre-push` hooks reject recognized AI attribution, including Claude/Anthropic, OpenAI/Codex/ChatGPT and other supported tool/provider labels. Ordinary mentions in descriptions and actual human co-authors remain allowed.
+- `install-git-hooks.ps1` activates guards for this checkout; setup runs the installer for new checkouts. Existing custom hook paths are preserved for manual integration. Hooks are local to each clone; required CI provides a second check.
+- Required Foundation CI fetches full history, checks primary authors/co-author trailers, and runs 16 behavioral cases. Eleven integration/configuration checks covered actual Git hook invocation, historic-credit reintroduction, AI primary authors, custom-hook preservation and YAML/setup syntax.
+- Repository owners can deliberately alter or bypass controls; automated work must never do so. Existing clones must install the hooks and synchronize the rewritten history. We do not claim an external clone's settings changed automatically.
 
-Sources: [GitHub commit-message rewriting](https://docs.github.com/en/pull-requests/how-tos/commit-changes/changing-a-commit-message), [protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches), [contributor refresh behavior](https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/viewing-a-projects-contributors).
+## Verification / recovery
+
+- Original and rewritten commit trees compared equal; no reachable Claude trailers remained across aligned local refs.
+- GitHub API verified 24 published commits, zero Claude trailers and only `Enrie John Edem` / `EnrieJohn31` author names. [Clean-main Foundation CI passed](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/39033220866).
+- All-ref recovery bundles, original/restored protection JSON, commit maps and publication/alignment reports are retained under ignored `.local-backups/contributor-cleanup-2026-10-17T12-30-04-860Z/`. The preparation mirror's default push URL remains disabled.
+- GitHub contributor displays may take about 24 hours to refresh. Old PR/commit links can retain original objects; this operation did not request a server-side purge. Re-clone/rebase existing collaborators' work onto cleaned history before publishing, so old credits cannot be reintroduced.
+
+Sources: [GitHub history rewriting](https://docs.github.com/en/pull-requests/how-tos/commit-changes/changing-a-commit-message), [protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches), [contributor display refresh](https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/viewing-a-projects-contributors).
