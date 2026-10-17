@@ -47,7 +47,7 @@ These are proposed additions, not existing folders or classes. Avoid a separate 
 
 | Entity / table group | Purpose and important rules |
 |---|---|
-| Existing `users`; roles/permissions and assignments | Accounts separated from client records; server controls privileges |
+| Existing `users`; `offices`, `user_roles`, `audit_events` | Accounts separated from client records; server controls privileges; field-level design in [Part 03 slice 1](03-accounts-permissions-and-audit.md#slice-1-data-model-additive-migrations) |
 | `client_profiles`, `client_identifiers`, account links | One person may have student and alumni identifiers; identifiers unique by type; verified links only |
 | `client_imports`, staged import rows | Source, dry-run results, authorization, errors and batch provenance |
 | `services`, service versions/requirements/fee versions | Effective dates; deactivate instead of removing referenced definitions |
@@ -103,7 +103,7 @@ Proposed first-release transaction unit: one service type per request with quant
 
 ## Work items
 
-- [ ] Produce field-level schema and ER diagram for the first development slice.
+- [ ] Produce field-level schema and ER diagram for the first development slice. Drafted for slice 1 (accounts, roles, audit) in [Part 03](03-accounts-permissions-and-audit.md#slice-1-data-model-additive-migrations); awaiting team review.
 - [ ] Review indexes for client ID lookup, office/state/date worklists, request references and reporting.
 - [ ] Define response shapes and shared TypeScript types for each screen.
 - [ ] Define database constraints and transaction boundaries before controllers.

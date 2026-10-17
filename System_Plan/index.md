@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-17 · **Current stage:** Planning / requirements review · **Current focus:** Part 01 and the [office interview checklist](95-office-interview-checklist.md) · **Next development slice:** Parts 02–05 after their affected decisions are resolved.
+**Last updated:** 2026-10-17 · **Current stage:** Planning / requirements review · **Current focus:** team review of the [Part 03 slice 1 design](03-accounts-permissions-and-audit.md#slice-1-design-staff-accounts-roles-and-audit) and the office interviews · **Next development slice:** Part 03 slice 1 (staff accounts, roles, audit) · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -103,7 +103,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 00 | [Current application baseline](00-current-baseline.md) | Foundation and repository tooling implemented/published | Local checks and GitHub CI passed: 40 tests / 138 assertions | Local verified only |
 | 01 | [Requirements and shared workflow](01-requirements-and-workflow.md) | Not started; plan draft | Office review pending | Not deployed |
 | 02 | [Architecture and data model](02-architecture-and-data-model.md) | Not started | Not started | Not deployed |
-| 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Not started beyond auth starter | Not started | Not deployed |
+| 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Not started beyond auth starter; slice 1 design ready for team review | Not started | Not deployed |
 | 04 | [Verified client records and imports](04-client-records-and-imports.md) | Not started | Not started | Not deployed |
 | 05 | [Services, requirements and fees](05-services-requirements-and-fees.md) | Not started | Not started | Not deployed |
 | 06 | [Campus portal and assisted intake](06-portal-and-request-intake.md) | Not started | Not started | Not deployed |
@@ -120,6 +120,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 
 ## Supporting references
 
+- [Handoff](handoff.md) — the current state, next steps, blockers and open questions; rewritten after every completed part.
 - [Repository foundation validation](../docs/FOUNDATION-VALIDATION.md) - repository, local checks and CI evidence.
 
 - [Original project concept brief](project-concept-brief.md) — preserved source, followed by confirmed scope clarification.
@@ -169,12 +170,7 @@ For governance/manual work, use Reviewed/Accepted rather than inventing a code d
 
 ## Immediate next actions
 
-- Team: check off the [plan review](93-plan-review.md), assign roles and dates in [94](94-team-schedule-and-risks.md), and name owners for every open decision.
-- Take the [office interview checklist](95-office-interview-checklist.md) to the Registrar, Cashier, MIS, DPO and Supply/BAC.
-- Review the office decisions in [Part 01](01-requirements-and-workflow.md) and the [decision register](90-decisions-and-open-questions.md).
-- Confirm identity proof and initial import columns, first services/fee schedule, queue policy and payment/receipt procedures.
-- Have MIS select the campus host, internal hostname and permitted LAN/Wi-Fi access.
-- Repository foundation is verified and published. Implement the first secure client/catalog slice after affected workflow decisions are recorded.
+What to do next, what is blocked, and which questions are open are kept in one place: [handoff.md](handoff.md). It is rewritten after every completed part, and the dated history is in the [change log](92-planning-change-log.md).
 
 The original planning delivery changed documentation only. Repository preparation on 2026-10-16 adds development tooling, CI and LAN-safe font handling; business feature implementation remains a separate scoped task.
 
