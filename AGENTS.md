@@ -9,6 +9,8 @@ You are a senior developer helping another senior developer. Keep code usable an
 - Run checks appropriate to the change. Use ./check.ps1 for a complete foundation check; builds must precede tests that render Vite assets.
 - Update affected plans and report what changed, why, validation results, remaining issues and useful optimization suggestions.
 - After completing a plan part or implementation slice, rewrite System_Plan/handoff.md (current state, decisions needed, next steps, blockers) and add the dated entry to the change log.
+- Git: commit on a local branch only. Do not push, open pull requests or merge on GitHub unless the project owner explicitly asks.
+- Commit authors and co-authors must be actual people. Do not credit AI providers, tools or models as authors/co-authors or add generated-by signatures to commits or pull requests. Preserve the real human author identities.
 - Keep secrets, real student/alumni records, payments, private documents, runtime data and local backups out of Git.
 - The deployment target is the BISU campus LAN. Development Docker configuration is not campus production deployment.
 - Business features require a separate scoped task; repository preparation alone does not authorize changing office policies.

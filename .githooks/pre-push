@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+hook_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+zero=0000000000000000000000000000000000000000
+while read -r local_ref local_sha remote_ref remote_sha; do
+    [ "$local_sha" = "$zero" ] && continue
+    range=$local_sha
+    if [ "$remote_sha" != "$zero" ] && git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+        range="$remote_sha..$local_sha"
+    fi
+    messages=$(git log --format='Co-authored-by: %an <%ae>%n%B' "$range")
+    printf '%s\n' "$messages" | sh "$hook_dir/check-attribution.sh"
+done

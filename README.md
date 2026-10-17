@@ -95,6 +95,12 @@ Staff provisioning, office-scoped roles, session controls and an append-only aud
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).
 
+## Commit attribution
+
+AI author/co-author credits are disabled for this project. Keep actual human authorship. Setup activates the local commit/push guards; existing checkouts can run `./install-git-hooks.ps1` (PowerShell) or `git config --local core.hooksPath .githooks` (Git Bash/Linux/macOS). Existing custom hooks are preserved for manual integration. The required Foundation checks also reject AI attribution, including if local hooks were bypassed or were not installed.
+
+The guard recognizes AI credit trailers and primary authors; ordinary mentions of tools in a commit description and real human co-authors remain allowed. Run `sh .githooks/test-attribution.sh` to verify its behavior. Only repository owners can deliberately override or change these controls; automated work must never do that.
+
 ## Source attribution
 
 Created from the MIT-licensed [official Laravel Vue starter kit](https://github.com/laravel/vue-starter-kit). Original foundation setup evidence remains in [SETUP-VALIDATION.md](SETUP-VALIDATION.md).
