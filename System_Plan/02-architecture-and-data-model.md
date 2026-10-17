@@ -48,8 +48,8 @@ These are proposed additions, not existing folders or classes. Avoid a separate 
 | Entity / table group | Purpose and important rules |
 |---|---|
 | Existing `users`; `offices`, `user_roles`, `audit_events` | Accounts separated from client records; server controls privileges; field-level design in [Part 03 slice 1](03-accounts-permissions-and-audit.md#slice-1-data-model-additive-migrations) |
-| `client_profiles`, `client_identifiers`, account links | One person may have student and alumni identifiers; identifiers unique by type; verified links only |
-| `client_imports`, staged import rows | Source, dry-run results, authorization, errors and batch provenance |
+| `client_profiles`, `client_identifiers`, profile revisions; later current account links + link events | Stable person ID, identifier history and reviewed one-to-one verified links; [Part 04 field/constraint design](04-client-records-and-imports.md#proposed-records-and-constraints) |
+| `client_imports`, `client_import_rows` | Private staging, immutable reviewed manifest, create-only commits, durable per-row outcomes/retries and source provenance; [Part 04 lifecycle](04-client-records-and-imports.md#import-lifecycle-consistency-and-recovery) |
 | `services`, service versions/requirements/fee versions | Effective dates; deactivate instead of removing referenced definitions |
 | `document_requests`, `request_items` | Client, source channel, reference, workflow state, optimistic version and submitted snapshots |
 | `request_status_events`, comments, attachments, holds | Ordered history; internal notes separated from client-visible updates |

@@ -6,9 +6,11 @@ Rewrite this file after each completed step; keep dated history in the change lo
 
 ## Current handoff — 2026-10-17
 
-**Stage:** M1 development; campus staging and production are not deployed. **Working branch:** `fix/part-03-browser-review`, based on the local accounts and Docker performance branches.
+**Stage:** M1 development; campus staging and production are not deployed. **Working branch:** `docs/part-04-client-import-design`, based on the local accounts and Docker performance branches.
 
 ### Just completed
+
+- Prepared the [Part 04 detailed design](04-client-records-and-imports.md): proposed data constraints, existing permissions, three delivery slices, reviewed imports/retries, later identity linking, acceptance cases and explicit office gates. No Part 04 application code added; no institutional policy inferred.
 
 - Part 03 design published: PR #6 merged after required Foundation checks passed; merge `2cd523e`. Accounts implementation publication follows the final browser review.
 
@@ -26,7 +28,7 @@ Rewrite this file after each completed step; keep dated history in the change lo
 
 1. Publish the reviewed accounts branch, then Docker performance and browser/runtime fixes; require passing protected-main CI for each PR.
 2. Publish the Part 03 design, accounts implementation and Docker performance branches in dependency order; require passing CI and normal protected-main PR merges. The project owner authorized proceeding in this session.
-3. Prepare **Part 04 client/import design**: the owner reports no office documents yet. Document proposed fields, permissions, import/review/retry rules and phased acceptance checks; do not treat drafts as office policy or implement live client linking.
+3. Review the Part 04 draft with the team and records custodian; scope slice 1 (synthetic client records) before implementation. Imports and client linking remain separately gated by D03/D04/D09. No office documents have been supplied.
 4. Bring the catalogue and [office checklist](95-office-interview-checklist.md) to Registrar/Cashier/MIS. Record named approval and evidence before real-data rollout.
 
 ### Waiting for office decisions
