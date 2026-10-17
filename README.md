@@ -63,6 +63,8 @@ docker compose -f docker-compose.dev.yml down
 
 Stopping containers preserves the database volume. Never use down -v for routine shutdown because it deletes the database volume. When dependencies change, rerun setup rather than installing host-platform packages into Docker's node_modules.
 
+PHP (`vendor/`) and frontend (`node_modules/`) dependencies live in Docker volumes, not in `src/`. Reading them through the Windows bind mount made every page take several seconds; from the volumes a page takes well under a second, and edits to your own code still apply immediately. Install or update packages inside the container, for example `docker compose -f docker-compose.dev.yml exec app composer require vendor/package` or `... exec app npm install package`; `./setup.ps1` reinstalls both. Any `src/vendor` or `src/node_modules` folder left on Windows is no longer used by the app (editors may still read it for autocompletion).
+
 Local test accounts (one per role, plus client, first-sign-in and deactivated examples). The seeder refuses to run in production and writes the sign-in details, including two-factor secrets, to `src/Credentials.md`, which git ignores:
 
 ```powershell

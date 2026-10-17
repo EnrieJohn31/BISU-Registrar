@@ -110,3 +110,18 @@ Known issue / next action / optimization suggestion:
 - Design change: sensitive roles require confirmed TOTP two-factor; a passkey alone does not count (it does not protect password sign-in). Recorded in C09 and Part 03.
 - Validation: `./check.ps1` passed (97 tests / 498 assertions, 57 new; Larastan level 7; lint, formatting, `vue-tsc`, build). Migrations applied, rolled back and re-applied on development MySQL. End-to-end smoke test on the development stack passed. New screens not visually reviewed.
 - Next action: team reviews and visually checks the screens using the test accounts, then merges after the supplier-rename PR; offices confirm the role catalogue and D03 values.
+
+## 2026-10-17 - Restore stopped Node/Vite service
+
+- Diagnosed bisu-registrar-node-1 as stopped with exit code 1 and npm SIGTERM; Docker reported OOMKilled=false and no startup error. The exact caller of the stop is not identifiable from the available events/logs.
+- Restarted the existing service with docker compose -f docker-compose.dev.yml up -d node.
+- Verified HTTP 200 from localhost:5178/@vite/client, localhost:5178/resources/js/app.ts and localhost:8085/login; Docker reports Node running.
+- No application or container-configuration changes required. Updated the current handoff with recovery commands; no tests rerun for the runtime/documentation-only fix, and nothing committed or pushed.
+
+## 2026-10-17 - Development environment performance
+
+- Project owner reported slow pages and black screens. Measured on the Windows host: 3–7 s per request even for `/up`, and up to ~45 s of blank page after a Vite restart.
+- Cause: PHP and Vite read their dependencies through the Windows bind mount. A page loads ~850 PHP files, 96% of them from `vendor/`, and OPcache re-checks each file's timestamp. A test server with OPcache timestamp checks off answered in 0.12 s; one with only `vendor/` on native storage answered `/login` in 0.23 s instead of 4.8 s.
+- Change (dev only): `vendor` and `node_modules` named volumes for the app and node services, `PHP_CLI_SERVER_WORKERS=4` for parallel requests, and `check.ps1` now checks dependencies inside the container. CI and `setup.ps1` already install inside the container, so they need no change. Production deployment is unaffected.
+- Result: `/login` 0.21–0.25 s and `/up` 0.11 s from the host; Vite ready in ~1 s; browser load 2–3 s with no errors; `check.ps1` passed in 66 s (97 tests / 498 assertions).
+- Branch `chore/docker-dev-performance`, local only, not pushed.
