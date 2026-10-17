@@ -173,3 +173,12 @@ Known issue / next action / optimization suggestion:
 - Recorded in `AGENTS.md` and at the top of the current handoff. Checked state: `main` equals `origin/main`, every local branch's commits are already in `main`, nothing is waiting to be published. The earlier publication table in the handoff is history from before this rule.
 - Handoff next steps clarified: the first step is owner approval of Part 04 slice 1 (synthetic data only), recorded as a decision, then local implementation.
 - Documentation only; no application code or tests changed.
+
+## 2026-10-17 - Part 04 slice 1 implemented (client records, local branch)
+
+- Project owner approved Part 04 slice 1 and asked for it to be built and testable on their side, local commits only. Recorded as decision C10 with the implementation details added beyond the written design.
+- Implemented on `feat/part-04-client-records` (not pushed): additive migrations for client profiles, identifiers and revisions; models, actions, policy, requests and controllers; Registrar "Client records" screens (list/search, create, detail with correction, verify, flag, add/retire ID and history); sidebar group and dashboard card; `DevelopmentClientsSeeder` with 20 clearly fake demo clients. Existing permissions only; no Part 03 role change.
+- Rules enforced on the server: IDs as exact text with a database unique key that includes retired IDs; optimistic version on every change; verification as a controlled action; correction of a verified profile returns it to needs-review; last current ID protected; audit holds no names or full IDs.
+- Validation: `./check.ps1` passed (161 tests / 844 assertions; 64 new). Full suite also passed on a disposable MySQL database, which exposed a too-long index name (fixed) and four tests that assumed JSON key order (fixed, two were Part 03 tests). Parallel race probes on MySQL showed one winner each for same-ID creation, stale saves, cross-profile ID adds and concurrent retirement, with no duplicates or version drift. A 34-check Edge walkthrough passed. Evidence: [docs/PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
+- Not covered: office or custodian acceptance, real data, official ID format (D04), retention/privacy review (D09), other browsers and kiosks (D20). Imports and account linking remain design only behind D03/D04/D09.
+- Next action: owner tests the screens with the demo accounts; Part 05 or Part 04 slice 2 follows when office inputs arrive.

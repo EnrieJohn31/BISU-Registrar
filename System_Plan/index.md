@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-17 · **Current stage:** M1 development (accounts slice merged; Part 04 design draft ready) · **Current focus:** review Part 04 design and gather office decisions · **Next development slice:** Part 04 slice 1 (client records), after design review; imports/linking have separate office gates · **Where to pick up:** [handoff.md](handoff.md)
+**Last updated:** 2026-10-17 · **Current stage:** M1 development (accounts slice merged; Part 04 slice 1 built on a local branch) · **Current focus:** test Part 04 slice 1 and gather office decisions · **Next development slice:** Part 05 (services and fees) once the Citizen's Charter is available, or Part 04 slice 2 (imports) once D04 is answered; imports and linking have separate office gates · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -90,7 +90,8 @@ Part 16 technically needs only Parts 02–03, but is scheduled after M2 by decis
 | Latest foundation validation | 40 tests / 138 assertions, frontend/PHP checks and clean-checkout GitHub CI passed on 2026-10-16 | [Validation report](../docs/FOUNDATION-VALIDATION.md) |
 | Current local runtime | Verified on 2026-10-17; app/Vite running, MySQL/Redis healthy; staff browser workflows passed | [Foundation validation](../docs/FOUNDATION-VALIDATION.md) |
 | Accounts, roles and audit trail | Part 03 slice 1 + browser fixes merged in [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7), `fa2246a`; office UAT/campus deployment pending | [Part 03 implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record) |
-| Registrar/Cashier business modules | Not started | Part 03 account foundation implemented; client/services/request/payment modules not implemented |
+| Client records | Part 04 slice 1 implemented on local branch `feat/part-04-client-records` (2026-10-17); not pushed, merged or deployed | [Part 04 implementation record](04-client-records-and-imports.md#slice-1-implementation-record), [validation](../docs/PART-04-SLICE-1-VALIDATION.md) |
+| Registrar/Cashier business modules | Not started | Part 03 account foundation and Part 04 client records (slice 1) implemented; services, requests, queues and payments not implemented |
 | Planning documentation | Draft reviewed 2026-10-17; gaps filled and diagrams added; needs team and process-owner review | [Plan review](93-plan-review.md); [change log](92-planning-change-log.md) |
 | Campus staging | Not deployed / no deployment recorded | [Deployment register](14-campus-deployment-and-operations.md) |
 | Campus production | Not deployed / no deployment recorded | No internal production URL, release revision or deployment approval recorded |
@@ -105,7 +106,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 01 | [Requirements and shared workflow](01-requirements-and-workflow.md) | Not started; plan draft | Office review pending | Not deployed |
 | 02 | [Architecture and data model](02-architecture-and-data-model.md) | Not started | Not started | Not deployed |
 | 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Slice 1 implemented and merged (PR #7, `fa2246a`) | Slice 1: 97 tests / 498 assertions, MySQL smoke, browser QA and GitHub CI passed | Not deployed |
-| 04 | [Verified client records and imports](04-client-records-and-imports.md) | Not started; detailed three-slice design draft prepared | Design checked against Part 03; office approval/tests pending | Not deployed |
+| 04 | [Verified client records and imports](04-client-records-and-imports.md) | Slice 1 (client records) implemented on a local branch; slices 2 (imports) and 3 (linking) design only | Slice 1: check.ps1 161 tests / 844 assertions, MySQL suite and race probes, 34-check browser walkthrough; custodian acceptance pending | Not deployed |
 | 05 | [Services, requirements and fees](05-services-requirements-and-fees.md) | Not started | Not started | Not deployed |
 | 06 | [Campus portal and assisted intake](06-portal-and-request-intake.md) | Not started | Not started | Not deployed |
 | 07 | [Queues, counters, display and kiosk](07-queues-counters-and-kiosk.md) | Not started | Not started | Not deployed |
@@ -123,6 +124,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 
 - [Handoff](handoff.md) — the current state, next steps, blockers and open questions; rewritten after every completed part.
 - [Repository foundation validation](../docs/FOUNDATION-VALIDATION.md) - repository, local checks and CI evidence.
+- [Part 04 slice 1 validation](../docs/PART-04-SLICE-1-VALIDATION.md) - automated, MySQL, race and browser evidence for client records.
 
 - [Original project concept brief](project-concept-brief.md) — preserved source, followed by confirmed scope clarification.
 - [Decisions and open questions](90-decisions-and-open-questions.md) — confirmed choices, proposed defaults and office decisions still needed.

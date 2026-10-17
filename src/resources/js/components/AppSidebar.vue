@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, ScrollText, UsersRound } from '@lucide/vue';
+import { IdCard, LayoutGrid, ScrollText, UsersRound } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -18,6 +18,7 @@ import { usePermissions } from '@/composables/usePermissions';
 import { dashboard } from '@/routes';
 import { index as auditIndex } from '@/routes/admin/audit';
 import { index as usersIndex } from '@/routes/admin/users';
+import { index as clientsIndex } from '@/routes/registrar/clients';
 import type { NavItem } from '@/types';
 
 const { can } = usePermissions();
@@ -29,6 +30,12 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
 ];
+
+const registrarNavItems = computed<NavItem[]>(() =>
+    can('clients.view')
+        ? [{ title: 'Client records', href: clientsIndex(), icon: IdCard }]
+        : [],
+);
 
 const adminNavItems = computed<NavItem[]>(() => [
     ...(can('users.view')
@@ -56,6 +63,11 @@ const adminNavItems = computed<NavItem[]>(() => [
 
         <SidebarContent>
             <NavMain :items="mainNavItems" />
+            <NavMain
+                v-if="registrarNavItems.length"
+                :items="registrarNavItems"
+                label="Registrar"
+            />
             <NavMain
                 v-if="adminNavItems.length"
                 :items="adminNavItems"

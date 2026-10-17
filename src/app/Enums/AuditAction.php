@@ -17,6 +17,12 @@ enum AuditAction: string
     case UserPasswordChanged = 'user.password_changed';
     case RoleAssigned = 'role.assigned';
     case RoleRevoked = 'role.revoked';
+    case ClientCreated = 'client.created';
+    case ClientCorrected = 'client.corrected';
+    case ClientVerified = 'client.verified';
+    case ClientFlaggedForReview = 'client.flagged_for_review';
+    case ClientIdentifierAdded = 'client.identifier_added';
+    case ClientIdentifierRetired = 'client.identifier_retired';
     case AuthDenied = 'auth.denied';
 
     public function label(): string
@@ -31,6 +37,12 @@ enum AuditAction: string
             self::UserPasswordChanged => 'Password changed',
             self::RoleAssigned => 'Role assigned',
             self::RoleRevoked => 'Role revoked',
+            self::ClientCreated => 'Client profile created',
+            self::ClientCorrected => 'Client profile corrected',
+            self::ClientVerified => 'Client profile verified',
+            self::ClientFlaggedForReview => 'Client profile flagged for review',
+            self::ClientIdentifierAdded => 'Client ID added',
+            self::ClientIdentifierRetired => 'Client ID retired',
             self::AuthDenied => 'Access denied',
         };
     }

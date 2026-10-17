@@ -4,9 +4,9 @@
 
 | Tracking field | Value |
 |---|---|
-| Plan status | Detailed design draft; owner requested preparation, office approval pending |
-| Implementation | Not started; no Part 04 tables, routes or screens added |
-| Validation | Design checked against Part 03; implementation and records-custodian acceptance pending |
+| Plan status | Slice 1 approved by the project owner (C10); slices 2 and 3 still design only, office approval pending |
+| Implementation | Slice 1 (client records) implemented on local branch `feat/part-04-client-records`, not pushed or merged, 2026-10-17. Imports and account linking not started. See the [implementation record](#slice-1-implementation-record) |
+| Validation | Slice 1: `check.ps1` passed (161 tests / 844 assertions); full suite also passed on MySQL; parallel race probes and a 34-check Edge walkthrough passed ([evidence](../docs/PART-04-SLICE-1-VALIDATION.md)). Records-custodian acceptance pending |
 | Deployment | Not deployed |
 | Owner | Registrar records custodian + developer; named custodian pending |
 | Dependencies | Parts 02–03; D03/D04/D09 gate real identity data and linkage |
@@ -29,6 +29,30 @@ Build profiles and safe imports first. Account linking follows only after Regist
 | 3 — Account linking | Neutral client claim submission, staff proof review, verified link/revocation and recovery | D03 proof/recovery/one-person rules, D09 notice/evidence retention, named office approvers | Impersonation/rate-limit/ownership/race tests and assisted-intake demonstration |
 
 **Suggested first implementation task:** slice 1 only, on a feature branch with synthetic fixtures. Keep import commit and client linking unavailable until their own gates pass. Completing this document does not authorize silently enabling real-data import or linking.
+
+## Slice 1 implementation record
+
+Implemented 2026-10-17 on the local branch `feat/part-04-client-records` (not pushed, not merged, not deployed), after the owner approved the design's proposed safe positions as decision [C10](90-decisions-and-open-questions.md). It uses **synthetic records only**. Evidence: [PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
+
+**What staff can do** (Registrar office only):
+- Search client records by name or the start of an ID (at least 2 characters), filter by category and verification, and page through results. Lists show masked IDs; the detail page shows full IDs.
+- Create a client with a first ID, source and reason; correct the name or category; add an ID to the same person (for example an Alumni ID after a Student ID); retire an ID; verify a profile; flag a profile for manual review.
+- See every profile's full history: version, who, when, why, and the old and new values.
+
+**Rules enforced** (server-side, in a transaction, with a revision and an audit event each):
+- IDs are text, so leading zeroes are kept, and compared in one canonical form. A database unique key on type + canonical value covers retired IDs too, so an ID is never reused or reassigned. The same text may be both a Student ID and an Alumni ID.
+- Two people may share a name; nothing is merged by name.
+- Every change to an existing profile carries the version the staff member saw. A stale screen is rejected and the page refreshes to the latest data.
+- Verification is a separate controlled action that records who and when. Correcting a verified profile returns it to "needs review". A profile cannot be verified without a current ID, and its last current ID cannot be retired.
+- The general audit trail records the action, office, revision number, category and verification changes, and only the last four characters of an ID. It never holds a name or a full ID.
+
+**Access** (existing permission catalogue, always scoped to the Registrar office): view = Intake staff, Registrar processor, Registrar approver, Release officer; change = Registrar processor only. Cashier, Cashier supervisor, Registrar supervisor, report exporter, supplier roles and system administrator are all denied; a test checks every role.
+
+**Code:** migrations `2026_10_17_100001–100003` (client profiles, identifiers, profile revisions; all additive); models `ClientProfile`, `ClientIdentifier`, `ClientProfileRevision`; actions in `app/Actions/Clients/`; `ClientProfileRecorder` (version, revision and audit in step); `IdentifierNormalizer` and `IdentifierMask`; `ClientProfilePolicy`; `routes/registrar.php` and controllers under `Http/Controllers/Registrar/`; pages `registrar/clients/{Index,Create,Show}`; sidebar "Registrar" group and dashboard card; `DevelopmentClientsSeeder` (20 clearly fake demo clients).
+
+**Choices beyond the written design** (each is easy to change, and listed in C10): the demo ID rule is 3 to 32 letters, digits or hyphens, case-insensitive, and is stored with a rule version; correcting a verified profile returns it to needs-review; the last current ID cannot be retired; the audit trail holds no client names; revisions keep the full old and new values and are shown only to staff who may view clients.
+
+**Not in slice 1:** imports, account linking, any real data, retention or erasure rules (D09), and the official ID format (D04). The demo ID rule is a placeholder and must be replaced by the Registrar's approved rule before real use. Viewing a record is not audited yet; whether it should be is part of D09.
 
 ## Proposed records and constraints
 
@@ -164,9 +188,9 @@ Run the existing `check.ps1` (PHP tests, Larastan, formatting, lint, Vue TypeScr
 
 - [x] Prepare field/model/permission/route/import/link design against Part 03.
 - [x] Identify office gates and catalogue mismatch without changing approved roles.
-- [ ] Team review and scope approval for slice 1; record reviewer/date/evidence.
+- [x] Team review and scope approval for slice 1; recorded as decision C10 (project owner, 2026-10-17).
 - [ ] D04/D09-approved source/columns/normalization/correction and retention decisions.
-- [ ] Slice 1 implementation, tests, MySQL checks and browser review.
+- [x] Slice 1 implementation, tests, MySQL checks and browser review (developer QA, synthetic data).
 - [ ] Slice 2 source/reviewer approvals, private import workflow and worker/cleanup operations.
 - [ ] D03/D09-approved identity proof/recovery, then slice 3 implementation/acceptance.
 - [ ] Registrar records-custodian UAT with synthetic demonstration; real-data/campus rollout evidence in Part 14.

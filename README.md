@@ -77,6 +77,14 @@ docker compose -f docker-compose.dev.yml exec app php artisan db:seed --class=De
 
 On a campus server, MIS creates the first administrator with `php artisan bisu:create-admin` instead.
 
+Fake client records for trying the Registrar's **Client records** screens (every name ends in "(Demo)" and every ID starts with "DEMO", so none can be mistaken for a real person). Run it after the accounts seeder; it is safe to run again and refuses to run in production:
+
+```powershell
+docker compose -f docker-compose.dev.yml exec app php artisan db:seed --class=DevelopmentClientsSeeder
+```
+
+Sign in as `processor@bisu.test` (can change records) or `intake@bisu.test` (view only); the password and other accounts are in `src/Credentials.md`. Try searching `DEMO-S-0001`, `reyes`, `zoë`, `00123456` and `villanueva`.
+
 To add a component after a feature is scoped:
 
 ```powershell

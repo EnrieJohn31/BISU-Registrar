@@ -54,8 +54,8 @@ class AuditTrailTest extends TestCase
 
         $stored = AuditEvent::query()->findOrFail($event->id);
 
-        $this->assertSame(['name' => ['old' => 'A', 'new' => 'B']], $stored->changes);
-        $this->assertSame(['nested' => ['kept' => 1]], $stored->context);
+        $this->assertEquals(['name' => ['old' => 'A', 'new' => 'B']], $stored->changes);
+        $this->assertEquals(['nested' => ['kept' => 1]], $stored->context);
     }
 
     public function test_system_actions_have_no_actor(): void

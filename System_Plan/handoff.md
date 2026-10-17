@@ -1,61 +1,88 @@
 # Handoff
 
-[Back to index](index.md) | [Part 03](03-accounts-permissions-and-audit.md) | [Part 04 design](04-client-records-and-imports.md) | [Change log](92-planning-change-log.md)
+[Back to index](index.md) | [Part 04](04-client-records-and-imports.md) | [Change log](92-planning-change-log.md) | [Decision register](90-decisions-and-open-questions.md)
 
 Rewrite this file after each completed slice; dated history belongs in the change log.
 
 ## Current handoff — 2026-10-17
 
-**Git policy (project owner, 2026-10-17): local commits only.** Work on a local branch and commit there. Do **not** push, open pull requests or merge on GitHub unless the owner explicitly asks. The publication table below is history from before this rule. Right now `main` equals `origin/main` and no local commits are waiting to be published.
+**Git policy (project owner, 2026-10-17): local commits only.** Work on a local branch and commit there. Do **not** push, open pull requests or merge on GitHub unless the owner explicitly asks. Earlier work (PRs #5–#9) was published before this rule; nothing from the current branches has been pushed.
 
-**Stage:** M1 development. Part 03 slice 1 is implemented, reviewed and merged. Part 04 is a detailed design draft; no client/import/linking code has been added. **Campus staging and production:** not deployed.
+**Stage:** M1 development. Part 03 slice 1 (staff accounts, roles, audit) is merged. **Part 04 slice 1 (client records) is built and committed on the local branch `feat/part-04-client-records`, ready for you to test.** Imports (slice 2) and account linking (slice 3) are design only. Campus staging and production: not deployed.
 
-### Just completed
+### Just completed: Part 04 slice 1 — client records
 
-- **Staff accounts, office roles and audit:** administrators provision accounts and temporary passwords; first sign-in requires a password change; sensitive roles require confirmed TOTP. Role changes need reasons, preserve history, prohibit self-management and preserve the last active administrator. Deactivation blocks sign-in and ends sessions. Staff idle timeout is 30 minutes; remember-me does not restore staff sessions. Audit data is append-only and office-scoped. Full scope and C09 deviations are in the [implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record).
-- **Browser review and fixes:** 19 synthetic workflow/layout checks passed. Fixed audit details immediately closing on Enter, added Space activation, wrapped long mobile expiry text and removed starter sidebar developer links. TOTP reset and password reissue were exercised. See [coverage/evidence](../docs/PART-03-BROWSER-REVIEW.md); this is developer QA, not office UAT.
-- **Docker development:** dependencies use Docker volumes and PHP uses four development workers. One-second Vite source polling fixes stale modules across Windows bind mounts. Source edits were verified in the served module; dependency/metadata exclusions remain in place.
-- **Part 04 design:** [three delivery slices](04-client-records-and-imports.md#delivery-slices-and-gates): client records first, reviewed create-only imports second, identity linking later. Includes proposed fields/constraints, permissions, routes, private files, immutable review/replay/retry rules, concurrency and acceptance checks. Office rules remain explicitly unapproved; no real records or proof documents were used.
+The owner approved the design's safe positions as decision [C10](90-decisions-and-open-questions.md). Details, rules and code are in the [implementation record](04-client-records-and-imports.md#slice-1-implementation-record); evidence is in [PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
 
-### Publication evidence
+- **Screens:** Registrar → **Client records**: search by name or the start of an ID, filter by category and verification, create a client, and a detail page with correct details, add or retire an ID, verify, flag for review, and a full history.
+- **Rules:** IDs are exact text (leading zeroes kept) and can never be reused, even retired ones; two people may share a name and are never merged; every change needs a reason and rejects a stale screen; correcting a verified profile returns it to "needs review"; the last current ID cannot be retired; the audit trail holds no names or full IDs.
+- **Access:** view = Intake staff, Registrar processor, approver, release officer; change = Registrar processor only. Cashier, both supervisors, report exporter, supplier roles and the system administrator are denied.
+- **Data:** 20 clearly fake demo clients (names end in "(Demo)", IDs start with "DEMO"). Your demo data was reset to this clean set after my testing.
 
-| Work | Protected-main publication |
-|---|---|
-| Supplier terminology (C08) | [PR #5](https://github.com/EnrieJohn31/BISU-Registrar/pull/5), merge `22d284d`; required CI passed |
-| Part 03 design | [PR #6](https://github.com/EnrieJohn31/BISU-Registrar/pull/6), merge `2cd523e`; required CI passed |
-| Part 03 accounts + browser fixes | [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7), merge `fa2246a`; [required CI](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38999900147) passed |
-| Docker dependency volumes/workers | [PR #8](https://github.com/EnrieJohn31/BISU-Registrar/pull/8), merge `4d69e06`; [required CI](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/39000107485) passed |
-| Source polling, review evidence and Part 04 draft | Delivered by [PR #9](https://github.com/EnrieJohn31/BISU-Registrar/pull/9); use its timeline for merge/CI evidence |
+### How to test it (about 10 minutes)
 
-No protected-branch rule was bypassed. The linked PR timeline records the exact final merge/CI status of the documentation containing this handoff.
+Sign in at http://localhost:8085 with `processor@bisu.test` (can change records) and `intake@bisu.test` (view only); passwords are in `src/Credentials.md`. If the demo clients are missing, run the two seeders in the README.
+
+1. **Dashboard / sidebar:** a "Registrar" card and a "Client records" link appear for the processor and intake accounts, but not for the cashier or supervisors.
+2. **Search:** try `DEMO-S-0001`, `DEMO-A`, `reyes` (two people share this name), `zoë`, `00123456` (leading zeroes) and `villanueva` (very long name). IDs are masked in the list.
+3. **Open a record** to see the full ID and the history. Open "Rosa Villanueva (Demo)" (one person with a Student ID and an Alumni ID) and "Retired ID Case (Demo)" (a retired ID kept as history).
+4. **New client:** create one. Then try the same ID again, in lower case; it is refused with a clear message.
+5. **Correct details, Verify, Flag for review.** Correct a verified client's name and watch it return to "Needs review".
+6. **Add ID, then Retire the old one.** Try to retire the only current ID; it is refused.
+7. **Stale edit:** open the same client in two tabs, save in one, then save in the other; the second is refused and refreshes.
+8. **View-only:** sign in as `intake@bisu.test`; no change buttons appear and `/registrar/clients/create` shows 403.
+9. **Audit trail:** as `admin@bisu.test` (password then two-factor; see Credentials.md) open Administration → Audit trail. Client events appear with no names and only the last 4 characters of an ID.
+10. **Phone width:** narrow the browser to about 390 px; the list and detail pages should not scroll sideways.
 
 ### Validation
 
-- `check.ps1` passed after code changes: **97 tests / 498 assertions**, Larastan level 7, PHP/frontend formatting, lint, Vue TypeScript and production asset build. Later edits are documentation only; local Markdown file/heading links were checked separately.
-- Development MySQL migration apply/rollback/reapply and authenticated smoke checks passed; browser QA used Edge 155.0.4283.45, 1440 × 1000 desktop and 390 × 844 mobile viewports, both themes. Enter/Space retain the audit detail sheet; no uncaught page errors in the final workflow run. Physical kiosk/printing and other campus browsers remain untested (D20).
-- Local app/Vite running; MySQL/Redis healthy. Test credentials stay in ignored `src/Credentials.md`. The two disposable browser-QA accounts were deactivated afterward; existing seeder accounts were preserved.
-
-### Next steps, in order
-
-1. **Start here: approve Part 04 slice 1.** The only gate for slice 1 is the team reviewing the design, because it uses synthetic records until D04/D09 are answered. The owner can approve the design's proposed safe positions as-is, as was done for Part 03 (C09), or change them. Record the answer as a decision (a new C-number) in [90](90-decisions-and-open-questions.md). In parallel, take the concrete [decision questions](04-client-records-and-imports.md#decisions-to-bring-to-registrar--mis--dpo) to the Registrar with the [office checklist](95-office-interview-checklist.md).
-2. Once approved, implement slice 1 on a local feature branch: additive client/identifier/revision tables, policies, staff search/detail/create/correction and audit, with **synthetic fixtures**. Test identifier conflicts, stale edits, office permissions, MySQL constraints and browser flows. Update Part 04, this handoff, index and change log after completion, and commit locally only.
-3. Build imports only as slice 2 with approved template/source/reviewer rules, private staging, durable row outcomes and a worker/scheduler. Build account linking only as slice 3 after proof/recovery/notice rules are approved. The current Compose has no dedicated queue worker.
-4. Continue Part 03 office acceptance and gather the Citizen's Charter/service/fee inputs for Part 05. Real-data rollout and campus deployment require separate office/MIS/privacy acceptance and Part 14 evidence.
+- `./check.ps1` passed on the final code: **161 tests / 844 assertions** (64 new), Larastan level 7, formatting, lint, Vue TypeScript and production build.
+- The whole suite also passed on a disposable **MySQL** database. That run exposed a too-long index name and four tests that assumed JSON key order (fixed; two were Part 03 tests). Parallel race probes on MySQL gave exactly one winner each for same-ID creation, stale saves, cross-profile ID adds and concurrent retirement, with no duplicates or version drift.
+- A 34-check Edge walkthrough passed (desktop and phone) with no page errors. See the validation document for coverage and what is not covered.
 
 ### Decisions still needed
 
 | Decision | Owner | Required answer |
 |---|---|---|
-| D03 | Registrar + MIS | Identity proof/recovery, role holders, confirmation of configurable 30-minute idle / 72-hour temporary-password defaults and TOTP roles |
-| D04 | Registrar records custodian | Approved source/sample/columns, ID formats/normalization/reuse, duplicate/correction authority, importer/reviewer duties; no office documents supplied yet |
-| D05 | Registrar + Cashier | Citizen's Charter, services, requirements, fees/waivers; no amounts invented |
-| D09 | DPO + MIS/office owners | Permitted fields/evidence, notice, retention, correction/deletion, audit access and real-data approval |
-| D01, D13, D20 | Sponsor/offices + MIS | Release scope, import workload/worker/recovery targets, supported campus devices/browsers |
+| **After you test:** any change to slice 1 | Project owner | For example: may Registrar supervisors see client records? Should viewing a record be audited (also part of D09)? Should verification need a second person? |
+| D04 | Registrar records custodian | The **official ID formats** (the current rule is a labelled demo placeholder), who maintains and verifies profiles, duplicate and correction authority, and a sample source for imports |
+| D03 / D09 | Registrar + MIS + DPO | Identity proof and recovery (slice 3); which fields may be stored, retention, correction and erasure, access auditing |
+| D05 | Registrar + Cashier | The Citizen's Charter, services, requirements and fees (Part 05) |
+| D01, D13, D20 | Sponsor/offices + MIS | Release scope, import volume and worker resources, supported campus browsers |
+
+### Next steps, in order
+
+1. **You test slice 1** with the checklist above and tell me what to change. I will fix it on the same local branch.
+2. **Take the ID question to the Registrar** (D04, questions R3 and R4 in the [office checklist](95-office-interview-checklist.md)). The demo ID rule (3–32 letters, digits or hyphens, case-insensitive) must be replaced by the approved format before any real record is entered. Changing it needs a versioned rule and a reviewed backfill.
+3. **Next build, whichever input arrives first:**
+   - **Part 05 (services and fees)** needs the Citizen's Charter, services and fees. I can write its design first, as was done for Parts 03 and 04.
+   - **Part 04 slice 2 (imports)** needs the D04 answers, a sample source file, a queue worker and the D09 retention rules.
+4. Publishing: when you want these branches pushed or merged, say so. Merge order: `docs/handoff-local-only-2026-10-17`, then `feat/part-04-client-records`.
+
+### Blocked or waiting
+
+- Imports and account linking wait for D03/D04/D09 and a configured queue worker (the dev Compose has none).
+- Office acceptance of Parts 03 and 04 is still pending; everything so far is developer QA with synthetic data.
 
 ### Watch out
 
-- Current Office supervisor includes `clients.import` for Registrar and Cashier. **Part 04 must require Registrar office scope**; a Cashier-only supervisor must be denied. Registrar supervisors do not currently have general `clients.view/manage`. Independent import approval is a proposed rule, not an approved map change.
-- Keep PHP/TypeScript permission catalogues, matrix tests and Part 03 documentation synchronized. Use `AuditRecorder` within the same transaction as each change, and `AuditDeniedAccess` on new protected route groups.
-- Run `./setup.ps1` once after pulling the dependency-volume change. Install packages inside containers; host `src/vendor`/`src/node_modules` copies are no longer used at runtime. If scripts are blocked, use process-scoped `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./check.ps1`.
-- Rerunning `DevelopmentAccountsSeeder` resets its test passwords/TOTP secrets; never run it on a campus server. Do not commit credentials or real records. Local `http://localhost:8085` is not a campus production URL.
-- Unrelated untracked `src/nul` was preserved and excluded from all commits. Dependabot PRs #1–3 were outside this task and remain untouched.
+- The **demo ID rule is a placeholder**; do not enter real IDs until D04 is answered.
+- `clients.import` is still in the shared Office supervisor role for both offices. Slice 2 must require the Registrar office so a Cashier supervisor is denied; the policy approach used in slice 1 already does this for view and change.
+- MySQL stores JSON objects with their keys re-ordered. Compare audit and revision JSON in tests with `assertEquals`, not `assertSame`.
+- Write every client change through `ClientProfileRecorder` (version, revision and audit together) and keep names and full IDs out of the audit trail.
+- Keep PHP and TypeScript permission lists and the Part 03 catalogue in step. Install packages inside the containers; run `./setup.ps1` once after pulling the dependency-volume change.
+- Do not commit credentials, real records or the walkthrough scripts. The unrelated untracked `src/nul` is left alone and excluded from commits.
+
+## Template for the next handoff
+
+```text
+## Current handoff — YYYY-MM-DD
+
+Stage / milestone / working branch:
+Just completed (with links):
+Validation done:
+Decisions needed (question | recommendation | who decides | answer):
+Next steps, in order:
+Blocked or waiting:
+Watch out:
+```
