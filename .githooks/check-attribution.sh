@@ -1,6 +1,6 @@
 #!/bin/sh
 # Read commit attribution from stdin. Human authors/co-authors remain allowed.
-pattern='^[[:space:]]*Co-authored-by:[[:space:]]*((Claude([[:space:]]+(Code|Sonnet|Opus|Haiku)[^<]*)?|claude\[bot\]|ChatGPT|OpenAI Codex|Codex|GitHub Copilot|Copilot|Gemini|Anthropic)[[:space:]]*<|.*<(noreply@anthropic\.com|noreply@openai\.com)>)'
+pattern='^[[:space:]]*Co-authored-by:[[:space:]]*((Claude([[:space:]]+(Code|Sonnet|Opus|Haiku)[^<]*)?|claude\[bot\]|ChatGPT|OpenAI([[:space:]]+Codex)?|Codex|GitHub Copilot|Copilot|(Google[[:space:]]+)?Gemini|Anthropic|DeepSeek|Cursor)[[:space:]]*<|.*<(noreply@anthropic\.com|noreply@openai\.com)>)'
 LC_ALL=C grep -Eiq "$pattern"
 result=$?
 case "$result" in
