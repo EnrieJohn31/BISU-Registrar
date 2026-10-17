@@ -150,3 +150,8 @@ Known issue / next action / optimization suggestion:
 - Owner selected client/import design because no office documents are available. Expanded Part 04 into profiles, reviewed imports and later account-linking slices, with data constraints, fixed draft CSV contract, Laravel/Inertia boundaries, audit/privacy handling, concurrency/replay/recovery and acceptance cases.
 - Checked current Part 03 role/permission map: Registrar office scope is mandatory even though Cashier supervisors also have clients.import; independent review/commit and any broader duties are proposals awaiting office confirmation. No enum/role changes made.
 - Connected architecture/index and rewrote handoff. D03/D04/D09 approval gates remain open; template/limits/proof are not BISU policy. No Part 04 migrations/routes/features or real-data imports added. Existing application checks remain valid for this documentation-only step; Markdown links checked separately.
+
+## 2026-10-17 - Part 03 accounts and browser fixes published
+
+- Part 03 accounts and browser fixes published: [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7) merged as `fa2246a` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38999900147) passed.
+- Rewrote handoff after the completed publication. Campus staging/production remain not deployed; office policy and acceptance decisions remain open.
