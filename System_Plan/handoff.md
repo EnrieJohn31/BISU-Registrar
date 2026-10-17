@@ -10,6 +10,13 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 **Stage:** M1 development. Part 03 slice 1 (staff accounts, roles, audit) is merged. **Part 04 slice 1 (client records) is built and committed on the local branch `feat/part-04-client-records`, ready for you to test.** Imports (slice 2) and account linking (slice 3) are design only. Campus staging and production: not deployed.
 
+### Commit attribution cleanup - 2026-10-17
+
+- Removed Claude co-author trailers from the two unpublished commits; human authors/commit times and every application file remain unchanged. Local commit replacements: `878964d` -> `8402d30`, `cca3936` -> `d577d76`. Added the no-AI-credit instruction to AGENTS.md for future work.
+- Backed up all Git refs in an ignored `.local-backups/contributor-cleanup-*` bundle. Prepared an isolated published-history rewrite: three published trailers removed, 20 commit objects rewritten with identical file trees. It covers five existing published branch tips, including main; Part 04 implementation remains private/local.
+- **Not published:** main protection currently enforces administrator checks, requires PR/CI and blocks force-pushes. Removing the GitHub credit needs explicit approval for a temporary protection adjustment and a guarded history replacement. Four old GitHub signatures cannot remain valid on rewritten commits; existing clones will need to resynchronize. Prepared map and recovery bundle remain local. Full review: [attribution cleanup](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md).
+- Slice 1 code, developer QA, owner-testing checklist and the local-commits-only policy below still apply. No application checks were rerun because only commit metadata/instructions/documentation changed.
+
 ### Just completed: Part 04 slice 1 — client records
 
 The owner approved the design's safe positions as decision [C10](90-decisions-and-open-questions.md). Details, rules and code are in the [implementation record](04-client-records-and-imports.md#slice-1-implementation-record); evidence is in [PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).

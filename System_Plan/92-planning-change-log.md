@@ -182,3 +182,11 @@ Known issue / next action / optimization suggestion:
 - Validation: `./check.ps1` passed (161 tests / 844 assertions; 64 new). Full suite also passed on a disposable MySQL database, which exposed a too-long index name (fixed) and four tests that assumed JSON key order (fixed, two were Part 03 tests). Parallel race probes on MySQL showed one winner each for same-ID creation, stale saves, cross-profile ID adds and concurrent retirement, with no duplicates or version drift. A 34-check Edge walkthrough passed. Evidence: [docs/PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
 - Not covered: office or custodian acceptance, real data, official ID format (D04), retention/privacy review (D09), other browsers and kiosks (D20). Imports and account linking remain design only behind D03/D04/D09.
 - Next action: owner tests the screens with the demo accounts; Part 05 or Part 04 slice 2 follows when office inputs arrive.
+
+
+## 2026-10-17 - AI co-author attribution cleanup (local / publication pending)
+
+- Owner requested removal of the Claude contributor credit. Found five co-author trailers: two unpublished, three in published history; human author/committer identities were already correct.
+- Backed up all Git refs and cleaned the two local commits atomically, preserving every file tree, author and timestamp: 878964d -> 8402d30; cca3936 -> d577d76. Added the future no-AI-credit instruction to AGENTS.md and rewrote handoff.
+- Prepared and verified an isolated metadata-only rewrite of the three published trailers and descendants (20 commit objects, five existing published branch tips); all trees identical. Four signatures would be lost on changed commit objects. Recorded map/backup and exact publication/recovery plan in docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md.
+- No push, PR or branch-protection change. Main blocks force-pushes and enforces PR/CI for admins; explicit approval is needed for its temporary protection adjustment/history replacement. Part 04 stays local and ready for owner testing. No application code changed; existing test evidence preserved.
