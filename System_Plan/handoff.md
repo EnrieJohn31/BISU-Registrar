@@ -2,96 +2,48 @@
 
 [Back to index](index.md) | [Change log](92-planning-change-log.md) | [Decision register](90-decisions-and-open-questions.md)
 
-This file is **rewritten, not appended**, after every completed plan part or implementation slice. It always describes where the project stands now and what the next person should do. Dated history stays in the [change log](92-planning-change-log.md).
+Rewrite this file after each completed step; keep dated history in the change log.
 
 ## Current handoff — 2026-10-17
 
-**Stage:** M1 development. **Just finished:** Part 03 slice 1 (staff accounts, roles, audit trail), then a development-speed fix. **Working branches (local only, not pushed):**
-- `feat/part-03-accounts-roles-audit`: the slice
-- `chore/docker-dev-performance`: on top of the slice, the dependency volumes below
+**Stage:** M1 development; campus staging and production are not deployed. **Working branch:** `fix/part-03-browser-review`, based on the local accounts and Docker performance branches.
 
-Both sit on top of `docs/part-03-accounts-design-2026-10-17` and the open supplier-rename branch.
+### Just completed
 
-### Just completed: Part 03 slice 1
+- Part 03 design published: PR #6 merged after required Foundation checks passed; merge `2cd523e`. Accounts implementation publication follows the final browser review.
 
-Details, file list and design changes are in the [Part 03 implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record). What now works:
+- Supplier terminology is published: [PR #5](https://github.com/EnrieJohn31/BISU-Registrar/pull/5) merged after required Foundation checks passed; merge `22d284d`. Module scope is unchanged (C08).
+- Part 03 browser workflow checks passed using disposable development data: staff creation/editing, assignment/revocation, first password change, staff 403, deactivation ending a session and reactivation restoring sign-in. Browser review is complete: 19 workflow/layout checks passed, including TOTP reset and password reissue. Audit keyboard activation and mobile expiry wrapping are fixed; starter sidebar developer links removed. See [review evidence](../docs/PART-03-BROWSER-REVIEW.md). This is not office UAT.
 
-- **Staff accounts:** administrators create staff accounts with a temporary password handed over in person. People must set their own password at first sign-in, and set up two-factor if their role needs it.
-- **Roles:** 10 roles, each tied to an office, assigned and revoked with a reason. Full history is kept, nobody can change their own roles, and at least one active administrator always remains.
-- **Deactivation:** refuses password, two-factor and passkey sign-in, ends sessions, and keeps the account's history.
-- **Staff session rules:** staff are signed out after 30 idle minutes and cannot be restored from a remember-me cookie.
-- **Audit trail:** append-only, with no secrets stored, and a viewer scoped by office.
-- **Starter fixes:** self-registered accounts get no roles, self-service deletion is gone, and the data shared with every page is an explicit allow-list.
-- **Bootstrap and test data:** `bisu:create-admin` creates the first administrator on a server; `DevelopmentAccountsSeeder` creates local test accounts.
+### Current implementation and validation
 
-**Design change you should know about:** the approved design said "two-factor or a passkey". The code requires confirmed TOTP two-factor for sensitive roles, because a passkey does not protect password sign-in. Recorded in C09.
-
-### Validation done
-
-- `./check.ps1` passed: 97 tests / 498 assertions (57 new), Larastan level 7, lint, formatting, `vue-tsc`, build.
-- The four migrations were applied, rolled back and re-applied on development MySQL.
-- End-to-end smoke test on the running stack passed: sign-in, two-factor challenge, admin pages, 403 for other staff, temporary-password redirect, deactivated sign-in refused, audit rows written.
-- **Not done:** a visual review of the new screens in a browser.
-
-### Test accounts
-
-Run the seeder (see README, "Daily commands"). Sign-in details are written to `src/Credentials.md`, which is git-ignored:
-- 15 accounts: one per role, a client, a first-sign-in account and a deactivated account
-- password `password`, except the first-sign-in account, which has a temporary password
-- two-factor secrets and recovery codes for the sensitive roles
-
-The file explains how to get a current two-factor code.
-
-### Development speed and recovery (2026-10-17)
-
-- **Slow pages and black screens:** caused by PHP and Vite reading their dependencies through the Windows bind mount. `vendor/` and `node_modules/` now live in Docker volumes, so:
-  - pages answer in 0.1–0.3 s instead of 3–7 s
-  - Vite starts in about 1 s instead of up to ~45 s of blank page
-  - `check.ps1` takes about 1 minute instead of about 5
-- **Installing packages:** do it inside the container (`docker compose -f docker-compose.dev.yml exec app composer require ...` or `... exec app npm install ...`), or rerun `./setup.ps1`. Anyone pulling this change must run `./setup.ps1` once to fill the new volumes.
-- **If the frontend shows a black page:** the Vite container is probably stopped or still starting (`check.ps1` stops it while building and restarts it at the end). From the project root, run:
-
-    docker compose -f docker-compose.dev.yml up -d node
-    docker compose -f docker-compose.dev.yml logs --tail 30 node
-
-### Decisions needed
-
-| # | Question | Recommendation | Who decides | Answer |
-|---|---|---|---|---|
-| 1 | Do the role names and holders match office practice? | Show the Part 03 catalogue at the Registrar and Cashier meetings | Registrar, Cashier (D03, D07, D08) | |
-| 2 | Confirm 30-minute staff idle timeout, 72-hour temporary passwords, two-factor roles | Keep the current values; all three are configurable in `.env` | Offices + MIS (D03) | |
-| 3 | Push and open a PR for review? | Yes, after the visual check, and after merging the supplier-rename PR | Project owner | |
+- [Part 03 slice 1](03-accounts-permissions-and-audit.md#slice-1-implementation-record): local staff accounts, office-scoped roles, TOTP requirements, temporary passwords, deactivation/session rules and append-only audit viewer. Sensitive roles require confirmed TOTP, because a passkey does not secure password sign-in (C09).
+- Full checks passed again after review fixes: 97 tests / 498 assertions, Larastan level 7, PHP/frontend formatting, lint, Vue TypeScript and build. Development MySQL migration apply/rollback/reapply and HTTP smoke checks passed. No application check failures remain.
+- Local dependency volumes and four PHP workers improve development response time; installing dependencies must happen in containers. Run `./setup.ps1` once on pulling the Docker volume change.
+- Test credentials remain only in ignored `src/Credentials.md`; seeding resets these accounts. Browser QA creates synthetic accounts and disables them after use. Never publish credentials or real records.
 
 ### Next steps, in order
 
-1. **Visual check:** sign in with the test accounts and walk through Users, Create staff, user detail (assign/revoke role, deactivate, temporary password, reset two-factor), the audit trail, the first-sign-in password change and the dashboard. Note anything that looks wrong.
-2. **Merge order:** supplier-rename PR, then `docs/part-03-accounts-design-2026-10-17`, then this branch. Push only when the project owner says so.
-3. **Office meetings** ([95](95-office-interview-checklist.md)): bring the role catalogue; continue with R1–R5 for Parts 04–05.
-4. **Next slice:** Part 05 (services and fees) if the Citizen's Charter is in hand, otherwise Part 04 (client records and imports). Write its design first, like Part 03.
+1. Publish the reviewed accounts branch, then Docker performance and browser/runtime fixes; require passing protected-main CI for each PR.
+2. Publish the Part 03 design, accounts implementation and Docker performance branches in dependency order; require passing CI and normal protected-main PR merges. The project owner authorized proceeding in this session.
+3. Prepare **Part 04 client/import design**: the owner reports no office documents yet. Document proposed fields, permissions, import/review/retry rules and phased acceptance checks; do not treat drafts as office policy or implement live client linking.
+4. Bring the catalogue and [office checklist](95-office-interview-checklist.md) to Registrar/Cashier/MIS. Record named approval and evidence before real-data rollout.
 
-### Blocked or waiting
+### Waiting for office decisions
 
-- Still-open M1 office decisions: D01, D04, D05, D09, D20. D03 is partly settled by C09, but its values need office/MIS confirmation.
-- Nothing is pushed: the branches exist only on this computer. Back them up or push them when ready.
+| Decision | Needed from | Current position |
+|---|---|---|
+| D03 | Registrar + MIS | Confirm identity proof, account recovery, role holders, configurable 30-minute idle / 72-hour temporary-password defaults and TOTP roles |
+| D04 | Registrar records custodian | Approved columns/ID rules, source owner, duplicates and correction authority; no source file supplied |
+| D05 | Registrar + Cashier | Citizen's Charter, approved services, fees and waivers; no amounts invented |
+| D09 | DPO + MIS/office owners | Privacy notice, permitted fields, retention, audit access and real-data approval |
+| D01, D20 | Sponsor/offices; MIS | First-release scope and supported device/browser baseline |
 
 ### Watch out
 
-- New permissions go in `app/Enums/Permission.php` **and** `resources/js/types/permissions.ts`; a test fails if they differ. Role changes must update `tests/Unit/RolePermissionMatrixTest.php` and the Part 03 catalogue together.
-- Write every audit event through `AuditRecorder`, inside the same transaction as the change.
-- Admin route groups for later modules (for example financial actions) should also use the `AuditDeniedAccess` middleware.
-- The sidebar still shows the Laravel starter's "Repository" and "Documentation" links; remove or replace them in a UI tidy-up.
-- On Windows, run `powershell -NoProfile -ExecutionPolicy Bypass -File ./check.ps1` if scripts are blocked.
-
-## Template for the next handoff
-
-```text
-## Current handoff — YYYY-MM-DD
-
-Stage / milestone / working branch:
-Just completed (with links):
-Validation done:
-Decisions needed (question | recommendation | who decides | answer):
-Next steps, in order:
-Blocked or waiting:
-Watch out:
-```
+- Add permissions in PHP and TypeScript together; update matrix tests and the Part 03 catalogue when roles change.
+- Use `AuditRecorder` in the same database transaction as each change. Add `AuditDeniedAccess` to future protected route groups.
+- Dev Compose now opts into one-second Vite source polling so Windows bind-mount edits invalidate cached modules. Keep dependencies on Docker volumes and preserve watch exclusions.
+- `src/nul` is an unrelated untracked Windows reserved-name artifact; keep it out of commits.
+- If PowerShell blocks local scripts, use process-scoped `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./check.ps1`.
+- Local `http://localhost:8085` verification is not campus deployment. Infrastructure and office acceptance remain open.
