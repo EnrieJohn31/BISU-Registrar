@@ -80,6 +80,7 @@ Confirm the dates and required deliverables with the IT Thesis Coordinator.
 - [ ] `./check.ps1` passes locally and GitHub CI is green on the PR.
 - [ ] Screens handle loading, empty and error states, keyboard use, mobile width, and light and dark mode.
 - [ ] Index and change log updated. No real records, secrets or private files committed.
+- [ ] [handoff.md](handoff.md) rewritten for the next person: what was done, decisions needed, next steps, blockers.
 
 ## Risk register
 

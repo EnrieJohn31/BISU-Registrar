@@ -26,6 +26,7 @@ flowchart LR
 | C06 | Use EnrieJohn31/BISU-Registrar for the full application root and prepare repository/development prerequisites before features | Project owner, 2026-10-16 | Source, Docker and plans published together; CI and local verification required |
 | C07 | Add a Registrar supplier list with per-delivery weighted performance points: staff-only, supervisor-confirmed, flag-for-review (no auto-suspension), reference numbers only (no money), document type/expiry tracking without uploads, Registrar-only, built after M2 | Project owner, 2026-10-16 | New [Part 16](16-supplier.md); additions to Parts 02, 03, 12, 13 and 15 |
 | C08 | Use Supplier/Suppliers for the Registrar module previously called Vendor/Vendors; rename the plan and proposed identifiers consistently | Project team, relayed by project owner, 2026-10-17 | Part 16 is 16-supplier.md; scope, ratings and office responsibilities are unchanged |
+| C09 | Part 03 slice 1 recommendations approved: native enum-based roles (D22); remove self-service account deletion; one account per person with the rule that staff never act on their own request; staff idle timeout 30 minutes and 2FA/passkey for the roles marked in Part 03; 72-hour temporary passwords; first administrator is an MIS staff member created with `bisu:create-admin`; permission catalogue to be shown to the offices | Project owner, 2026-10-17 | Slice 1 development may proceed with these defaults; timeout, 2FA roles and expiry stay configurable until offices/MIS confirm under D03; catalogue names may change after office review |
 
 ## Proposed defaults, awaiting process review
 
@@ -48,7 +49,7 @@ flowchart LR
 |---|---|---|---|---|
 | D01 | Initial services and first-release scope; confirm phased portal/assisted/kiosk order | Project sponsor + offices | Parts 01, 05–07; release sizing | Open; proposed sequence documented |
 | D02 | Hosting machine/OS, internal hostname, HTTPS trust, VLAN/Wi-Fi access, Internet-independent operation, time sync (NTP), upload malware scanning | MIS | Part 14; campus staging/production | LAN hosting confirmed; infrastructure details open |
-| D03 | Proof for identity linkage, unlinked account access, account recovery and staff provisioning | Registrar + MIS | Parts 03–04, 06; real-client access | Open |
+| D03 | Proof for identity linkage, unlinked account access, account recovery and staff provisioning; staff account policies (temporary password expiry, idle timeout, roles requiring 2FA/passkey, replacement for self-service deletion with D09) | Registrar + MIS | Parts 03–04, 06; real-client access | Open; slice 1 proposals in [Part 03](03-accounts-permissions-and-audit.md#slice-1-design-staff-accounts-roles-and-audit) |
 | D04 | Import format/approved columns, source custodian, ID formats, duplicates and correction authority | Registrar records custodian | Part 04; reliable identity source | Maintained/imported list confirmed; format open |
 | D05 | Approved services/requirements, effective fees, waivers, assessment timing and targets; Citizen's Charter edition used and processing-time classification per service | Registrar + Cashier | Parts 05, 08–09, 12 | Open; no fee amounts invented |
 | D06 | Service hours/day, reserved-ticket validity, check-in, no-show/transfer and printing; legally required priority lanes (seniors, PWDs, others), eligibility checks and lane alternation; suspension-day rollover | Both offices | Parts 06–07 | Open |
@@ -67,6 +68,7 @@ flowchart LR
 | D19 | Client feedback: adopt the ARTA CSM questions digitally, anonymous or linked, paper alternative, who compiles results | Registrar + Cashier, with the office that submits ARTA reports; DPO for anonymity | Parts 11, 12 | Open |
 | D20 | Supported browser/device baseline for office PCs, kiosks, displays and client phones | MIS | Parts 06, 07, 13, 14; all screens | Open; Tailwind v4 needs Chrome/Edge 111+, Firefox 128+, Safari 16.4+ |
 | D21 | Code and repository ownership, licensing/IP, post-thesis maintainer, transfer timing | Sponsor + MIS + IT Thesis Coordinator | Parts 14–15; handover | Open; repository currently under a personal GitHub account |
+| D22 | Role/permission implementation: native enum-based roles with code-defined permission map (recommended) or spatie/laravel-permission | Project team (backend lead) | Part 03 slice 1 and every later permission | Decided: native enum-based (C09) |
 
 ## Decision entry template
 
