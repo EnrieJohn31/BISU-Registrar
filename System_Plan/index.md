@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-17 · **Current stage:** Planning / requirements review · **Current focus:** team review of the [Part 03 slice 1 design](03-accounts-permissions-and-audit.md#slice-1-design-staff-accounts-roles-and-audit) and the office interviews · **Next development slice:** Part 03 slice 1 (staff accounts, roles, audit) · **Where to pick up:** [handoff.md](handoff.md)
+**Last updated:** 2026-10-17 · **Current stage:** M1 development (accounts slice done locally) · **Current focus:** review and merge Part 03 slice 1; office interviews · **Next development slice:** Part 05 (services and fees) or Part 04 (client records), whichever office answers arrive first · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -89,6 +89,7 @@ Part 16 technically needs only Parts 02–03, but is scheduled after M2 by decis
 | Laravel/Vue/Docker foundation | Implemented, repository published and verified for development | [Part 00](00-current-baseline.md), [existing setup report](../SETUP-VALIDATION.md) |
 | Latest foundation validation | 40 tests / 138 assertions, frontend/PHP checks and clean-checkout GitHub CI passed on 2026-10-16 | [Validation report](../docs/FOUNDATION-VALIDATION.md) |
 | Current local runtime | Verified on 2026-10-16; app/auth/Vite HTTP 200, MySQL/Redis healthy | [Foundation validation](../docs/FOUNDATION-VALIDATION.md) |
+| Accounts, roles and audit trail | Part 03 slice 1 implemented on local branch `feat/part-03-accounts-roles-audit` (2026-10-17); not merged or deployed | [Part 03 implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record) |
 | Registrar/Cashier business modules | Not started | Inspected routes/model/migration inventory contains the starter foundation |
 | Planning documentation | Draft reviewed 2026-10-17; gaps filled and diagrams added; needs team and process-owner review | [Plan review](93-plan-review.md); [change log](92-planning-change-log.md) |
 | Campus staging | Not deployed / no deployment recorded | [Deployment register](14-campus-deployment-and-operations.md) |
@@ -103,7 +104,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 00 | [Current application baseline](00-current-baseline.md) | Foundation and repository tooling implemented/published | Local checks and GitHub CI passed: 40 tests / 138 assertions | Local verified only |
 | 01 | [Requirements and shared workflow](01-requirements-and-workflow.md) | Not started; plan draft | Office review pending | Not deployed |
 | 02 | [Architecture and data model](02-architecture-and-data-model.md) | Not started | Not started | Not deployed |
-| 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Not started beyond auth starter; slice 1 design ready for team review | Not started | Not deployed |
+| 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Slice 1 (staff accounts, roles, audit) implemented on local branch; not merged | Slice 1: check.ps1 passed, 97 tests / 498 assertions; MySQL smoke test | Not deployed |
 | 04 | [Verified client records and imports](04-client-records-and-imports.md) | Not started | Not started | Not deployed |
 | 05 | [Services, requirements and fees](05-services-requirements-and-fees.md) | Not started | Not started | Not deployed |
 | 06 | [Campus portal and assisted intake](06-portal-and-request-intake.md) | Not started | Not started | Not deployed |

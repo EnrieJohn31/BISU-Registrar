@@ -6,52 +6,65 @@ This file is **rewritten, not appended**, after every completed plan part or imp
 
 ## Current handoff — 2026-10-17
 
-**Stage:** Planning. **Milestone:** M1 (no business code yet). **Working branch:** `docs/part-03-accounts-design-2026-10-17`, created from the supplier-rename branch; not committed.
+**Stage:** M1 development. **Just finished:** Part 03 slice 1 (staff accounts, roles, audit trail). **Working branch:** `feat/part-03-accounts-roles-audit`, local only, committed, **not pushed**. It sits on top of `docs/part-03-accounts-design-2026-10-17` and the open supplier-rename branch.
 
-### Just completed: Part 03 slice 1 design (staff accounts, roles, audit)
+### Just completed: Part 03 slice 1
 
-Design only, no code. Read [Part 03, slice 1](03-accounts-permissions-and-audit.md#slice-1-design-staff-accounts-roles-and-audit):
+Details, file list and design changes are in the [Part 03 implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record). What now works:
 
-- **RBAC approach:** native, enum-based roles recommended over spatie/laravel-permission (new decision D22), with a comparison table.
-- **Roles and permissions:** 10 staff roles, and a permission catalogue covering every part so the offices review it once. Clients are not a role; they act through a verified ID link (Part 04).
-- **Data model:** field-level design for `offices`, `user_roles`, `audit_events`, and new `users` columns.
-- **Diagrams:** request authorization flow, staff provisioning without email, account lifecycle.
-- **Implementation detail:** audit trail design, proposed changes to the starter app, screens, code layout, and 14 slice tests.
-- **Connected updates:** D22 added and D03 widened in the decision register; Parts 00 and 02 linked to the design; index updated; the Definition of Done in 94 and `AGENTS.md` now require rewriting this file.
+- **Staff accounts:** administrators create staff accounts with a temporary password handed over in person. People must set their own password at first sign-in, and set up two-factor if their role needs it.
+- **Roles:** 10 roles, each tied to an office, assigned and revoked with a reason. Full history is kept, nobody can change their own roles, and at least one active administrator always remains.
+- **Deactivation:** refuses password, two-factor and passkey sign-in, ends sessions, and keeps the account's history.
+- **Staff session rules:** staff are signed out after 30 idle minutes and cannot be restored from a remember-me cookie.
+- **Audit trail:** append-only, with no secrets stored, and a viewer scoped by office.
+- **Starter fixes:** self-registered accounts get no roles, self-service deletion is gone, and the data shared with every page is an explicit allow-list.
+- **Bootstrap and test data:** `bisu:create-admin` creates the first administrator on a server; `DevelopmentAccountsSeeder` creates local test accounts.
 
-### Decisions needed before coding slice 1
+**Design change you should know about:** the approved design said "two-factor or a passkey". The code requires confirmed TOTP two-factor for sensitive roles, because a passkey does not protect password sign-in. Recorded in C09.
+
+### Validation done
+
+- `./check.ps1` passed: 97 tests / 498 assertions (57 new), Larastan level 7, lint, formatting, `vue-tsc`, build.
+- The four migrations were applied, rolled back and re-applied on development MySQL.
+- End-to-end smoke test on the running stack passed: sign-in, two-factor challenge, admin pages, 403 for other staff, temporary-password redirect, deactivated sign-in refused, audit rows written.
+- **Not done:** a visual review of the new screens in a browser.
+
+### Test accounts
+
+Run the seeder (see README, "Daily commands"). Sign-in details are written to `src/Credentials.md`, which is git-ignored:
+- 15 accounts: one per role, a client, a first-sign-in account and a deactivated account
+- password `password`, except the first-sign-in account, which has a temporary password
+- two-factor secrets and recovery codes for the sensitive roles
+
+The file explains how to get a current two-factor code.
+
+### Decisions needed
 
 | # | Question | Recommendation | Who decides | Answer |
 |---|---|---|---|---|
-| 1 | D22: native enum-based roles or spatie/laravel-permission? | Native | Team (backend lead) | |
-| 2 | Remove self-service account deletion now? | Yes; clients ask the office to close an account | Team; DPO later for client erasure (D09) | |
-| 3 | Staff who are also alumni: one account or two? | One account, with "never act on your own request" enforced | Team, then Registrar | |
-| 4 | Staff idle timeout, and which roles need 2FA or a passkey | 30 minutes; roles marked in Part 03's role table | Team proposes, offices and MIS confirm (D03) | |
-| 5 | Temporary password expiry, or a printed activation code? | 72-hour temporary password | Team proposes, MIS confirms (D03) | |
-| 6 | Who is the first system administrator? | An MIS staff member | MIS | |
-| 7 | Do the role names and permission holders match how the offices work? | Show the catalogue at the Registrar and Cashier meetings | Registrar, Cashier (D03, D07, D08) | |
-
-Questions 1–3 and 6 are enough to start coding with the proposed defaults. Questions 4, 5 and 7 can be confirmed while coding, because the values are configurable or kept in one map.
+| 1 | Do the role names and holders match office practice? | Show the Part 03 catalogue at the Registrar and Cashier meetings | Registrar, Cashier (D03, D07, D08) | |
+| 2 | Confirm 30-minute staff idle timeout, 72-hour temporary passwords, two-factor roles | Keep the current values; all three are configurable in `.env` | Offices + MIS (D03) | |
+| 3 | Push and open a PR for review? | Yes, after the visual check, and after merging the supplier-rename PR | Project owner | |
 
 ### Next steps, in order
 
-1. **Team review:** read Part 03 slice 1, answer the table above, and record the answers in [90](90-decisions-and-open-questions.md) and Part 03.
-2. **Kickoff items still open:** assign team roles and dates in [94](94-team-schedule-and-risks.md); work through the check-off list in [93](93-plan-review.md).
-3. **Office meetings** ([95](95-office-interview-checklist.md)): adviser T1–T4; Registrar R1–R5, bringing the permission catalogue; MIS M1 and M3; DPO P1.
-4. **Code slice 1** on a feature branch (suggested `feat/part-03-accounts-roles-audit`), following the design and the Definition of Done in 94. Then rewrite this file.
-5. **After slice 1:** Part 05 (services and fees) if the Citizen's Charter is in hand, then Part 04 (client records and imports).
+1. **Visual check:** sign in with the test accounts and walk through Users, Create staff, user detail (assign/revoke role, deactivate, temporary password, reset two-factor), the audit trail, the first-sign-in password change and the dashboard. Note anything that looks wrong.
+2. **Merge order:** supplier-rename PR, then `docs/part-03-accounts-design-2026-10-17`, then this branch. Push only when the project owner says so.
+3. **Office meetings** ([95](95-office-interview-checklist.md)): bring the role catalogue; continue with R1–R5 for Parts 04–05.
+4. **Next slice:** Part 05 (services and fees) if the Citizen's Charter is in hand, otherwise Part 04 (client records and imports). Write its design first, like Part 03.
 
 ### Blocked or waiting
 
-- Every M1 office decision is still open: D01, D03, D04, D05, D09, D20. Slice 1 needs only D22 and the team answers above; office input refines it but does not block it.
-- The supplier-rename PR (`docs/rename-vendor-to-supplier-2026-10-17`) is not yet merged into `main`. This branch builds on it, so merge that PR first.
+- Still-open M1 office decisions: D01, D04, D05, D09, D20. D03 is partly settled by C09, but its values need office/MIS confirmation.
+- Nothing is pushed: the branches exist only on this computer. Back them up or push them when ready.
 
 ### Watch out
 
-- Replace the shared `auth.user` with an explicit allow-list **before** adding columns to `users`. Otherwise the new columns (deactivation reason and others) are sent to every page.
-- Removing self-deletion changes existing Settings tests and the `DeleteUser.vue` component. Update both in the same PR.
-- Deactivation must block all sign-in paths: password, two-factor challenge, passkey and remember-me. Test each one.
-- On Windows, `./check.ps1` may need `powershell -NoProfile -ExecutionPolicy Bypass -File ./check.ps1`.
+- New permissions go in `app/Enums/Permission.php` **and** `resources/js/types/permissions.ts`; a test fails if they differ. Role changes must update `tests/Unit/RolePermissionMatrixTest.php` and the Part 03 catalogue together.
+- Write every audit event through `AuditRecorder`, inside the same transaction as the change.
+- Admin route groups for later modules (for example financial actions) should also use the `AuditDeniedAccess` middleware.
+- The sidebar still shows the Laravel starter's "Repository" and "Documentation" links; remove or replace them in a UI tidy-up.
+- On Windows, run `powershell -NoProfile -ExecutionPolicy Bypass -File ./check.ps1` if scripts are blocked.
 
 ## Template for the next handoff
 

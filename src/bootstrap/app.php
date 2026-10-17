@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Middleware\AssignCorrelationId;
+use App\Http\Middleware\EnsureAccountActive;
+use App\Http\Middleware\EnsurePasswordChanged;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\RequireTwoFactorForSensitiveRoles;
+use App\Http\Middleware\StaffIdleTimeout;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,10 +22,17 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
-        $middleware->web(append: [
+        $middleware->web(prepend: [
+            AssignCorrelationId::class,
+        ], append: [
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            // Account rules, in order (System_Plan Part 03, slice 1).
+            EnsureAccountActive::class,
+            StaffIdleTimeout::class,
+            EnsurePasswordChanged::class,
+            RequireTwoFactorForSensitiveRoles::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

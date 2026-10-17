@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Office;
+use App\Models\User;
+use App\Models\UserRole;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -32,6 +36,13 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
+
+        // Short, stable names in audit records instead of PHP class names.
+        Relation::morphMap([
+            'user' => User::class,
+            'user_role' => UserRole::class,
+            'office' => Office::class,
+        ]);
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),
