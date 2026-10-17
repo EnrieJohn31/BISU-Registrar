@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from '@lucide/vue';
+import {
+    BookOpen,
+    FolderGit2,
+    LayoutGrid,
+    ScrollText,
+    UsersRound,
+} from '@lucide/vue';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -14,8 +21,13 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { usePermissions } from '@/composables/usePermissions';
 import { dashboard } from '@/routes';
+import { index as auditIndex } from '@/routes/admin/audit';
+import { index as usersIndex } from '@/routes/admin/users';
 import type { NavItem } from '@/types';
+
+const { can } = usePermissions();
 
 const mainNavItems: NavItem[] = [
     {
@@ -24,6 +36,15 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
 ];
+
+const adminNavItems = computed<NavItem[]>(() => [
+    ...(can('users.view')
+        ? [{ title: 'Users', href: usersIndex(), icon: UsersRound }]
+        : []),
+    ...(can('audit.view')
+        ? [{ title: 'Audit trail', href: auditIndex(), icon: ScrollText }]
+        : []),
+]);
 
 const footerNavItems: NavItem[] = [
     {
@@ -55,6 +76,11 @@ const footerNavItems: NavItem[] = [
 
         <SidebarContent>
             <NavMain :items="mainNavItems" />
+            <NavMain
+                v-if="adminNavItems.length"
+                :items="adminNavItems"
+                label="Administration"
+            />
         </SidebarContent>
 
         <SidebarFooter>
