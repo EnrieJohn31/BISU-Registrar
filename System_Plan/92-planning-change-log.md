@@ -167,3 +167,9 @@ Known issue / next action / optimization suggestion:
 - Reconciled Part 00/02/03/index/README with the merged accounts implementation and completed browser QA; preserved historical foundation results. Handoff rewritten with completed work, publication evidence, explicit next slice and outstanding office gates.
 - Recorded Edge 155.0.4283.45 and successful Enter/Space audit-panel regression. Source polling is the only runtime-code follow-up after the full local checks; all code changes were included in that passed check run.
 - Final follow-up combines the small Docker source-watch fix, review evidence and Part 04 design documentation; protected-main CI/merge evidence is linked from handoff. No client features implemented, no production deployment, no credential or nul artifact staged. Existing Dependabot updates remain outside scope.
+## 2026-10-17 - Git policy: local commits only (documentation)
+
+- Project owner instructed that work is committed to local branches only; nothing is pushed, no pull requests are opened and nothing is merged on GitHub unless the owner explicitly asks.
+- Recorded in `AGENTS.md` and at the top of the current handoff. Checked state: `main` equals `origin/main`, every local branch's commits are already in `main`, nothing is waiting to be published. The earlier publication table in the handoff is history from before this rule.
+- Handoff next steps clarified: the first step is owner approval of Part 04 slice 1 (synthetic data only), recorded as a decision, then local implementation.
+- Documentation only; no application code or tests changed.

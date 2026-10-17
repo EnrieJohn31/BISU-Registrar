@@ -6,6 +6,8 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 ## Current handoff — 2026-10-17
 
+**Git policy (project owner, 2026-10-17): local commits only.** Work on a local branch and commit there. Do **not** push, open pull requests or merge on GitHub unless the owner explicitly asks. The publication table below is history from before this rule. Right now `main` equals `origin/main` and no local commits are waiting to be published.
+
 **Stage:** M1 development. Part 03 slice 1 is implemented, reviewed and merged. Part 04 is a detailed design draft; no client/import/linking code has been added. **Campus staging and production:** not deployed.
 
 ### Just completed
@@ -35,8 +37,8 @@ No protected-branch rule was bypassed. The linked PR timeline records the exact 
 
 ### Next steps, in order
 
-1. **Review Part 04 slice 1** with the team/Registrar: agree minimal fields, ID comparison/history rules, custodian/correction authority and who verifies a profile. Use the concrete [decision questions](04-client-records-and-imports.md#decisions-to-bring-to-registrar--mis--dpo) and [office checklist](95-office-interview-checklist.md).
-2. After the scoped slice 1 design is approved, implement additive client/identifier/revision tables, policies, staff search/detail/create/correction and audit using **synthetic fixtures**. Test identifier conflicts, stale edits, office permissions, MySQL constraints and browser flows. Update Part 04, this handoff, index and change log after completion.
+1. **Start here: approve Part 04 slice 1.** The only gate for slice 1 is the team reviewing the design, because it uses synthetic records until D04/D09 are answered. The owner can approve the design's proposed safe positions as-is, as was done for Part 03 (C09), or change them. Record the answer as a decision (a new C-number) in [90](90-decisions-and-open-questions.md). In parallel, take the concrete [decision questions](04-client-records-and-imports.md#decisions-to-bring-to-registrar--mis--dpo) to the Registrar with the [office checklist](95-office-interview-checklist.md).
+2. Once approved, implement slice 1 on a local feature branch: additive client/identifier/revision tables, policies, staff search/detail/create/correction and audit, with **synthetic fixtures**. Test identifier conflicts, stale edits, office permissions, MySQL constraints and browser flows. Update Part 04, this handoff, index and change log after completion, and commit locally only.
 3. Build imports only as slice 2 with approved template/source/reviewer rules, private staging, durable row outcomes and a worker/scheduler. Build account linking only as slice 3 after proof/recovery/notice rules are approved. The current Compose has no dedicated queue worker.
 4. Continue Part 03 office acceptance and gather the Citizen's Charter/service/fee inputs for Part 05. Real-data rollout and campus deployment require separate office/MIS/privacy acceptance and Part 14 evidence.
 
