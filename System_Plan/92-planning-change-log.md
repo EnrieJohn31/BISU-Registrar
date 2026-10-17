@@ -155,3 +155,9 @@ Known issue / next action / optimization suggestion:
 
 - Part 03 accounts and browser fixes published: [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7) merged as `fa2246a` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38999900147) passed.
 - Rewrote handoff after the completed publication. Campus staging/production remain not deployed; office policy and acceptance decisions remain open.
+
+
+## 2026-10-17 - Docker development performance published
+
+- Docker development performance published: [PR #8](https://github.com/EnrieJohn31/BISU-Registrar/pull/8) merged as `4d69e06` after required [Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/39000107485) passed.
+- Rewrote handoff after the completed publication. Campus staging/production remain not deployed; office policy and acceptance decisions remain open.

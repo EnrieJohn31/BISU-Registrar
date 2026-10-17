@@ -6,7 +6,7 @@
 
 ## Environment and coverage
 
-- Isolated headless Microsoft Edge; desktop 1440 × 1000 and mobile viewport 390 × 844, light and dark themes. Windows control runtime was unavailable; this does not test physical kiosks, printers, Safari/Firefox or the campus browser baseline (D20).
+- Isolated headless Microsoft Edge 155.0.4283.45; desktop 1440 × 1000 and mobile viewport 390 × 844, light and dark themes. Windows control runtime was unavailable; this does not test physical kiosks, printers, Safari/Firefox or the campus browser baseline (D20).
 - Local `http://localhost:8085`; synthetic seeder accounts and disposable staff fixtures only. Disposable accounts were deactivated after review. No existing staff credentials were reset.
 - Walkthrough: dashboard, Users/search/empty state, staff form, temporary-password screen, account details/edit dialog, role assignment/revocation, deactivation/reactivation, audit list and keyboard-opened detail sheet, first-sign-in password form.
 - Functional checks: administrator password/TOTP sign-in; create/edit/assign/revoke; required first password change; ordinary staff denied Users (403); confirmed TOTP setup followed by administrator reset; deactivation invalidates an existing session; reactivation permits sign-in; password reissue ends the old session and requires another password change.
@@ -16,7 +16,7 @@
 
 | Finding | Change | Verification |
 |---|---|---|
-| Pressing Enter on an audit row opened then immediately closed the details sheet | Prevent Enter's default activation; support Space with prevented default; wrap long detail text | Enter now leaves the populated sheet open on desktop and mobile; close still works |
+| Pressing Enter on an audit row opened then immediately closed the details sheet | Prevent Enter's default activation; support Space with prevented default; wrap long detail text | Enter and Space leave the populated sheet open on desktop/mobile; Escape/Close still work |
 | Long first-sign-in expiry badge clipped on mobile | Wrap status text within available width; allow long user heading text to wrap | 390 px screenshot shows complete expiry text |
 | Staff sidebar linked to the Laravel starter repository/docs | Remove developer footer links; preserve permission-filtered navigation and account menu | Staff navigation reviewed in both themes |
 | Windows Docker bind-mount edits were not invalidating Vite's module cache | Opt-in Vite source polling from dev Compose (`VITE_USE_POLLING=true`, 1000 ms); existing dependency/metadata exclusions retained | Served module initially lacked the fix; after enabling polling, host formatting edits automatically appeared in served source |
