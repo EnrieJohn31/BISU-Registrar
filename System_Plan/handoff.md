@@ -8,6 +8,12 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 **Stage:** M1 development. Part 03 slice 1 is implemented, reviewed and merged. Part 04 is a detailed design draft; no client/import/linking code has been added. **Campus staging and production:** not deployed.
 
+### Attribution cleanup and recurrence prevention - 2026-10-17
+
+- Owner approved the published-history cleanup. Replaced five existing branch tips with the prepared credit-free history (clean main `2e83568`); every application file tree was identical. All original main protection settings were restored and verified immediately after the atomic leased push. Four old signatures were removed from rewritten commit objects; recovery bundles/maps are retained locally.
+- Added shared commit/push hooks, a safe hook installer invoked by setup, the no-AI-credit instruction in AGENTS.md and an attribution check in required Foundation CI. These block the known Claude/AI credit trailers and AI primary authors while allowing actual human authors and ordinary descriptions. Setup installs the hooks for new checkouts; existing checkouts must run the installer. Owners can intentionally change/bypass local controls, so CI provides a second check.
+- This publication contains only attribution prevention/tooling/docs, not Part 04 client-record implementation. The owner's separate local branch is preserved and unpushed. Campus deployment state is unchanged.
+
 ### Just completed
 
 - **Staff accounts, office roles and audit:** administrators provision accounts and temporary passwords; first sign-in requires a password change; sensitive roles require confirmed TOTP. Role changes need reasons, preserve history, prohibit self-management and preserve the last active administrator. Deactivation blocks sign-in and ends sessions. Staff idle timeout is 30 minutes; remember-me does not restore staff sessions. Audit data is append-only and office-scoped. Full scope and C09 deviations are in the [implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record).

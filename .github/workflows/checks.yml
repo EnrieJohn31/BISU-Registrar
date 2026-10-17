@@ -25,6 +25,13 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Check commit attribution and guard behavior
+        shell: bash
+        run: |
+          sh .githooks/test-attribution.sh
+          git log --format='Co-authored-by: %an <%ae>%n%B' HEAD | sh .githooks/check-attribution.sh
 
       - name: Validate Docker configuration
         run: docker compose -f docker-compose.dev.yml config --quiet

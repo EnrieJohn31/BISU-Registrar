@@ -167,3 +167,9 @@ Known issue / next action / optimization suggestion:
 - Reconciled Part 00/02/03/index/README with the merged accounts implementation and completed browser QA; preserved historical foundation results. Handoff rewritten with completed work, publication evidence, explicit next slice and outstanding office gates.
 - Recorded Edge 155.0.4283.45 and successful Enter/Space audit-panel regression. Source polling is the only runtime-code follow-up after the full local checks; all code changes were included in that passed check run.
 - Final follow-up combines the small Docker source-watch fix, review evidence and Part 04 design documentation; protected-main CI/merge evidence is linked from handoff. No client features implemented, no production deployment, no credential or nul artifact staged. Existing Dependabot updates remain outside scope.
+
+## 2026-10-17 - Approved contributor cleanup and future attribution guards
+
+- Owner explicitly approved removing published Claude co-author credit and temporarily adjusting main protection. Atomic, exact-lease updates replaced five existing public tips; clean main is 2e83568. Every rewritten tree matched the original; human identities/times were preserved. Original main protection restored and verified. Backup bundles/maps remain ignored and local.
+- Added commit-msg/pre-push guards, shared attribution checker and 12 behavioral cases; setup installs the local hooks via install-git-hooks.ps1. Existing custom hooks are preserved. Required Foundation CI checks primary authors and co-author trailers across fetched history. AGENTS.md records no automatic AI credits and local-only publication policy.
+- Application code is unchanged. Part 04 implementation stays local and separate from this prevention branch. GitHub contributor displays may take about 24 hours to refresh; original PR/commit references may retain historical objects.
