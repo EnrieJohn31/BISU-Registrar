@@ -65,6 +65,9 @@ Stopping containers preserves the database volume. Never use down -v for routine
 
 PHP (`vendor/`) and frontend (`node_modules/`) dependencies live in Docker volumes, not in `src/`. Reading them through the Windows bind mount made every page take several seconds; from the volumes a page takes well under a second, and edits to your own code still apply immediately. Install or update packages inside the container, for example `docker compose -f docker-compose.dev.yml exec app composer require vendor/package` or `... exec app npm install package`; `./setup.ps1` reinstalls both. Any `src/vendor` or `src/node_modules` folder left on Windows is no longer used by the app (editors may still read it for autocompletion).
 
+
+Windows Docker source watching uses one-second polling (`VITE_USE_POLLING=true` in dev Compose). This prevents stale Vite modules when bind-mount file events are missed; ordinary host/Vite use keeps event-based watching. Retain the dependency/metadata watch exclusions to limit polling overhead.
+
 Local test accounts (one per role, plus client, first-sign-in and deactivated examples). The seeder refuses to run in production and writes the sign-in details, including two-factor secrets, to `src/Credentials.md`, which git ignores:
 
 ```powershell
@@ -88,13 +91,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch/review conventions and [docs/F
 
 ## Current scope and campus hosting
 
-Starter authentication/settings and dashboard placeholders exist. Public self-registration is still the starter behavior; office roles, identity linkage, records/imports, requests, queues, payment verification and documents are not implemented. Mail uses the log driver. Database-backed sessions/cache/jobs are configured; future asynchronous work needs a worker and scheduler.
+Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Public self-registration grants no staff roles; identity linkage, client records/imports, requests, queues, payments and documents remain unimplemented. Part 04 has a detailed design draft for review. Mail uses the log driver. Database-backed sessions/cache/jobs are configured; future asynchronous work needs a worker and scheduler.
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).
 
 ## Source attribution
 
 Created from the MIT-licensed [official Laravel Vue starter kit](https://github.com/laravel/vue-starter-kit). Original foundation setup evidence remains in [SETUP-VALIDATION.md](SETUP-VALIDATION.md).
-
-
-Windows Docker source watching uses one-second polling (VITE_USE_POLLING=true in dev Compose). This prevents stale Vite modules when bind-mount file events are missed; ordinary host/Vite use keeps event-based watching. Retain the dependency/metadata watch exclusions to limit polling overhead.
