@@ -49,7 +49,7 @@ Setup preserves an existing src/.env and application key, installs locked depend
 
 Development URLs: app http://localhost:8085; Vite http://localhost:5178; test email inbox http://localhost:8026. All three bind to developer loopback. MySQL/Redis and Mailpit SMTP have no host ports. The local Compose database/user/password are bisu_registrar / laravel / laravel; root password is root. These development placeholders must be replaced in a future campus production configuration.
 
-For a phone on the same trusted Wi-Fi, run `./lan-preview.ps1 -Address <PC-IPv4-address>`. This optional preview builds assets, pauses Vite and adds app access on that LAN address; `./lan-preview.ps1 -Stop` restores ordinary development. See [phone access and scoped Windows firewall instructions](docs/LAN-PHONE-PREVIEW.md).
+For daily phone access on the same trusted Wi-Fi, double-click `start-lan.cmd` or run `./lan-preview.ps1`. It detects the active private LAN IPv4 address, builds assets, pauses Vite and prints PC, phone and test-inbox links. Use `./lan-preview.ps1 -Links` to show the running app's links without a rebuild, `-Address <PC-IPv4-address>` to choose an adapter explicitly, or `-Stop` to restore ordinary development. See [phone access and scoped Windows firewall instructions](docs/LAN-PHONE-PREVIEW.md).
 
 ## Daily commands
 

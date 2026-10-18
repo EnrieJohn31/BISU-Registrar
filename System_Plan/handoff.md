@@ -4,9 +4,9 @@
 
 ## Current position — 2026-10-18
 
-**We are in M1 development. The owner confirmed that the login page opens on their physical phone over the same Wi-Fi (2026-10-18). OPS-1 still needs phone sign-in/navigation, device/browser details and a second-laptop check. DEV-5 (the Part 05 design) awaits your approval. Do not build Part 05 yet.** Office-dependent work remains on hold under C11–C14; C16 authorizes only the development phone preview.
+**We are in M1 development. For daily phone access, start Docker Desktop and double-click `start-lan.cmd` (or run `./lan-preview.ps1`); it detects the LAN IP and prints connection links.** The owner confirmed the physical phone login page opens (2026-10-18). OPS-1 still needs phone sign-in/navigation, device/browser details and a second-laptop check. DEV-5 awaits your approval; do not build Part 05 yet. C16/C17 cover development LAN access/startup only; office gates remain unchanged.
 
-Current local branch: `chore/lan-preview-2026-10-18`, based on the Part 05 design commit `08febd1`, following DEV-4 (`461ed51`) and DEV-8 (`265e695`). Part 03 slice 1 is merged. Part 04 and later waiting-work slices are local, unpushed and not campus-deployed. No push, PR or merge is authorized by this handoff.
+Current local branch: `chore/lan-startup-links-2026-10-18`, based on `e2599a8` (requirements checklist v2), preserving the baseline kit, phone-access evidence, Part 05 design (`08febd1`), DEV-4 (`461ed51`) and DEV-8 (`265e695`). Part 03 slice 1 is merged. Part 04 and later waiting-work slices are local, unpushed and not campus-deployed. No push, PR or merge is authorized by this handoff.
 
 ### Project status at a glance
 
@@ -29,7 +29,15 @@ Current local branch: `chore/lan-preview-2026-10-18`, based on the Part 05 desig
 
 At your request I prepared the "before" baseline kit: [baseline-kit.pdf](baseline-kit.pdf), 7 A4 pages, editable source [baseline-kit.html](baseline-kit.html), with [CSV entry templates](baseline-templates/README.md). It holds the privacy rules, a permission form for each office head, the observation protocol and four sheets: arrivals tally, timed sample, records extract and day sheet. **Nobody has observed anything yet, and nothing has been sent to an office.** The two timed hours a day, the codes and the five-day sample are proposals for you and the adviser to change. Documentation only; committed locally on `docs/baseline-kit-2026-10-18`.
 
-### Latest slice — same-network phone preview (OPS-1 preparation)
+### Latest slice — daily LAN startup and connection links
+
+The owner asked how to know the current IP and links every time the app starts. Added automatic selection to `lan-preview.ps1`: it uses the single active private IPv4 address with an IPv4 gateway, excluding gateway-less virtual adapters. Multiple qualifying addresses stop before container changes and require explicit `-Address`. `start-lan.cmd` launches the helper by absolute path, preserves its exit code and keeps the window open with links or errors. `-Links` reads actual running Docker bindings and active adapter addresses without restarting or rebuilding. It does not present an inactive bound address as a working phone link.
+
+Daily use: start Docker Desktop, double-click `start-lan.cmd` or run `./lan-preview.ps1`, then use the printed **Phone / same LAN** URL. Show links again with `./lan-preview.ps1 -Links`; restore normal development with `./lan-preview.ps1 -Stop`. The helper changes no router/DHCP/firewall settings or source `.env`, and does not reserve a fixed IP. If DHCP changes the address, restart the preview and refresh any address-specific firewall rule or signed email link. [Instructions](../docs/LAN-PHONE-PREVIEW.md).
+
+Validation: the actual Windows launcher ran without `-Address`, selected Wi-Fi `192.168.1.8`, built assets and printed all three links. Gateway-less virtual adapters were excluded. The read-only `-Links` check left container IDs and `.env` SHA-256 unchanged; a failure-path check confirmed the launcher preserves a nonzero helper exit code. Corrected PowerShell array-property enumeration during validation. Final syntax and both login/28-asset HTTP checks passed; six services remain running with Vite paused. No app/Compose source or account change and no new full foundation/browser/physical-device claim.
+
+### Previous slice — same-network phone preview (OPS-1 preparation)
 
 The user asked to access the app from a phone on the same network. Added `lan-preview.ps1` and an optional `docker-compose.lan.yml`: only app port 8085 is added on the selected private IPv4 address, with localhost retained. Assets are compiled and Vite is paused, so phone requests do not depend on its own localhost or a second port. App/worker/scheduler use the LAN `APP_URL` with debug disabled. The source `.env`, account/role data, database bindings and Mailpit access are preserved. No application source changed.
 
@@ -100,6 +108,7 @@ Read the output JSON and inspect new page PNGs before accepting a later run. The
 ### Runtime and watch-outs
 
 - Active LAN preview: app http://192.168.1.8:8085 and http://localhost:8085; six services running, **Vite paused**. Captured-email inbox stays at http://localhost:8026 on the PC. No firewall rule was installed by this agent. The owner confirmed the physical phone login page opens; sign-in/navigation and device/browser details remain pending. This is not campus production.
+- IP/link discovery: double-click `start-lan.cmd` for automatic startup, or run `./lan-preview.ps1 -Links` to read current bindings without a rebuild. The address above is a session snapshot; use the printed link after future restarts/network changes. If several gateway addresses qualify, choose with `-Address <PC-LAN-IPv4>`.
 - Resume live development with `./lan-preview.ps1 -Stop`, which restores loopback-only app access and Vite at http://localhost:5178. Do this before `setup.ps1`, `check.ps1` or base Compose `up`, which can reset preview containers/hot markers. Rebuild the preview after code changes. Never remove database volumes for this task.
 - Keep real records, private documents, secrets, runtime data and backups out of Git. Preserve actual human commit authorship and the existing attribution/push guards. Local commits only; publishing needs an explicit request.
 - Existing registration-disabled builds fail because `Register.vue` imports a route omitted by generation in that configuration. Record a separate technical fix before using that setting; this slice did not change registration policy.

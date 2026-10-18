@@ -16,7 +16,7 @@
 
 Host BISU Registrar on BISU-managed local infrastructure and expose it to approved campus LAN/Wi-Fi devices. “Online” means campus browser access. Public Internet hosting, public DNS exposure and off-campus access are outside the initial scope.
 
-Default development at `localhost:8085` is accessible only on the developer machine. For OPS-1 phone testing, the owner-authorized optional [LAN preview](../docs/LAN-PHONE-PREVIEW.md) temporarily adds app access on a selected private IPv4 address, builds assets and pauses Vite. This is not campus deployment. A campus system used for real transactions is **production**, even though it is private and local-network-only.
+Default development at `localhost:8085` is accessible only on the developer machine. For OPS-1 phone testing, double-click `start-lan.cmd` or run `./lan-preview.ps1`: the optional [LAN preview](../docs/LAN-PHONE-PREVIEW.md) detects the current private LAN IPv4 address, builds assets, pauses Vite and prints connection links. `-Links` reprints actual running bindings without a rebuild; `-Address` remains available when several adapters qualify. This changes no router/DHCP/firewall configuration and is not campus deployment. A campus system used for real transactions is **production**, even though it is private and local-network-only.
 
 ## Proposed topology
 
