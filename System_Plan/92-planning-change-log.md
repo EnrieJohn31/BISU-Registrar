@@ -222,3 +222,9 @@ Known issue / next action / optimization suggestion:
 - Added [requirements.pdf](requirements.pdf) (3 pages, 29 items in three priorities, plus a documents list and tracking lines) with its editable source [requirements.html](requirements.html), built from the open decisions in [90](90-decisions-and-open-questions.md) and the [office interview checklist](95-office-interview-checklist.md). Each item names the decision or part it unlocks. Ground rules: blank or made-up examples only, official versions, and who/when/which document recorded for every answer.
 - Received so far: Citizen's Charter 2024 (1st Edition), page 115 only (Registration Office, 5.2.1 Enrollment). It shows the charter's structure (office, classification, type of transaction, who may avail, requirements and where to secure each) but not the steps, fees or processing time, and Enrollment is probably outside this system's scope (D01 question).
 - The PDF was produced by printing the HTML from Microsoft Edge; layout checked page by page. Documentation only; no application code or tests changed.
+
+## 2026-10-18 - Work plan while waiting for office inputs (documentation)
+
+- Project owner asked what the team can do while the offices answer the requirements checklist.
+- Added [97 - Work while waiting](97-work-while-waiting.md): four tracks (development, thesis and documentation, office preparation, deployment readiness) with size, rework risk and the office input each task later takes, plus a suggested order and a "not yet" list (Parts 06, 08, 09, imports and linking wait for answers). Chosen rule: build mechanisms with labelled demo data, not office rules.
+- Linked it from the index and the handoff (new step 4). Documentation only; no application code or tests changed.

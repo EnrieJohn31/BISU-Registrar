@@ -126,6 +126,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 - [Repository foundation validation](../docs/FOUNDATION-VALIDATION.md) - repository, local checks and CI evidence.
 - [Part 04 slice 1 validation](../docs/PART-04-SLICE-1-VALIDATION.md) - automated, MySQL, race and browser evidence for client records.
 - [Requirements checklist (PDF)](requirements.pdf) — 29 items to collect from the offices, in priority order, for the team to send out; editable source [requirements.html](requirements.html).
+- [Work while waiting](97-work-while-waiting.md) — low-rework tasks for development, thesis, office preparation and deployment readiness until the office answers arrive.
 
 - [Original project concept brief](project-concept-brief.md) — preserved source, followed by confirmed scope clarification.
 - [Decisions and open questions](90-decisions-and-open-questions.md) — confirmed choices, proposed defaults and office decisions still needed.
