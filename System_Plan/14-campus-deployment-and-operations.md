@@ -6,7 +6,7 @@
 |---|---|
 | Plan status | Draft; campus LAN hosting confirmed |
 | Implementation | Development Docker includes worker/scheduler/Mailpit (DEV-2) and an optional same-network phone preview (OPS-1); operational deployment not started |
-| Validation | Development service evidence in [DEV-2](../docs/DEV-2-BACKGROUND-SERVICES.md); [LAN preview PC checks](../docs/LAN-PHONE-PREVIEW.md#validation--2026-10-18) passed, physical phone results pending; production/restore/rollback checks not started |
+| Validation | Development service evidence in [DEV-2](../docs/DEV-2-BACKGROUND-SERVICES.md); [LAN preview checks](../docs/LAN-PHONE-PREVIEW.md#validation--2026-10-18) passed, owner confirmed physical phone login page opens; sign-in/device/browser/second-laptop evidence pending; production/restore/rollback checks not started |
 | Deployment | No staging or campus-production deployment recorded |
 | Owner | Campus MIS/IT deployment owner with office sponsors; names pending |
 | Dependencies | Parts 03–12, Part 13 acceptance, Part 15 handover readiness |
@@ -41,7 +41,7 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 
 | Environment | Current evidence | Planned access |
 |---|---|---|
-| Developer Docker | Foundation and DEV-2 background services validated locally; optional OPS-1 LAN preview prepared and PC HTTP/assets checked. Physical phone/browser acceptance remains pending. Historical GitHub checks do not validate this unpublished branch | Default loopback ports 8085/5178/8026; optional selected-LAN-address app 8085 with compiled assets and Vite paused; SMTP internal only |
+| Developer Docker | Foundation and DEV-2 background services validated locally; OPS-1 PC HTTP/assets checked and owner confirmed physical phone login page opens on 2026-10-18. Phone sign-in/navigation, device/browser details and second laptop remain pending. Historical GitHub checks do not validate this unpublished branch | Default loopback ports 8085/5178/8026; optional selected-LAN-address app 8085 with compiled assets and Vite paused; SMTP internal only |
 | Campus staging | Not configured / no deployment recorded | Restricted MIS/tester LAN segment; synthetic or authorized test data |
 | Campus production | Not configured / no deployment recorded | Approved BISU LAN/Wi-Fi segments through internal HTTPS |
 

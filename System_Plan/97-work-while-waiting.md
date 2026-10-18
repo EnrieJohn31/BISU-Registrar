@@ -79,7 +79,7 @@ Deployment liaison, with development help.
 
 | # | Task | Why | Size |
 |---|---|---|---|
-| OPS-1 | **LAN preview prepared locally 2026-10-18:** [start/stop and firewall instructions](../docs/LAN-PHONE-PREVIEW.md). PC HTTP/assets checks passed. Still open: actual phone and second-laptop access on the same Wi-Fi, and browser-version records | Catches old-browser and LAN access problems early (RK05, RK08) | S |
+| OPS-1 | **Partial, 2026-10-18:** [LAN preview instructions](../docs/LAN-PHONE-PREVIEW.md), PC HTTP/assets checks passed; owner confirmed login page opens on a physical phone over the same Wi-Fi. Still open: phone sign-in/navigation, model/OS/browser versions and second-laptop access | Catches old-browser and LAN access problems early (RK05, RK08) | S |
 | OPS-2 | Draft a production image (compiled assets, no CDN, debug off) and a backup-and-restore script, then run one restore drill on a spare laptop | Part 14 needs a practiced restore before staging; MIS details plug in later | M |
 
 ## Not yet

@@ -4,7 +4,7 @@
 
 ## Current position — 2026-10-18
 
-**We are in M1 development. The optional same-network phone preview is prepared and running for OPS-1; physical phone access/browser evidence is still pending. DEV-5 (the Part 05 design) awaits your approval. Do not build Part 05 yet.** Office-dependent work remains on hold under C11–C14; C16 authorizes only the development phone preview.
+**We are in M1 development. The owner confirmed that the login page opens on their physical phone over the same Wi-Fi (2026-10-18). OPS-1 still needs phone sign-in/navigation, device/browser details and a second-laptop check. DEV-5 (the Part 05 design) awaits your approval. Do not build Part 05 yet.** Office-dependent work remains on hold under C11–C14; C16 authorizes only the development phone preview.
 
 Current local branch: `chore/lan-preview-2026-10-18`, based on the Part 05 design commit `08febd1`, following DEV-4 (`461ed51`) and DEV-8 (`265e695`). Part 03 slice 1 is merged. Part 04 and later waiting-work slices are local, unpushed and not campus-deployed. No push, PR or merge is authorized by this handoff.
 
@@ -19,7 +19,7 @@ Current local branch: `chore/lan-preview-2026-10-18`, based on the Part 05 desig
 | DEV-3 saved browser regression | Complete locally (`0dc56c6`): 34 cases × four projects | Extend when later features are scoped; physical device acceptance remains D20 |
 | DEV-8 BISU shared/browser branding and stray-file cleanup | Complete locally (`265e695`) | Existing local assets and generator retained |
 | DEV-4 PDF renderer comparison | Complete locally: 12 combinations, 36 renders, 19 reviewed pages | Provisional Dompdf direction; actual templates/fonts/printer still require D08 acceptance |
-| OPS-1 same-network phone preparation | Optional LAN preview implemented locally; PC HTTP/assets and stop/restore checked | User must test the physical phone/second laptop and record OS/browser versions; Windows may need the documented administrator firewall command |
+| OPS-1 same-network phone preparation | Optional LAN preview implemented locally; PC HTTP/assets and stop/restore checked; owner confirmed physical phone login page opens | Still needed: phone sign-in/navigation, model/OS/browser versions and second-laptop access |
 | Part 05 services, requirements and fees | Slice 1 design written (DEV-5), not built | **You approve the design (proposed C15)**, then DEV-6 builds the staff catalog on synthetic data |
 | Part 07 basic queue | Not implemented | Later scoped design/build task, following the waiting-work sequence; office settings remain open |
 | Portal, Registrar and Cashier workflows; document lifecycle/release/reports | Not implemented | Office answers and each part's design/approval gates |
@@ -31,7 +31,9 @@ The user asked to access the app from a phone on the same network. Added `lan-pr
 
 Start/stop, a scoped Windows firewall command, email-link behavior and troubleshooting are in [phone preview instructions](../docs/LAN-PHONE-PREVIEW.md). The PC test used Wi-Fi address `192.168.1.8` (may change with DHCP), app URL http://192.168.1.8:8085. Windows classifies this Wi-Fi as Public; that category was not changed. This agent has no administrator token, so no firewall rule was installed. If the phone cannot connect, run the documented rule in administrator PowerShell; it allows only TCP 8085 on the chosen Wi-Fi address/adapter from the local subnet.
 
-Validation: runner syntax and merged Compose passed; login and all 28 referenced compiled assets returned HTTP 200 through both LAN and localhost URLs, with no HMR references. Stopping restored all seven base services and loopback-only app binding. The source environment SHA-256 stayed identical. Current preview leaves six services running and Vite stopped. No full foundation/browser regression rerun was needed for this root-only configuration slice; earlier results below are historical. Actual phone connectivity and model/OS/browser versions remain unverified.
+Validation: runner syntax and merged Compose passed; login and all 28 referenced compiled assets returned HTTP 200 through both LAN and localhost URLs, with no HMR references. Stopping restored all seven base services and loopback-only app binding. The source environment SHA-256 stayed identical. Current preview leaves six services running and Vite stopped. No full foundation/browser regression rerun was needed for this root-only configuration slice; earlier results below are historical.
+
+**Physical phone evidence, 2026-10-18:** the owner answered “Login page opens” when asked to open http://192.168.1.8:8085 on the same Wi-Fi. This confirms basic phone reachability only. Successful authentication/navigation, device/OS/browser versions, second-laptop access and whether the owner added a firewall rule were not reported. No runtime or account changes were made for this documentation follow-up.
 
 ### Previous slice — DEV-5, Part 05 slice 1 design
 
@@ -73,7 +75,7 @@ Read the output JSON and inspect new page PNGs before accepting a later run. The
 
 ### Next action
 
-1. **Test the phone:** connect to the same Wi-Fi and open http://192.168.1.8:8085, then sign in again. If blocked, use the scoped administrator firewall command in the [preview instructions](../docs/LAN-PHONE-PREVIEW.md). Record phone/OS/browser version and results, then test a second laptop. Finish with `./lan-preview.ps1 -Stop` before returning to ordinary development or foundation checks; remove the preview firewall rule if created.
+1. **Continue phone testing:** the login page already opens at http://192.168.1.8:8085. Sign in and check dashboard/navigation; record phone model/OS/browser version and results, then test a second laptop. Finish with `./lan-preview.ps1 -Stop` before returning to ordinary development or foundation checks; remove the preview firewall rule if created. [Preview instructions](../docs/LAN-PHONE-PREVIEW.md).
 2. **You review the [Part 05 design](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18)** and approve, change or reject the seven proposals (including the new `services.view` permission). On approval I record it as decision C15, then build DEV-6 on a new local branch with `./check.ps1`, MySQL race probes and new browser cases. Nothing in Part 05 is built before then.
 3. **Alternative or parallel:** DEV-7 (basic queue) needs its own short design and approval first. Thesis and office-preparation tasks in [97](97-work-while-waiting.md) need no code.
 4. **Send the [requirements checklist](requirements.pdf)** if not yet sent. The rest of the Citizen's Charter (steps, fees, processing times and the Cashier section) is item 1 and unlocks Part 05 slice 2.
@@ -92,7 +94,7 @@ Read the output JSON and inspect new page PNGs before accepting a later run. The
 
 ### Runtime and watch-outs
 
-- Active LAN preview: app http://192.168.1.8:8085 and http://localhost:8085; six services running, **Vite paused**. Captured-email inbox stays at http://localhost:8026 on the PC. No firewall rule was installed by this session. Physical phone access is pending. This is not campus production.
+- Active LAN preview: app http://192.168.1.8:8085 and http://localhost:8085; six services running, **Vite paused**. Captured-email inbox stays at http://localhost:8026 on the PC. No firewall rule was installed by this agent. The owner confirmed the physical phone login page opens; sign-in/navigation and device/browser details remain pending. This is not campus production.
 - Resume live development with `./lan-preview.ps1 -Stop`, which restores loopback-only app access and Vite at http://localhost:5178. Do this before `setup.ps1`, `check.ps1` or base Compose `up`, which can reset preview containers/hot markers. Rebuild the preview after code changes. Never remove database volumes for this task.
 - Keep real records, private documents, secrets, runtime data and backups out of Git. Preserve actual human commit authorship and the existing attribution/push guards. Local commits only; publishing needs an explicit request.
 - Existing registration-disabled builds fail because `Register.vue` imports a route omitted by generation in that configuration. Record a separate technical fix before using that setting; this slice did not change registration policy.
