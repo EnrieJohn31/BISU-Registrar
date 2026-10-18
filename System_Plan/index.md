@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-18 · **Current stage:** M1 development (accounts slice merged; Part 04 slice 1 and follow-up fixes local) · **Current focus:** Part 04 browser confirmation and office decisions · **Next development task:** DEV-2 design for a dev worker, scheduler and test inbox; Part 05 design may follow the charter field layout, with implementation after owner approval. Imports and linking retain separate office gates · **Where to pick up:** [handoff.md](handoff.md)
+**Last updated:** 2026-10-18 · **Current stage:** M1 development (accounts slice merged; Part 04 and DEV-2 infrastructure local) · **Current focus:** work that can proceed while office answers are pending (C11) · **Next development task:** DEV-3 saved browser regression suite; Part 04 pagination still needs visual confirmation. Later slices retain their own scoped approval and office gates · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -87,8 +87,9 @@ Part 16 technically needs only Parts 02–03, but is scheduled after M2 by decis
 | Area | Current status | Evidence |
 |---|---|---|
 | Laravel/Vue/Docker foundation | Implemented, repository published and verified for development | [Part 00](00-current-baseline.md), [existing setup report](../SETUP-VALIDATION.md) |
-| Latest local foundation validation | 163 tests / 936 assertions, build, frontend/PHP checks passed on 2026-10-18; this branch remains unpublished | [Part 04 follow-up QA](../docs/PART-04-QA-2026-10-18.md); [historical foundation/CI report](../docs/FOUNDATION-VALIDATION.md) |
-| Current local runtime | Existing dev containers started on 2026-10-18; MySQL/Redis healthy. Browser walkthrough evidence remains dated 2026-10-17 | [Part 04 follow-up QA](../docs/PART-04-QA-2026-10-18.md) |
+| Latest local foundation validation | DEV-2: 163 tests / 936 assertions, build, frontend/PHP checks passed on 2026-10-18; this branch remains unpublished | [DEV-2 validation](../docs/DEV-2-BACKGROUND-SERVICES.md); [historical foundation/CI report](../docs/FOUNDATION-VALIDATION.md) |
+| Current local runtime | Seven dev services running; database worker, scheduler and Mailpit validated on 2026-10-18. Client-screen browser evidence remains dated 2026-10-17 | [DEV-2 validation](../docs/DEV-2-BACKGROUND-SERVICES.md); [Part 04 follow-up QA](../docs/PART-04-QA-2026-10-18.md) |
+| Development background services | DEV-2 adds a database queue worker, scheduler and Mailpit test inbox on `feat/dev-background-services-2026-10-18`; local only | [Design and validation](../docs/DEV-2-BACKGROUND-SERVICES.md) |
 | Accounts, roles and audit trail | Part 03 slice 1 + browser fixes merged in [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7), `fa2246a`; office UAT/campus deployment pending | [Part 03 implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record) |
 | Client records | Part 04 slice 1 with follow-up QA fixes on `fix/part-04-qa-2026-10-18`; not pushed, merged or deployed | [Part 04 implementation record](04-client-records-and-imports.md#slice-1-implementation-record), [follow-up QA](../docs/PART-04-QA-2026-10-18.md) |
 | Registrar/Cashier business modules | Not started | Part 03 account foundation and Part 04 client records (slice 1) implemented; services, requests, queues and payments not implemented |
@@ -116,7 +117,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 11 | [Release, tracking and notifications](11-release-tracking-and-notifications.md) | Not started | Not started | Not deployed |
 | 12 | [Reporting and analytics](12-reporting-and-analytics.md) | Not started | Not started | Not deployed |
 | 13 | [Testing and campus acceptance](13-testing-and-campus-acceptance.md) | Not started for modules | Not started | Not deployed |
-| 14 | [Campus deployment and operations](14-campus-deployment-and-operations.md) | Dev Docker only | Operational checks pending | Not deployed |
+| 14 | [Campus deployment and operations](14-campus-deployment-and-operations.md) | Dev Docker + DEV-2 worker/scheduler/test inbox local; campus operations pending | Dev service validation recorded; production/restore/rollback checks pending | Not deployed |
 | 15 | [Training, handover and improvements](15-training-handover-and-roadmap.md) | Manuals/training not started | Not started | Not handed over |
 | 16 | [Registrar supplier list and performance points](16-supplier.md) | Not started; scope confirmed (C07), build after M2 | Not started | Not deployed |
 
@@ -126,6 +127,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 - [Repository foundation validation](../docs/FOUNDATION-VALIDATION.md) - repository, local checks and CI evidence.
 - [Part 04 slice 1 validation](../docs/PART-04-SLICE-1-VALIDATION.md) - automated, MySQL, race and browser evidence for client records.
 - [Part 04 follow-up QA](../docs/PART-04-QA-2026-10-18.md) - full-history pagination, restricted reasons, regression checks and remaining visual validation.
+- [DEV-2 development background services](../docs/DEV-2-BACKGROUND-SERVICES.md) - worker/scheduler/test inbox design, checks and boundaries while office answers are pending.
 - [Requirements checklist (PDF)](requirements.pdf) — 29 items to collect from the offices, in priority order, for the team to send out; editable source [requirements.html](requirements.html).
 - [Work while waiting](97-work-while-waiting.md) — low-rework tasks for development, thesis, office preparation and deployment readiness until the office answers arrive.
 

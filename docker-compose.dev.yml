@@ -1,6 +1,14 @@
 name: bisu-registrar
+x-runtime: &runtime
+  image: bisu-registrar-app
+  volumes:
+    - ./src:/var/www/html
+    # Dependencies live on Docker-native volumes; Windows bind mounts are slow.
+    - vendor:/var/www/html/vendor
+    - node_modules:/var/www/html/node_modules
 services:
   app:
+    <<: *runtime
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -9,33 +17,64 @@ services:
     environment:
       # Let the development server answer parallel requests instead of queueing them.
       PHP_CLI_SERVER_WORKERS: "4"
-    volumes:
-      - ./src:/var/www/html
-      # Dependencies live on Docker-native volumes. Read through the Windows bind
-      # mount, they made every request take seconds (OPcache re-checks each file).
-      - vendor:/var/www/html/vendor
-      - node_modules:/var/www/html/node_modules
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
+      mailpit:
+        condition: service_healthy
   node:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+    <<: *runtime
     command: npm run dev -- --host 0.0.0.0 --port 5178
     environment:
       # Windows bind mounts can miss filesystem events; poll source once a second.
       VITE_USE_POLLING: "true"
     ports:
       - "127.0.0.1:5178:5178"
-    volumes:
-      - ./src:/var/www/html
-      - vendor:/var/www/html/vendor
-      - node_modules:/var/www/html/node_modules
     depends_on:
       - app
+  worker:
+    <<: *runtime
+    command: ["php", "artisan", "queue:work", "database", "--queue=default", "--sleep=1", "--tries=3", "--backoff=5", "--timeout=60", "--max-time=3600"]
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 75s
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_healthy
+  scheduler:
+    <<: *runtime
+    command: ["php", "artisan", "schedule:work"]
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 75s
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_healthy
+  mailpit:
+    image: axllent/mailpit:v1.31.6
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8026:8025"
+    environment:
+      MP_LABEL: "BISU Registrar (Demo)"
+      MP_MAX_MESSAGES: "500"
+      MP_DISABLE_VERSION_CHECK: "true"
+      MP_SMTP_DISABLE_RDNS: "true"
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
   db:
     image: mysql:8.4
     environment:

@@ -45,9 +45,9 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\check.ps1
 ```
 
-Setup preserves an existing src/.env and application key, installs locked dependencies, starts MySQL/Redis, applies outstanding local migrations, builds assets and starts the application/Vite. It stops a running Vite service while replacing dependencies and restores it afterward. It refuses an APP_ENV other than local/testing. Use ./setup.ps1 -Rebuild to refresh base images.
+Setup preserves an existing src/.env and application key, installs locked dependencies, starts MySQL/Redis/Mailpit, applies outstanding local migrations, builds assets and recreates the app/Vite/worker/scheduler against the rebuilt PHP image. It pauses those running containers before replacing dependencies and restores previously running services if setup fails. It refuses an APP_ENV other than local/testing. Use ./setup.ps1 -Rebuild to refresh base images.
 
-Development URLs: app http://localhost:8085; Vite http://localhost:5178. MySQL/Redis have no host ports. The local Compose database/user/password are bisu_registrar / laravel / laravel; root password is root. These development placeholders must be replaced in a future campus production configuration.
+Development URLs: app http://localhost:8085; Vite http://localhost:5178; test email inbox http://localhost:8026. All three bind to developer loopback. MySQL/Redis and Mailpit SMTP have no host ports. The local Compose database/user/password are bisu_registrar / laravel / laravel; root password is root. These development placeholders must be replaced in a future campus production configuration.
 
 ## Daily commands
 
@@ -56,7 +56,7 @@ Run from the repository root:
 ```powershell
 docker compose -f docker-compose.dev.yml up -d
 docker compose -f docker-compose.dev.yml ps
-docker compose -f docker-compose.dev.yml logs --tail 100 app node
+docker compose -f docker-compose.dev.yml logs --tail 100 app node worker scheduler mailpit
 ./check.ps1
 docker compose -f docker-compose.dev.yml down
 ```
@@ -65,6 +65,32 @@ Stopping containers preserves the database volume. Never use down -v for routine
 
 PHP (`vendor/`) and frontend (`node_modules/`) dependencies live in Docker volumes, not in `src/`. Reading them through the Windows bind mount made every page take several seconds; from the volumes a page takes well under a second, and edits to your own code still apply immediately. Install or update packages inside the container, for example `docker compose -f docker-compose.dev.yml exec app composer require vendor/package` or `... exec app npm install package`; `./setup.ps1` reinstalls both. Any `src/vendor` or `src/node_modules` folder left on Windows is no longer used by the app (editors may still read it for autocompletion).
 
+## Development jobs and email
+
+The worker processes the existing database queue's `default` queue: three attempts, five-second backoff, 60-second timeout, with a 90-second reservation expiry. `schedule:work` runs in a separate container; no business tasks or retention/pruning jobs are enabled yet. After changing PHP job code or configuration, restart the long-running services:
+
+```powershell
+docker compose -f docker-compose.dev.yml restart worker scheduler
+docker compose -f docker-compose.dev.yml exec app php artisan queue:failed
+```
+
+Fresh setups use Mailpit. Existing `.env` files are preserved, so use these local test settings in `src/.env` if upgrading a clone that used the log mailer:
+
+```dotenv
+QUEUE_CONNECTION=database
+DB_QUEUE_RETRY_AFTER=90
+MAIL_MAILER=smtp
+MAIL_SCHEME=null
+MAIL_URL=null
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+```
+
+Then run `docker compose -f docker-compose.dev.yml exec app php artisan config:clear` and restart the worker/scheduler. `MAIL_URL` must be absent or `null`; an empty string overrides Laravel's SMTP transport. Test messages appear at http://localhost:8026 and are not relayed externally. The inbox is temporary, capped at 500 messages, and discarded when Mailpit stops; use synthetic content only. PHPUnit keeps its array mailer and synchronous queue. See [DEV-2 design and validation](docs/DEV-2-BACKGROUND-SERVICES.md).
+
+## Source watching and demo data
 
 Windows Docker source watching uses one-second polling (`VITE_USE_POLLING=true` in dev Compose). This prevents stale Vite modules when bind-mount file events are missed; ordinary host/Vite use keeps event-based watching. Retain the dependency/metadata watch exclusions to limit polling overhead.
 
@@ -93,13 +119,13 @@ docker compose -f docker-compose.dev.yml exec app npx shadcn-vue@latest add butt
 
 ## Checks and collaboration
 
-check.ps1 validates Compose/Composer, builds assets/Wayfinder routes, checks frontend formatting/lint/types, then runs PHP formatting, static analysis and the test suite. Tests currently use an in-memory SQLite database; later concurrency work also needs disposable MySQL integration tests. GitHub Actions runs the same application checks in the same Docker runtime from a clean checkout.
+check.ps1 validates Compose/Composer, builds assets/Wayfinder routes, checks frontend formatting/lint/types, then runs PHP formatting, static analysis and the test suite. It pauses Vite/worker/scheduler if running and restores their previous running state afterwards. Tests currently use an in-memory SQLite database; later concurrency work also needs disposable MySQL integration tests. GitHub Actions runs the same application checks in the same Docker runtime from a clean checkout.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for branch/review conventions and [docs/FOUNDATION-VALIDATION.md](docs/FOUNDATION-VALIDATION.md) for evidence from repository preparation. Dependabot proposes weekly Composer, npm and GitHub Actions updates; updates require review and passing checks.
 
 ## Current scope and campus hosting
 
-Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Part 04 slice 1 implements client records with synthetic data, complete paginated revision history and client reasons restricted to that history. Public self-registration grants no staff roles. Imports, identity linkage, requests, queues, payments and documents remain unimplemented. Mail uses the log driver. Database-backed sessions/cache/jobs are configured; future asynchronous work needs a worker and scheduler. See the [Part 04 QA report](docs/PART-04-QA-2026-10-18.md) for current evidence and remaining browser confirmation.
+Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Part 04 slice 1 implements client records with synthetic data, complete paginated revision history and client reasons restricted to that history. Public self-registration grants no staff roles. Imports, identity linkage, requests, office ticket queues, payments and documents remain unimplemented. DEV-2 adds a development database-job worker, scheduler and captured-email inbox; campus email delivery remains gated by D11. Current authorization covers work that can proceed while offices answer (C11), with existing per-task approval gates preserved. See the [Part 04 QA report](docs/PART-04-QA-2026-10-18.md) for client-record evidence and remaining browser confirmation.
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).
 

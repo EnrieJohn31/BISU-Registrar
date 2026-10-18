@@ -15,7 +15,7 @@ The requirements checklist has gone out, and its answers decide fees, ID formats
 2. **Reduce later risk.** Concurrency, document rendering, testing and deployment problems are cheaper to find now.
 3. **Prepare the thesis and the offices.** Members who don't code can write, draw diagrams and prepare office visits in parallel.
 
-When an office answer arrives, the work it unblocks takes priority over this list. The [handoff](handoff.md) says what each answer unblocks.
+**Owner direction, 2026-10-18 (C11): current work is limited to items that can proceed while the offices answer.** DEV-2 is authorized next. Keep the separate design/approval gates for later slices. Record incoming office answers, but do not automatically start a previously gated business feature; obtain its own scoped task first. The [handoff](handoff.md) says what each answer unblocks.
 
 ```mermaid
 flowchart LR
@@ -40,7 +40,7 @@ In this order. Each build slice gets a design or approval first, as for Parts 03
 | # | Task | Part | Why now | Rework risk | Size | Office input that plugs in later |
 |---|---|---|---|---|---|---|
 | DEV-1 | Fix what you find when testing Part 04 slice 1. **2026-10-18:** full-history paging and restricted audit reasons fixed; 163 tests / 936 assertions pass. Browser confirmation pending ([QA evidence](../docs/PART-04-QA-2026-10-18.md)) | 04 | Finishes the current slice | None | S | — |
-| DEV-2 | Add a queue worker, scheduler and Mailpit (a test mail inbox) to `docker-compose.dev.yml` | 14, 04, 11 | Imports, document jobs and notifications all need a worker. Mailpit lets us test emails with no campus mail relay | Low | S | D11 mail relay |
+| DEV-2 | Add a queue worker, scheduler and Mailpit (a test mail inbox) to `docker-compose.dev.yml`. **Done 2026-10-18:** dev services, captured email/retry/failure probes, setup/restoration checks and 163 tests / 936 assertions passed ([design/evidence](../docs/DEV-2-BACKGROUND-SERVICES.md)) | 14, 04, 11 | Imports, document jobs and notifications all need a worker. Mailpit lets us test emails with no campus mail relay | Low | S | D11 mail relay |
 | DEV-3 | Turn the 34-check browser walkthrough into a committed test suite (Playwright recommended, which can drive Edge) | 13 | Today it lives in a temporary folder; every later slice can reuse it as a regression check | Low | M | D20 browser list |
 | DEV-4 | Document renderer spike: compare two PDF renderers offline in Docker with bundled fonts, on a made-up certificate stamped "SAMPLE – NOT VALID" (A4 and Legal, long names, multi-page) | 10 | Addresses risk RK12 before any template work; choosing the tool doesn't depend on the real template | Low; the real template repeats the test | M | D08 templates and signatories |
 | DEV-5 | Write the Part 05 design (services, requirements, fees) to match the Citizen's Charter entry format. Page 115 already shows the fields: office, classification, type of transaction, who may avail, checklist of requirements and where to secure them, client steps, agency actions, fees, processing time, person responsible | 05 | The charter format is standard across entries, so the data model can follow it now | Low | S | D05 |
