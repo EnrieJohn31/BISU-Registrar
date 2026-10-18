@@ -1,0 +1,55 @@
+name: bisu-registrar-browser
+x-environment: &browser-environment
+  APP_NAME: "BISU Registrar"
+  APP_ENV: testing
+  APP_DEBUG: "false"
+  APP_URL: http://web:8000
+  BISU_BROWSER_TESTS: "1"
+  DB_CONNECTION: sqlite
+  DB_DATABASE: /var/www/html/storage/browser/database.sqlite
+  SESSION_DRIVER: database
+  CACHE_STORE: database
+  QUEUE_CONNECTION: sync
+  MAIL_MAILER: array
+  BCRYPT_ROUNDS: "4"
+  LOG_CHANNEL: stderr
+  BISU_REGISTRATION_ENABLED: "true"
+x-php: &browser-php
+  image: bisu-registrar-browser-php
+  environment: *browser-environment
+  working_dir: /var/www/html
+  volumes:
+    - workspace:/var/www/html
+    - ./scripts/browser:/scripts/browser:ro
+services:
+  prepare:
+    <<: *browser-php
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ["sh", "/scripts/browser/prepare.sh"]
+    volumes:
+      - workspace:/var/www/html
+      - ./src:/source:ro
+      - ./scripts/browser:/scripts/browser:ro
+  web:
+    <<: *browser-php
+    command: ["sh", "/scripts/browser/serve.sh"]
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@file_get_contents('http://127.0.0.1:8000/up') === false ? 1 : 0);"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  browser:
+    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    working_dir: /var/www/html
+    init: true
+    shm_size: 1gb
+    environment:
+      BISU_BROWSER_TESTS: "1"
+    command: ["npm", "run", "test:browser"]
+    volumes:
+      - workspace:/var/www/html
+      - ./.browser-artifacts:/artifacts
+volumes:
+  workspace:

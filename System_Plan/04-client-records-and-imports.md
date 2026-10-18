@@ -6,7 +6,7 @@
 |---|---|
 | Plan status | Slice 1 approved by the project owner (C10); slices 2 and 3 still design only, office approval pending |
 | Implementation | Slice 1 implemented locally, with follow-up fixes on `fix/part-04-qa-2026-10-18`; not pushed, merged or deployed. Imports and account linking not started. See the [implementation record](#slice-1-implementation-record) |
-| Validation | 2026-10-18: `check.ps1` passed (163 tests / 936 assertions); Part 04 MySQL suite passed (45 tests / 394 assertions), [follow-up QA](../docs/PART-04-QA-2026-10-18.md). Original race/34-check Edge evidence is dated 2026-10-17. New pagination visual check and records-custodian acceptance pending |
+| Validation | 2026-10-18: DEV-3 saved Chromium suite passed 34 cases in four viewport/theme projects, including full-history paging and audit privacy; [browser evidence](../docs/DEV-3-BROWSER-REGRESSION.md). DEV-1 MySQL: 45 tests / 394 assertions; original race/Edge evidence: 2026-10-17. Records-custodian acceptance pending |
 | Deployment | Not deployed |
 | Owner | Registrar records custodian + developer; named custodian pending |
 | Dependencies | Parts 02–03; D03/D04/D09 gate real identity data and linkage |
@@ -58,7 +58,9 @@ Implemented 2026-10-17 on the local branch `feat/part-04-client-records` (not pu
 
 Fixed two defects under C10: the detail page now pages through the complete revision history instead of stopping at 50, and the central recorder keeps free-text client reasons in restricted revisions rather than copying them into general audit access. Audit events retain a fixed revision reference and the existing masked metadata. No migration, permission or office-rule change; historical audit rows remain untouched.
 
-Added regressions for 51 revisions, record isolation, view-only history, all role restrictions on older pages, every client mutation's reason and both administrator/supervisor audit responses. Both new tests failed before the fixes. Final foundation checks passed: **163 tests / 936 assertions**; Part 04 on disposable MySQL: **45 tests / 394 assertions**. Browser retest remains pending because the tool exposed no browser session. Full findings, connected files and next steps: [QA report](../docs/PART-04-QA-2026-10-18.md).
+Added regressions for 51 revisions, record isolation, view-only history, all role restrictions on older pages, every client mutation's reason and both administrator/supervisor audit responses. Both new tests failed before the fixes. Final DEV-1 foundation checks passed: **163 tests / 936 assertions**; Part 04 on disposable MySQL: **45 tests / 394 assertions**. Full findings: [QA report](../docs/PART-04-QA-2026-10-18.md).
+
+DEV-3 subsequently saved and ran 34 browser cases across desktop/phone widths and light/dark themes. The 51-revision fixture reaches creation on page 2 and returns to the newest history; screenshots confirm the controls and wrapping. Audit privacy and existing role boundaries pass through real authentication. This completes the pending developer visual follow-up; physical campus devices and custodian acceptance remain separate. [Suite and evidence](../docs/DEV-3-BROWSER-REGRESSION.md).
 
 ## Proposed records and constraints
 

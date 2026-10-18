@@ -119,13 +119,34 @@ docker compose -f docker-compose.dev.yml exec app npx shadcn-vue@latest add butt
 
 ## Checks and collaboration
 
-check.ps1 validates Compose/Composer, builds assets/Wayfinder routes, checks frontend formatting/lint/types, then runs PHP formatting, static analysis and the test suite. It pauses Vite/worker/scheduler if running and restores their previous running state afterwards. Tests currently use an in-memory SQLite database; later concurrency work also needs disposable MySQL integration tests. GitHub Actions runs the same application checks in the same Docker runtime from a clean checkout.
+check.ps1 validates Compose/Composer, builds assets/Wayfinder routes, checks frontend formatting/lint and Vue/browser-test types, then runs PHP formatting, static analysis and the PHP test suite. It pauses Vite/worker/scheduler if running and restores their previous running state afterwards. PHP tests use an in-memory SQLite database; concurrency checks also need disposable MySQL tests. Browser execution is a separate command below. GitHub Actions has separate foundation and browser jobs; this local branch has not been published or run on GitHub.
+
+## Saved browser regression suite (DEV-3)
+
+Run from the repository root with Docker Desktop in Linux-container mode. No host PHP/Node, dev credentials or running development stack are required:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./browser-tests.ps1
+```
+
+The suite runs 34 named cases in four Chromium projects: desktop (1440 × 900) and phone emulation (390 × 844), each in light/dark mode. It uses a fixed, separate `bisu-registrar-browser` Docker project, a fresh SQLite database, random test credentials and real sign-in/TOTP flows. It copies only allowlisted source, never the development `.env`, credentials, runtime data, dependency volumes or Vite hot marker. It builds the app before browser execution and removes the isolated workspace/network afterwards, including on failure. It does not reset development records or expose a second app port.
+
+Repeat or focus a run after the browser PHP image has been built:
+
+```powershell
+./browser-tests.ps1 -SkipBuild
+./browser-tests.ps1 -SkipBuild -Project phone-dark -Grep B31
+```
+
+`-SkipBuild` skips only rebuilding the test PHP image; source, locked dependencies, assets and fixtures are still prepared fresh. First use downloads the matching pinned Playwright image and dependencies. Reports are in ignored `.browser-artifacts/report/index.html` and `.browser-artifacts/results.json`; failure screenshots/traces are in `test-results/`, and layout captures are in `screenshots/`. The JSON/HTML report identifies the current run; custom layout captures retain the latest capture for each project. CI retains only this synthetic evidence for seven days when the workflow is eventually published.
+
+The four fixture-safety guards and TypeScript checks run in `./check.ps1`; actual browser tests run through `./browser-tests.ps1`. New parts should add independent cases and isolated fixtures. This suite is developer regression evidence; campus browser/device acceptance remains D20. [Design, case map and validation](docs/DEV-3-BROWSER-REGRESSION.md).
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for branch/review conventions and [docs/FOUNDATION-VALIDATION.md](docs/FOUNDATION-VALIDATION.md) for evidence from repository preparation. Dependabot proposes weekly Composer, npm and GitHub Actions updates; updates require review and passing checks.
 
 ## Current scope and campus hosting
 
-Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Part 04 slice 1 implements client records with synthetic data, complete paginated revision history and client reasons restricted to that history. Public self-registration grants no staff roles. Imports, identity linkage, requests, office ticket queues, payments and documents remain unimplemented. DEV-2 adds a development database-job worker, scheduler and captured-email inbox; campus email delivery remains gated by D11. Current authorization covers work that can proceed while offices answer (C11), with existing per-task approval gates preserved. See the [Part 04 QA report](docs/PART-04-QA-2026-10-18.md) for client-record evidence and remaining browser confirmation.
+Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Part 04 slice 1 implements client records with synthetic data, complete paginated revision history and client reasons restricted to that history. Public self-registration grants no staff roles. Imports, identity linkage, requests, office ticket queues, payments and documents remain unimplemented. DEV-2 adds a development database-job worker, scheduler and captured-email inbox; campus email delivery remains gated by D11. Current authorization covers work that can proceed while offices answer (C11), with existing per-task approval gates preserved. See the [Part 04 QA report](docs/PART-04-QA-2026-10-18.md) and [saved browser evidence](docs/DEV-3-BROWSER-REGRESSION.md).
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).
 

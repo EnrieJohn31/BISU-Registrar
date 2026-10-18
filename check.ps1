@@ -27,6 +27,7 @@ try {
     Invoke-Compose run --rm --no-deps app npm run build
     Invoke-Compose run --rm --no-deps app npm run check
     Invoke-Compose run --rm --no-deps app npm run types:check
+    Invoke-Compose run --rm --no-deps app npm run types:browser
     Invoke-Compose run --rm --no-deps app composer test
     Write-Host 'Foundation checks passed.'
 } finally {

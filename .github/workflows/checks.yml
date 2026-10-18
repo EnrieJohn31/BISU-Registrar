@@ -63,9 +63,36 @@ jobs:
       - name: Check Vue TypeScript
         run: docker compose -f docker-compose.dev.yml run --rm --no-deps app npm run types:check
 
+      - name: Check browser test TypeScript
+        run: docker compose -f docker-compose.dev.yml run --rm --no-deps app npm run types:browser
+
       - name: Check PHP formatting, analysis and tests
         run: docker compose -f docker-compose.dev.yml run --rm --no-deps app composer test
 
       - name: Clean up CI containers
         if: always()
         run: docker compose -f docker-compose.dev.yml down --remove-orphans
+
+  browser:
+    name: Browser regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run isolated browser suite
+        shell: pwsh
+        run: ./browser-tests.ps1
+
+      - name: Retain synthetic browser evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: browser-regression
+          path: .browser-artifacts/
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: ignore
