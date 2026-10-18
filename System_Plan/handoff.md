@@ -83,7 +83,7 @@ Read the output JSON and inspect new page PNGs before accepting a later run. The
 2. **Start the baseline (OF-4):** agree the method with the adviser, tell the Data Protection Officer, get each office head to sign the permission form (page 2 of the kit), print the sheets and observe. Nothing is measured until the signature is on file.
 3. **You review the [Part 05 design](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18)** and approve, change or reject the seven proposals (including the new `services.view` permission). On approval I record it as decision C15, then build DEV-6 on a new local branch with `./check.ps1`, MySQL race probes and new browser cases. Nothing in Part 05 is built before then.
 4. **Alternative or parallel:** DEV-7 (basic queue) needs its own short design and approval first. Thesis and office-preparation tasks in [97](97-work-while-waiting.md) need no code.
-5. **Send the [requirements checklist](requirements.pdf)** if not yet sent. The rest of the Citizen's Charter (steps, fees, processing times and the Cashier section) is item 1 and unlocks Part 05 slice 2.
+5. **Send the [requirements checklist](requirements.pdf)** (version 2, 18 October: 37 items grouped by office, plain wording and made-up example answers; start with its "six to get first"). The rest of the Citizen's Charter (steps, fees, processing times and the Cashier section) is item 1 and unlocks Part 05 slice 2.
 6. Record incoming office answers; they do not automatically authorize a previously gated feature. No messages, appointments or office permissions were sent or obtained by this slice.
 
 ### Office decisions still needed

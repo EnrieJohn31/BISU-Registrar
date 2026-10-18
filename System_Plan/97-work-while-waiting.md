@@ -67,7 +67,7 @@ Project lead plus one member.
 
 | # | Task | Why | Size |
 |---|---|---|---|
-| OF-1 | Send [requirements.pdf](requirements.pdf), name one contact per office, and record every answer as a decision in [90](90-decisions-and-open-questions.md) | Answers have to be traceable | S |
+| OF-1 | Send [requirements.pdf](requirements.pdf) (version 2, 18 October 2026, grouped by office with example answers), name one contact per office, and record every answer as a decision in [90](90-decisions-and-open-questions.md) | Answers have to be traceable | S |
 | OF-2 | Book a 20-minute demo with the Registrar: show client records and the demo ID rule, then ask the ID questions (D04, R3 and R4 in [95](95-office-interview-checklist.md)) | Offices answer faster and more precisely when they can see a screen | S |
 | OF-3 | Draft the privacy notice and a Privacy Impact Assessment outline for the Data Protection Officer to review, listing only the fields we store now (C10) | The DPO edits a draft faster than writing from nothing (D09, risk RK07) | M |
 | OF-4 | **Kit ready 2026-10-18, no observation done yet:** [baseline-kit.pdf](baseline-kit.pdf) (7 pages: privacy rules, office permission form, observation protocol, four sheets) with [CSV entry templates](baseline-templates/README.md). Needs each office head's signed permission and the adviser's agreement on the method first. Original task: with office permission, take a "before" baseline: for a few days, tally clients per day, waiting time and processing time per document type on paper, with no names | Gives the thesis a before-and-after comparison and sets realistic report targets (Parts 12, 13, 14 cutover) | M |

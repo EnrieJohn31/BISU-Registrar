@@ -33,6 +33,11 @@ flowchart LR
 | R12 | How is client feedback collected now (paper CSM form)? Who compiles ARTA reports? | D19 |
 | R13 | Which language(s) should clients see: English, Filipino, Cebuano/Boholano? | D01 |
 | R14 | Supplier list: rating criteria and weights, review threshold, scoring period, supplier fields, documents | D15, D16 |
+| R15 | (Added 2026-10-18) The charter says "Registration Office"; which office name should clients see on screens and printouts? | D05 |
+| R16 | (Added 2026-10-18) For each requirement: may it be uploaded as a photo, or must it be shown at the counter? Are requirement groups by client type (as on charter page 115) alternatives the client chooses between? | D05 |
+| R17 | (Added 2026-10-18) Paper size, special paper and printer brand/model used for each printed document, so output can be tested on the real printer | D08 |
+| R18 | (Added 2026-10-18) One contact person for questions, the approver of office rules, and staff who can test later | D14 |
+| R19 | (Added 2026-10-18) Signed permission to observe the public counter for the baseline count (page 2 of [baseline-kit.pdf](baseline-kit.pdf)) | OF-4 |
 
 ## Cashier's Office
 
@@ -44,6 +49,9 @@ flowchart LR
 | C4 | Partial payments, overpayments, refunds, discounts/waivers: allowed? Who approves? | D07, D05 |
 | C5 | Daily cut-off and reconciliation; which official collection report (for example the Report of Collections and Deposits) and which date basis? | D07, D12 |
 | C6 | Which fee schedule or board resolution sets the amounts? Effective dates? | D05 |
+| C7 | (Added 2026-10-18) Is each fee per copy, per page or per request, and does it differ by client group? | D05, D07 |
+| C8 | (Added 2026-10-18) The Cashier's section of the Citizen's Charter (payment steps, processing time, person responsible) | D05 |
+| C9 | (Added 2026-10-18) Signed permission to observe the payment window for the baseline count | OF-4 |
 
 ## MIS / IT
 
@@ -66,6 +74,7 @@ flowchart LR
 | P3 | Retention periods for requests, payments, queue data, feedback and audit logs | D09 |
 | P4 | How are data subject requests (access, correction) and breaches reported, and to whom? | D09 |
 | P5 | Should feedback be anonymous or linked to the request? | D19 |
+| P6 | (Added 2026-10-18) Is anonymous counting and timing of clients at the counters (the baseline kit, no names or recordings) acceptable, and under what conditions? | D09, OF-4 |
 
 ## Supply Office / BAC
 
@@ -82,6 +91,7 @@ flowchart LR
 | T2 | Is the added scope (supplier list, review additions) accepted for the thesis? | C07, 93 |
 | T3 | Who signs UAT and acceptance for each office? | D14 |
 | T4 | Code ownership and licensing expectations for a campus-deployed thesis system | D21 |
+| T5 | (Added 2026-10-18) Approve the baseline method (about five days per office, two timed hours a day, no names) | OF-4 |
 
 ## Documents to request (blank or sanitized only)
 

@@ -135,7 +135,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 - [DEV-3 saved browser regression](../docs/DEV-3-BROWSER-REGRESSION.md) - isolated fixtures, 34-case mapping, viewport/theme checks and completed history visual follow-up.
 - [DEV-8 BISU branding](../docs/DEV-8-BISU-BRANDING.md) - verified seal source, local sidebar/browser icons, reproducible asset generation and cleanup evidence.
 - [DEV-4 PDF renderer comparison](../docs/DEV-4-PDF-RENDERERS.md) - isolated offline fixtures, result matrix, provisional renderer choice and remaining template/printer gates.
-- [Requirements checklist (PDF)](requirements.pdf) — 29 items to collect from the offices, in priority order, for the team to send out; editable source [requirements.html](requirements.html).
+- [Requirements checklist (PDF)](requirements.pdf) — version 2 (18 October 2026): 37 plain-language items grouped by office, each with the reason and a made-up example answer, plus the six to get first; editable source [requirements.html](requirements.html).
 - [Baseline observation kit (PDF)](baseline-kit.pdf) — 7 A4 pages to measure how the offices work today (arrivals, waiting, service and turnaround), with a permission form and [CSV templates](baseline-templates/README.md); editable source [baseline-kit.html](baseline-kit.html).
 - [Work while waiting](97-work-while-waiting.md) — low-rework tasks for development, thesis, office preparation and deployment readiness until the office answers arrive.
 
