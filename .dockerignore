@@ -1,6 +1,8 @@
 .git
 .github
 .local-backups
+output
+tmp
 System_Plan
 docs
 src/.git

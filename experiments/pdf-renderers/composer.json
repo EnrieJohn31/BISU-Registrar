@@ -1,0 +1,18 @@
+{
+    "name": "bisu/pdf-renderer-spike",
+    "description": "Isolated synthetic PDF comparison; not an application dependency.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "ext-dom": "*",
+        "ext-gd": "*",
+        "ext-mbstring": "*",
+        "dompdf/dompdf": "3.1.6"
+    },
+    "config": {
+        "platform": { "php": "8.4.0" },
+        "sort-packages": true,
+        "allow-plugins": false
+    }
+}

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BISU Registrar - Requirements checklist</title>
+<style>
+  @page {
+    size: A4;
+    margin: 13mm 12mm 16mm 12mm;
+    @bottom-left { content: "BISU Registrar · What we need from the offices · Version 2, 18 October 2026"; font: 8pt "Segoe UI", Arial, sans-serif; color: #666; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt "Segoe UI", Arial, sans-serif; color: #666; }
+  }
+  :root { --ink: #1c1b22; --muted: #5b5a66; --line: #cfcdd8; --brand: #2d1a6b; --soft: #f3f1fa; --warn: #fff7e0; --warn-line: #e3c56b; --ex: #f4f8f4; --ex-ink: #2f5130; }
+  * { box-sizing: border-box; }
+  html { font: 9.4pt/1.38 "Segoe UI", Arial, sans-serif; color: var(--ink); }
+  body { margin: 0; }
+  h1 { font-size: 19pt; line-height: 1.15; margin: 0 0 1.5mm; color: var(--brand); letter-spacing: -0.2px; }
+  .sub { color: var(--muted); margin: 0 0 3.5mm; font-size: 9.4pt; }
+  h2 { font-size: 11.5pt; margin: 5mm 0 2mm; padding: 1.6mm 3mm; background: var(--brand); color: #fff; border-radius: 1.2mm; break-after: avoid; }
+  h2 small { font-weight: 400; font-size: 8.8pt; opacity: .92; margin-left: 2mm; }
+  p { margin: 0 0 2mm; }
+  .page { break-before: page; }
+  .box-note { border: 0.3mm solid var(--warn-line); background: var(--warn); border-radius: 1.5mm; padding: 2.4mm 3.4mm; margin: 0 0 3mm; break-inside: avoid; }
+  .box-note strong { color: #6b4b00; }
+  .box-note ul, .card ul, .card ol { margin: 1mm 0 0 4.5mm; padding: 0; }
+  .box-note li, .card li { margin: 0 0 0.7mm; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-bottom: 3mm; break-inside: avoid; }
+  .card { border: 0.3mm solid var(--line); border-radius: 1.5mm; padding: 2.4mm 3.2mm; background: var(--soft); }
+  .card h4 { margin: 0 0 1mm; font-size: 9.6pt; color: var(--brand); }
+  table { width: 100%; border-collapse: collapse; font-size: 8.9pt; }
+  th { text-align: left; background: #e9e6f5; color: var(--brand); font-size: 8pt; letter-spacing: .2px; }
+  th, td { border: 0.25mm solid var(--line); padding: 1.5mm 1.8mm; vertical-align: top; }
+  tr { break-inside: avoid; }
+  thead { display: table-header-group; }
+  td.c { width: 7mm; text-align: center; }
+  td.n { width: 7mm; text-align: center; color: var(--muted); font-weight: 600; }
+  td.q { width: 50%; }
+  td.q .why { display: block; color: var(--muted); font-size: 8.3pt; margin-top: 0.8mm; }
+  td.q .ref { color: #8b8996; font-size: 7.4pt; white-space: nowrap; }
+  td.ex { background: var(--ex); color: var(--ex-ink); font-size: 8.5pt; font-style: italic; }
+  td.w { width: 15mm; text-align: center; }
+  .tick { display: inline-block; width: 3.6mm; height: 3.6mm; border: 0.35mm solid #444; border-radius: 0.6mm; vertical-align: -0.6mm; }
+  .p { display: inline-block; font-size: 7.4pt; font-weight: 700; padding: 0.3mm 1.4mm; border-radius: 1mm; white-space: nowrap; }
+  .p1 { background: var(--brand); color: #fff; }
+  .p2 { border: 0.3mm solid var(--brand); color: var(--brand); }
+  .p3 { border: 0.3mm solid #aaa; color: #777; }
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; margin: 0 0 3mm; break-inside: avoid; }
+  .flow div { border: 0.3mm solid var(--line); border-radius: 1.5mm; padding: 2mm 2.4mm; font-size: 8.4pt; background: #fff; }
+  .flow b { display: block; color: var(--brand); font-size: 8.8pt; margin-bottom: 0.6mm; }
+  .docs { columns: 2; column-gap: 6mm; margin: 0; padding: 0; list-style: none; }
+  .docs li { break-inside: avoid; margin: 0 0 1.6mm; display: flex; gap: 2mm; }
+  .sig { margin-top: 4mm; font-size: 9pt; color: var(--muted); }
+  .lines { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 8mm; margin-top: 2mm; }
+  .lines div { border-bottom: 0.25mm solid #888; height: 6mm; font-size: 8pt; color: var(--muted); }
+  .foot { margin-top: 5mm; font-size: 8.2pt; color: var(--muted); border-top: 0.25mm solid var(--line); padding-top: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1 ============================ -->
+<h1>What we need from the offices</h1>
+<p class="sub">Requirements checklist for the BISU Registrar system, Balilihan Campus · Version 2, 18 October 2026 (replaces version 1 of 17 October)</p>
+
+<div class="grid2">
+  <div class="card">
+    <h4>How to use this list</h4>
+    <ul>
+      <li>It is grouped by <strong>who to ask</strong>: Registrar, Cashier, MIS, the Data Protection Officer, the adviser, and our own team.</li>
+      <li>Each item says <strong>what to ask</strong> in plain words and <strong>why</strong> we need it, with an <strong>example answer</strong> (green) showing the kind of reply that helps.</li>
+      <li>The tag on the right says when: <span class="p p1">First</span> blocks the next step, <span class="p p2">Soon</span> before the first full request, <span class="p p3">Later</span> for reports and extras.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>What we already have</h4>
+    <ul>
+      <li><strong>One page</strong> of the Citizen's Charter (page 115, Enrollment). It shows how each service is described, but not the steps, fees or processing time.</li>
+      <li><strong>Working with made-up data:</strong> staff sign-in and roles, an activity log, and client records. The login page also opens on a phone over Wi-Fi.</li>
+      <li><strong>Ready to use:</strong> the baseline kit for counting clients and waiting times, and the design of the services and fees screens.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box-note">
+  <strong>Ground rules for every request</strong>
+  <ul>
+    <li><strong>Never ask for or carry real student or alumni records</strong>, payment details or ID numbers. Ask for <strong>blank forms and made-up examples</strong> only.</li>
+    <li><strong>The green examples are invented.</strong> They show the kind of answer we need. They are not BISU's rules, so never copy one as an answer.</li>
+    <li>Ask for the <strong>official, approved version</strong> of each document, not someone's memory of it.</li>
+    <li>For every answer, write down <strong>who</strong> said it (name and position), the <strong>date</strong>, and the <strong>document name and page</strong>. Clear photos or scans are fine if they show no personal data.</li>
+  </ul>
+</div>
+
+<h2>The six to get first <small>these unblock the most work</small></h2>
+<table>
+  <tbody>
+    <tr><td class="n">1</td><td><strong>The rest of the Citizen's Charter</strong>: the Registration Office and Cashier pages with steps, fees, processing time and person responsible (items 1, 21).</td></tr>
+    <tr><td class="n">2</td><td><strong>The services for the first release</strong> and what each one requires (items 4, 5).</td></tr>
+    <tr><td class="n">3</td><td><strong>The fee for each service</strong> and the document that approved it (item 19).</td></tr>
+    <tr><td class="n">4</td><td><strong>What Student and Alumni IDs look like</strong>, with made-up examples, and who keeps the official list (items 6, 7).</td></tr>
+    <tr><td class="n">5</td><td><strong>Signed permission</strong> from both office heads to start the baseline count (items 18, 25), and the adviser's agreement on the method (item 34).</td></tr>
+    <tr><td class="n">6</td><td><strong>Defense dates</strong> and a <strong>project lead</strong> named for our team (items 33, 37).</td></tr>
+  </tbody>
+</table>
+
+<h2>What the answers let us build <small>so the offices see why we ask</small></h2>
+<div class="flow">
+  <div><b>Charter pages and fees</b>The services and fees screens filled with the real services instead of demo ones.</div>
+  <div><b>ID formats and the list</b>Loading the official student and alumni list, and checking IDs correctly.</div>
+  <div><b>Queue and claim rules</b>Queue tickets, the order of calling, and who may claim a document.</div>
+  <div><b>Templates, server, devices</b>Printing real certificates, and installing the system on campus.</div>
+</div>
+
+<p class="foot"><strong>Changes from version 1:</strong> grouped by office, with plain wording and made-up example answers. Added: which office name clients see (3), upload or show at the counter and client groups (5), a contact person (9), printer model and paper (11), the Cashier's charter section (21), the baseline permission forms (18, 25, 32a, 34) and the phone test (36). Page 115 of the charter has been received. The "Ref" codes link each item to the team's decision list (System_Plan/90-decisions-and-open-questions.md). This list gathers information only; it does not approve any office rule, fee or policy.</p>
+
+<!-- ============================ REGISTRAR ============================ -->
+<div class="page"></div>
+<h2>Registrar's Office (Registration Office) <small>items 1–18</small></h2>
+<table>
+  <thead><tr><th></th><th>#</th><th>What to ask, and why</th><th>Example of a helpful answer (made up)</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">1</td>
+      <td class="q"><strong>The rest of the Citizen's Charter (2024, 1st Edition)</strong>: the whole Registration Office section, especially the pages after page 115 that show each service's steps, fees, processing time and person responsible. <span class="why">Why: the services screens copy the charter's layout. We have only the Enrollment page.</span> <span class="ref">Ref D05</span></td>
+      <td class="ex">"Here are clear photos of pages 116 to 130, the whole section 5.2."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">2</td>
+      <td class="q"><strong>Is that edition still current, and does Balilihan use it?</strong> The charter covers six campuses. <span class="why">Why: we must build from the edition the office actually follows.</span> <span class="ref">Ref D05</span></td>
+      <td class="ex">"Yes, the 2024 edition is current. Balilihan follows the university-wide charter; a 2025 edition is coming in June."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">3</td>
+      <td class="q"><strong>Which office name should clients see on screens?</strong> The charter says "Registration Office"; we have been saying "Registrar's Office". <span class="why">Why: the name appears on every screen and printout.</span> <span class="ref">Ref D05</span></td>
+      <td class="ex">"Use 'Office of the Registrar'. 'Registration Office' is the old charter wording."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">4</td>
+      <td class="q"><strong>Which documents and services should the system handle first, and which are requested most?</strong> Also: is <strong>Enrollment</strong> part of this system, or does it stay outside? <span class="why">Why: we build the most-used services first and leave out what the office handles elsewhere.</span> <span class="ref">Ref D01</span></td>
+      <td class="ex">"Start with a certification, a transcript request and authentication. Certifications are most requested, about 20 a day. Enrollment stays outside this system."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">5</td>
+      <td class="q"><strong>For each service, what must the client bring or fill in?</strong> If it differs by client (current student, alumni, transferee), list each group, as page 115 does. For each item say whether it can be <strong>uploaded as a photo</strong> or must be <strong>shown at the counter</strong>, and whether a <strong>clearance</strong> from another office (library, accounting) is needed. <span class="why">Why: the request form asks for exactly these things.</span> <span class="ref">Ref D05</span></td>
+      <td class="ex">"Certification: current students fill in the request form and show their school ID at the counter. Alumni also show a government ID. A representative brings an authorization letter. Library clearance only for transcripts; the clerk checks the signed slip."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">6</td>
+      <td class="q"><strong>What do Student IDs and Alumni IDs look like?</strong> Length, letters or numbers, dashes, leading zeros, whether an ID is ever reused, and whether alumni keep their student ID. Give <strong>made-up</strong> examples. <span class="why">Why: the system currently uses a placeholder rule and refuses real IDs until we know.</span> <span class="ref">Ref D04</span></td>
+      <td class="ex">"Student IDs are the entry year, a dash, then four digits, like 2099-0042. Zeros at the front are kept. IDs are never reused. Alumni keep their student ID."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">7</td>
+      <td class="q"><strong>The official student and alumni list</strong>: who keeps it, its column headings (a blank copy with headings only), how often it changes, and who fixes duplicates and mistakes. <span class="why">Why: the system loads this list so that it knows who may request documents.</span> <span class="ref">Ref D04</span></td>
+      <td class="ex">"The records clerk keeps it in Excel: ID, last name, first name, middle name, program, year graduated. Updated each semester. The Registrar decides on duplicates."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">8</td>
+      <td class="q"><strong>How do you make sure a person is really that student or alumnus?</strong> And what should happen when someone forgets their password or loses access? <span class="why">Why: before clients can request online, their account must be linked to the right person.</span> <span class="ref">Ref D03</span></td>
+      <td class="ex">"They show a school or government ID at the counter and staff compare the name and photo. If they lose access, they come to the office with an ID."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">9</td>
+      <td class="q"><strong>One contact person</strong> who can answer our questions, and who in the office <strong>approves</strong> rules and will <strong>test</strong> the system later. <span class="why">Why: every answer needs an owner, and testing needs real staff.</span> <span class="ref">Ref D14</span></td>
+      <td class="ex">"Ask the records clerk first. The Registrar approves. Two clerks can test in March."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">10</td>
+      <td class="q"><strong>How do clients line up today?</strong> Office hours and days, lunch break, how senior citizens, persons with disabilities and pregnant women are served, and what happens if a called client is not there. <span class="why">Why: the queue screens follow these rules. The baseline count also measures them.</span> <span class="ref">Ref D06</span></td>
+      <td class="ex">"8:00 to 5:00, Monday to Friday, open over lunch. One line. Seniors and PWDs go first at window 1. We call three times, then serve the next person."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">11</td>
+      <td class="q"><strong>Blank copies of each document the office prints</strong> (certifications and similar), who signs each one, how they are numbered, the paper size, any special paper, and the <strong>printer brand and model</strong>. Is approval a wet signature? <span class="why">Why: we tested making certificates with fake layouts. We must test again with the real blank layout and printer.</span> <span class="ref">Ref D08</span></td>
+      <td class="ex">"Certification on A4 security paper, signed by the Registrar, numbered by year (2026-0001). Printer: an office laser printer, model on the label. Wet signature."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">12</td>
+      <td class="q"><strong>Who may claim a document?</strong> Can a relative or friend claim it, and what must they bring? <span class="why">Why: the release screen checks this before handing over a document.</span> <span class="ref">Ref D08</span></td>
+      <td class="ex">"Yes, with an authorization letter and both people's IDs. For transcripts, a notarized SPA."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">13</td>
+      <td class="q"><strong>How long may a request wait</strong> for missing papers or payment before it is closed? What happens to documents nobody claims, and after how many days? <span class="why">Why: the system sends reminders and lists old requests, but never closes them on its own.</span> <span class="ref">Ref D18</span></td>
+      <td class="ex">"Incomplete requests close after 30 days, with a reminder after 7. Unclaimed documents are kept for 6 months, then filed."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">14</td>
+      <td class="q"><strong>The academic calendar and holiday list</strong>, and how class or work suspensions are announced. <span class="why">Why: processing days are counted in working days, and the queue closes on suspended days.</span> <span class="ref">Ref D06, D12</span></td>
+      <td class="ex">"The calendar is a PDF from the university. Suspensions are posted on the BISU Facebook page by the President's office."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">15</td>
+      <td class="q"><strong>Blank samples of the reports made today</strong> (daily, monthly, semester, academic year) and who receives each one. <span class="why">Why: the system's reports should match what the office already submits.</span> <span class="ref">Ref D12</span></td>
+      <td class="ex">"A monthly report of documents issued, in Excel, to the Campus Director by the 5th."</td><td class="w"><span class="p p3">Later</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">16</td>
+      <td class="q"><strong>How is client feedback collected today</strong> (the paper satisfaction form)? Who compiles the report? Which languages should clients see on screen? <span class="why">Why: feedback and language options come at the end of the build.</span> <span class="ref">Ref D19, D01</span></td>
+      <td class="ex">"Paper form at the window, compiled monthly by the clerk. English on screens is fine; Cebuano would be nice later."</td><td class="w"><span class="p p3">Later</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">17</td>
+      <td class="q"><strong>Supplier list</strong>: how suppliers should be rated, how much each point counts, the score that should trigger a review, how often scores reset, and which supplier details and documents to keep. <span class="why">Why: the supplier list is built after the main request flow.</span> <span class="ref">Ref D15, D16</span></td>
+      <td class="ex">"On-time delivery 40%, quality 40%, complete papers 20%. Review anyone below 70. Reset every year. Keep the business permit expiry date."</td><td class="w"><span class="p p3">Later</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">18</td>
+      <td class="q"><strong>Sign the baseline permission form</strong> (page 2 of the baseline kit), so the team may count arrivals and time service at the counter for about five days, with no names. <span class="why">Why: it gives the thesis a "before" picture to compare with later.</span> <span class="ref">Ref OF-4</span></td>
+      <td class="ex">"Signed. Observe 21 to 25 October, 9 to 10 and 2 to 3. Stand near the bench by the door. Avoid Friday afternoon."</td><td class="w"><span class="p p1">First</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ CASHIER ============================ -->
+<h2>Cashier's Office <small>items 19–25</small></h2>
+<table>
+  <thead><tr><th></th><th>#</th><th>What to ask, and why</th><th>Example of a helpful answer (made up)</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">19</td>
+      <td class="q"><strong>The fee for each service</strong>, the document that approved it (board resolution or fee schedule) and since when. Is it per copy, per page or per request? Does it differ by client group? <span class="why">Why: the system computes what a client owes. It must never guess an amount.</span> <span class="ref">Ref D05, D07</span></td>
+      <td class="ex">"Certification: ₱__ per copy. Transcript: ₱__ per page. Both from Board Resolution No. __, series of 20__, effective June 2024. Same for everyone."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">20</td>
+      <td class="q"><strong>Are some clients exempt from fees or given discounts?</strong> Who approves it, and what proof is needed? <span class="why">Why: a fee waiver needs its own approval step, separate from a free service.</span> <span class="ref">Ref D05, D07</span></td>
+      <td class="ex">"No discounts. Graduating students get their first certification free, with the Campus Director's approval."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">21</td>
+      <td class="q"><strong>The Cashier's section of the Citizen's Charter</strong>: payment steps, processing time and person responsible. <span class="why">Why: the payment part of the request follows it.</span> <span class="ref">Ref D05</span></td>
+      <td class="ex">"Section 5.4, pages 140 to 142. Photos attached."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">22</td>
+      <td class="q"><strong>How can clients pay</strong> (cash, bank deposit, e-wallet)? How are official receipts issued and numbered? Who records a payment and who checks it? <span class="why">Why: the Cashier screen records the receipt number and who checked it.</span> <span class="ref">Ref D07</span></td>
+      <td class="ex">"Cash at the window only. Manual receipt booklets, numbered by series. The cashier issues the receipt; the collecting officer checks the day's receipts at closing."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">23</td>
+      <td class="q"><strong>Partial payments, overpayments and refunds</strong>: are they allowed, and who approves them? <span class="why">Why: these need separate records, never edits to a payment.</span> <span class="ref">Ref D07</span></td>
+      <td class="ex">"Full payment only. Overpayments are returned on the spot. Refunds are approved by the Accountant."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">24</td>
+      <td class="q"><strong>The daily closing time</strong> for payments, and a <strong>blank copy of the daily collection report</strong> (for example the Report of Collections and Deposits). <span class="why">Why: the system's totals must match the official report.</span> <span class="ref">Ref D07, D12</span></td>
+      <td class="ex">"Payments until 4:00 p.m. The report is prepared daily and given to Accounting the next morning. Blank copy attached."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">25</td>
+      <td class="q"><strong>Sign the baseline permission form</strong> for the Cashier's counter (page 2 of the baseline kit). <span class="why">Why: same as item 18, for the payment window.</span> <span class="ref">Ref OF-4</span></td>
+      <td class="ex">"Signed. Observe in the mornings only. Do not stand behind the window."</td><td class="w"><span class="p p1">First</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ MIS ============================ -->
+<h2>MIS / IT Office <small>items 26–31</small></h2>
+<table>
+  <thead><tr><th></th><th>#</th><th>What to ask, and why</th><th>Example of a helpful answer (made up)</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">26</td>
+      <td class="q"><strong>Which computer will run the system on campus</strong>, what address people will type, whether students on campus Wi-Fi can reach it, how the security padlock (certificate) is handled, and whether its clock is set automatically. <span class="why">Why: the system runs on the campus network only, not the public internet.</span> <span class="ref">Ref D02</span></td>
+      <td class="ex">"A spare desktop in the MIS room with Ubuntu. Address: registrar.balilihan.local. Reachable from student Wi-Fi. MIS issues the certificate. Clock syncs automatically."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">27</td>
+      <td class="q"><strong>A list of office computers, printers and any screens or kiosks</strong>: model, Windows version and browser version. <span class="why">Why: the system needs Chrome or Edge version 111 or newer (2023 onward). Older browsers show broken pages.</span> <span class="ref">Ref D10, D20</span></td>
+      <td class="ex">"Registrar PC 1: Windows 10, Chrome 129. Cashier PC: Windows 11, Edge 128. One laser printer. No kiosk or TV screen yet."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">28</td>
+      <td class="q"><strong>Can the system send emails</strong> (for example password resets) through a campus email account? If not, accounts are activated in person. <span class="why">Why: without email, staff must help clients set up their accounts.</span> <span class="ref">Ref D11</span></td>
+      <td class="ex">"No campus email server for this. Do in-person activation for now."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">29</td>
+      <td class="q"><strong>Backups and monitoring</strong>: how often to back up, how long to keep backups, who checks the system works, and how many people might use it at once on the busiest day. <span class="why">Why: so nothing is lost, and the computer is big enough.</span> <span class="ref">Ref D13</span></td>
+      <td class="ex">"Back up every night and keep 30 days. MIS checks every Monday. About 300 clients a day during enrollment week."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">30</td>
+      <td class="q"><strong>Who owns the program code after the thesis</strong>, and can it move to a BISU-controlled GitHub account? <span class="why">Why: someone must maintain the system after the team graduates.</span> <span class="ref">Ref D21</span></td>
+      <td class="ex">"MIS will own it. Move it to the campus GitHub account after the final defense."</td><td class="w"><span class="p p3">Later</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">31</td>
+      <td class="q"><strong>Supply Office or BAC</strong> (ask through MIS or directly): is there an existing supplier evaluation form, and should the Registrar's supplier ratings be shared with them? <span class="why">Why: the supplier list should not duplicate an official form.</span> <span class="ref">Ref D16, D17</span></td>
+      <td class="ex">"Yes, we use a yearly paper evaluation form. Ratings stay internal to the Registrar."</td><td class="w"><span class="p p3">Later</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ DPO, ADVISER, TEAM ============================ -->
+<h2>Data Protection Officer <small>item 32</small></h2>
+<table>
+  <thead><tr><th></th><th>#</th><th>What to ask, and why</th><th>Example of a helpful answer (made up)</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">32</td>
+      <td class="q"><strong>Three privacy questions.</strong> (a) Is it acceptable for the team to count clients and time service at the counters with <strong>no names</strong> (the baseline kit)? (b) Is a <strong>Privacy Impact Assessment</strong> needed before real student data is used, and is there a template and an approved <strong>privacy notice</strong>? (c) Which student details may the system keep, <strong>for how long</strong>, and how are correction requests and data breaches handled? <span class="why">Why: no real data enters the system until the privacy officer approves.</span> <span class="ref">Ref D09, D19</span></td>
+      <td class="ex">"(a) Yes, with no photos, and keep the sheets locked. (b) Yes, use the university template; we review it in two weeks. Notice text attached. (c) Name, ID and program only; keep request records 5 years; report breaches to me within 24 hours."</td><td class="w"><span class="p p1">First</span> (a)<br><span class="p p2">Soon</span> (b, c)</td></tr>
+  </tbody>
+</table>
+
+<h2>IT Thesis Coordinator / adviser <small>items 33–35</small></h2>
+<table>
+  <thead><tr><th></th><th>#</th><th>What to ask, and why</th><th>Example of a helpful answer (made up)</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">33</td>
+      <td class="q"><strong>Defense dates and required deliverables</strong>, and how the system will be evaluated (for example a quality survey based on ISO/IEC 25010). <span class="why">Why: we plan what must be working by each defense.</span></td>
+      <td class="ex">"Progress review on 15 December, final defense in March. Use an ISO 25010 survey with staff, students and IT experts."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">34</td>
+      <td class="q"><strong>Agree the baseline method</strong>: about five days per office, two timed hours a day, no names (show the baseline kit). <span class="why">Why: the before-and-after comparison must use a method the panel accepts.</span></td>
+      <td class="ex">"Approved. Add one peak day during enrollment, and report the median waiting time."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">35</td>
+      <td class="q"><strong>Is the extra scope accepted?</strong> The supplier list and the other additions to the plan. <span class="why">Why: we should not build what the panel will not count.</span></td>
+      <td class="ex">"Keep the supplier list, but only after the main request flow works."</td><td class="w"><span class="p p2">Soon</span></td></tr>
+  </tbody>
+</table>
+
+<h2>Our team <small>items 36–37</small></h2>
+<table>
+  <thead><tr><th></th><th>#</th><th>What to do, and why</th><th>Example of a helpful answer (made up)</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">36</td>
+      <td class="q"><strong>Finish the phone test</strong>: on a phone connected to the same Wi-Fi, sign in, open the dashboard and Client records, and write down the phone model, Android or iPhone version and browser version. Then try a second laptop. <span class="why">Why: it shows early whether campus phones and PCs can run the system.</span> <span class="ref">Ref OPS-1</span></td>
+      <td class="ex">"Phone: a mid-range Android 14 phone, Chrome 129. Sign-in OK, client list OK, buttons a bit small. Laptop 2: Windows 11, Edge, all OK."</td><td class="w"><span class="p p1">First</span></td></tr>
+    <tr><td class="c"><span class="tick"></span></td><td class="n">37</td>
+      <td class="q"><strong>Name a project lead</strong> and the other roles, and give every open question an owner and a target date. <span class="why">Why: answers come faster when one person is chasing each one.</span></td>
+      <td class="ex">"Lead: Ana. Registrar visits: Ben. Cashier and MIS: Carla. Thesis writing: Dan. Targets: charter pages by 25 October."</td><td class="w"><span class="p p1">First</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ DOCUMENTS ============================ -->
+<h2>Documents to bring back <small>blank or made-up data only</small></h2>
+<ul class="docs">
+  <li><span class="tick"></span><span>Citizen's Charter: all Registration Office and Cashier pages, plus the front pages (edition, date)</span></li>
+  <li><span class="tick"></span><span>Fee schedule and the document that approves it</span></li>
+  <li><span class="tick"></span><span>Current request forms (blank)</span></li>
+  <li><span class="tick"></span><span>Blank certificate and document layouts, paper size and printer model</span></li>
+  <li><span class="tick"></span><span>Student/alumni list: column headings only, or a made-up sample</span></li>
+  <li><span class="tick"></span><span>Official receipt sample (blank or voided) and the daily collection report (blank)</span></li>
+  <li><span class="tick"></span><span>Sample daily, monthly, semester and academic-year reports (blank)</span></li>
+  <li><span class="tick"></span><span>Academic calendar and holiday list</span></li>
+  <li><span class="tick"></span><span>Office organization chart and list of signatories</span></li>
+  <li><span class="tick"></span><span>Two signed baseline permission forms (Registrar and Cashier)</span></li>
+  <li><span class="tick"></span><span>Device and browser list from MIS</span></li>
+  <li><span class="tick"></span><span>Approved privacy notice and any Privacy Impact Assessment template</span></li>
+  <li><span class="tick"></span><span>Supplier evaluation form, if one exists</span></li>
+</ul>
+
+<p class="sig"><strong>Tracking:</strong> tick each item when received, then note who is chasing the rest.</p>
+<div class="lines">
+  <div>Project lead</div><div>Date this list was sent to the offices</div>
+  <div>Registrar's Office contact</div><div>Cashier's Office contact</div>
+  <div>MIS contact</div><div>Data Protection Officer contact</div>
+</div>
+
+
+
+</body>
+</html>

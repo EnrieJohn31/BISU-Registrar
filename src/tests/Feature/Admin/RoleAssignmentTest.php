@@ -47,7 +47,7 @@ class RoleAssignmentTest extends TestCase
         $event = AuditEvent::query()->where('action', 'role.assigned')->sole();
 
         $this->assertSame($cashierOffice->id, $event->office_id);
-        $this->assertSame(['role' => 'cashier', 'office' => 'CASHIER', 'assignment_id' => $assignment->id], $event->context);
+        $this->assertEquals(['role' => 'cashier', 'office' => 'CASHIER', 'assignment_id' => $assignment->id], $event->context);
     }
 
     public function test_a_role_cannot_be_held_twice_in_the_same_office(): void

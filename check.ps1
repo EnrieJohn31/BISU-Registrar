@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Push-Location $PSScriptRoot
-$nodeWasRunning = $false
+$pausedServices = @()
 
 function Invoke-Compose {
     & docker compose -f docker-compose.dev.yml @args
@@ -20,16 +20,17 @@ try {
     # Dependencies live in Docker volumes, not in src/, so check inside the container.
     & docker compose -f docker-compose.dev.yml run --rm --no-deps app sh -c 'test -f vendor/autoload.php && test -d node_modules/.bin'
     if ($LASTEXITCODE -ne 0) { throw 'Dependencies are missing from the Docker volumes. Run ./setup.ps1 first.' }
-    $nodeWasRunning = [bool](Invoke-Compose ps --status running --quiet node)
-    if ($nodeWasRunning) { Invoke-Compose stop node }
+    $pausedServices = @(Invoke-Compose ps --status running --services | Where-Object { $_ -in @('node', 'worker', 'scheduler') })
+    if ($pausedServices.Count) { Invoke-Compose stop @pausedServices }
 
     Invoke-Compose run --rm --no-deps app composer validate --strict
     Invoke-Compose run --rm --no-deps app npm run build
     Invoke-Compose run --rm --no-deps app npm run check
     Invoke-Compose run --rm --no-deps app npm run types:check
+    Invoke-Compose run --rm --no-deps app npm run types:browser
     Invoke-Compose run --rm --no-deps app composer test
     Write-Host 'Foundation checks passed.'
 } finally {
-    if ($nodeWasRunning) { & docker compose -f docker-compose.dev.yml up -d node }
+    if ($pausedServices.Count) { & docker compose -f docker-compose.dev.yml up -d --no-deps @pausedServices }
     Pop-Location
 }

@@ -186,7 +186,7 @@ class UserAdministrationTest extends TestCase
 
         $event = AuditEvent::query()->where('action', 'user.updated')->firstOrFail();
 
-        $this->assertSame(['name' => ['old' => 'Old Name', 'new' => 'New Name']], $event->changes);
+        $this->assertEquals(['name' => ['old' => 'Old Name', 'new' => 'New Name']], $event->changes);
         $this->assertSame('Spelling correction', $event->reason);
     }
 

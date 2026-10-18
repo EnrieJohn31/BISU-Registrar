@@ -10,7 +10,7 @@
 | Deployment | Not deployed |
 | Owner | Registrar release owner with developer; names pending |
 | Dependencies | Parts 06–10; audit and ownership controls from Part 03 |
-| Updated | 2026-10-17 |
+| Updated | 2026-10-18 |
 
 ## Features and screens
 
@@ -44,7 +44,7 @@ sequenceDiagram
 
 ## Campus-network behavior
 
-Tracking and in-app notifications are available while clients are connected to the BISU LAN/Wi-Fi. They do not promise off-campus push delivery. The baseline mail driver writes to logs; actual account verification/password recovery mail requires a campus-approved relay or an approved assisted account process. External email/SMS is optional and must not be assumed available.
+Tracking and in-app notifications are planned while clients are connected to the BISU LAN/Wi-Fi. They do not promise off-campus push delivery. DEV-2 captures development email in Mailpit and supplies a worker/scheduler ([development setup](../docs/DEV-2-BACKGROUND-SERVICES.md)); it does not implement release notifications or deliver campus email. Operational account verification/password recovery still requires a campus-approved relay or an approved assisted account process under D11. External email/SMS is optional and must not be assumed available.
 
 ## Implementation steps
 

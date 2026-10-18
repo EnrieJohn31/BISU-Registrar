@@ -1,0 +1,18 @@
+# Optional, temporary phone preview. Keep the base development bindings unchanged.
+# Requires Compose 2.24.4+ for !override; launch with ./lan-preview.ps1.
+x-lan-environment: &lan-environment
+  APP_URL: "http://${BISU_LAN_ADDRESS:?Run lan-preview.ps1 -Address with your PC LAN IPv4 address}:8085"
+  APP_DEBUG: "false"
+services:
+  app:
+    ports: !override
+      - "127.0.0.1:8085:8000"
+      - "${BISU_LAN_ADDRESS:?Run lan-preview.ps1 -Address with your PC LAN IPv4 address}:8085:8000"
+    environment:
+      <<: *lan-environment
+  worker:
+    environment:
+      <<: *lan-environment
+  scheduler:
+    environment:
+      <<: *lan-environment

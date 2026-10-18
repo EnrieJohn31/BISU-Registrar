@@ -2,7 +2,7 @@ param([switch]$Rebuild)
 
 $ErrorActionPreference = 'Stop'
 Push-Location $PSScriptRoot
-$nodeWasRunning = $false
+$pausedServices = @()
 $finished = $false
 
 function Invoke-Compose {
@@ -24,25 +24,29 @@ try {
         throw 'Both dependency lockfiles are required. Restore them from Git before setup.'
     }
 
-    $nodeWasRunning = [bool](Invoke-Compose ps --status running --quiet node)
-    if ($nodeWasRunning) { Invoke-Compose stop node }
+    # Long-lived processes must not read dependencies while setup replaces them.
+    $pausedServices = @(Invoke-Compose ps --status running --services | Where-Object { $_ -in @('app', 'node', 'worker', 'scheduler') })
+    if ($pausedServices.Count) { Invoke-Compose stop @pausedServices }
     if ($Rebuild) { Invoke-Compose build --pull } else { Invoke-Compose build }
     Invoke-Compose run --rm --no-deps app composer install --no-interaction --prefer-dist
     Invoke-Compose run --rm --no-deps app composer validate --strict
     if (!(Select-String -Path src/.env -Pattern '^APP_KEY=\S+' -Quiet)) {
         Invoke-Compose run --rm --no-deps app php artisan key:generate
     }
-    Invoke-Compose up -d --wait db redis
+    Invoke-Compose up -d --wait db redis mailpit
     Invoke-Compose run --rm app php artisan migrate --force
     Invoke-Compose run --rm --no-deps app npm ci --no-audit --no-fund
     Invoke-Compose run --rm --no-deps app npm run build
-    Invoke-Compose up -d
+    # Recreate long-lived runtimes so they use the image just built, even when
+    # Docker retains a stale image reference on an existing stopped container.
+    Invoke-Compose up -d --no-deps --force-recreate app node worker scheduler
     $finished = $true
     Write-Host 'BISU Registrar is available at http://localhost:8085'
+    Write-Host 'Test email inbox: http://localhost:8026 (Mailpit; no external delivery).'
     Write-Host 'Run ./check.ps1 to verify the foundation.'
 } finally {
-    if ($nodeWasRunning -and !$finished) {
-        & docker compose -f docker-compose.dev.yml up -d node
+    if ($pausedServices.Count -and !$finished) {
+        & docker compose -f docker-compose.dev.yml up -d --no-deps @pausedServices
     }
     Pop-Location
 }

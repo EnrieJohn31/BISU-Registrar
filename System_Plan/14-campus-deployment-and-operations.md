@@ -5,18 +5,18 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft; campus LAN hosting confirmed |
-| Implementation | Development Docker exists; operational deployment not started |
-| Validation | Production/restore/rollback checks not started |
+| Implementation | Development Docker includes worker/scheduler/Mailpit (DEV-2) and an optional same-network phone preview (OPS-1); operational deployment not started |
+| Validation | Development service evidence in [DEV-2](../docs/DEV-2-BACKGROUND-SERVICES.md); [LAN preview checks](../docs/LAN-PHONE-PREVIEW.md#validation--2026-10-18) passed, owner confirmed physical phone login page opens; sign-in/device/browser/second-laptop evidence pending; production/restore/rollback checks not started |
 | Deployment | No staging or campus-production deployment recorded |
 | Owner | Campus MIS/IT deployment owner with office sponsors; names pending |
 | Dependencies | Parts 03–12, Part 13 acceptance, Part 15 handover readiness |
-| Updated | 2026-10-17 |
+| Updated | 2026-10-18 |
 
 ## Confirmed deployment model
 
 Host BISU Registrar on BISU-managed local infrastructure and expose it to approved campus LAN/Wi-Fi devices. “Online” means campus browser access. Public Internet hosting, public DNS exposure and off-campus access are outside the initial scope.
 
-Development at `localhost:8085` is accessible only on the developer machine under the current Compose binding. It is not campus deployment. A campus system used for real transactions is **production**, even though it is private and local-network-only.
+Default development at `localhost:8085` is accessible only on the developer machine. For OPS-1 phone testing, double-click `start-lan.cmd` or run `./lan-preview.ps1`: the optional [LAN preview](../docs/LAN-PHONE-PREVIEW.md) detects the current private LAN IPv4 address, builds assets, pauses Vite and prints connection links. `-Links` reprints actual running bindings without a rebuild; `-Address` remains available when several adapters qualify. This changes no router/DHCP/firewall configuration and is not campus deployment. A campus system used for real transactions is **production**, even though it is private and local-network-only.
 
 ## Proposed topology
 
@@ -41,9 +41,17 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 
 | Environment | Current evidence | Planned access |
 |---|---|---|
-| Developer Docker | Verified on 2026-10-16; local and GitHub foundation checks passed; see foundation validation report | Developer loopback ports 8085/5178 |
+| Developer Docker | Foundation and DEV-2 background services validated locally; OPS-1 PC HTTP/assets checked and owner confirmed physical phone login page opens on 2026-10-18. Phone sign-in/navigation, device/browser details and second laptop remain pending. Historical GitHub checks do not validate this unpublished branch | Default loopback ports 8085/5178/8026; optional selected-LAN-address app 8085 with compiled assets and Vite paused; SMTP internal only |
 | Campus staging | Not configured / no deployment recorded | Restricted MIS/tester LAN segment; synthetic or authorized test data |
 | Campus production | Not configured / no deployment recorded | Approved BISU LAN/Wi-Fi segments through internal HTTPS |
+
+## Development background services — DEV-2, 2026-10-18
+
+Owner-authorized under C11 for work while office answers are pending. A single shared PHP image runs the app, Vite, one `database/default` queue worker and `schedule:work`. Worker defaults: 3 attempts, 5-second backoff, 60-second timeout, 90-second reservation expiry and 75-second shutdown grace. Mailpit captures test SMTP inside Docker; its temporary inbox is at http://localhost:8026. No relay, business schedule or record-pruning policy is enabled.
+
+Setup pauses app/Vite/worker/scheduler before dependency replacement and recreates them against the rebuilt image. Foundation checks pause and restore running Vite/worker/scheduler. Restart background containers after PHP/config changes. Existing local environment files remain preserved by setup; the README lists the Mailpit settings for existing clones. Design, operational commands, validation and limitations: [DEV-2 report](../docs/DEV-2-BACKGROUND-SERVICES.md).
+
+This completes only a development prerequisite for future Parts 04/10/11. The production preparation checklist below remains open, and D11/D13 still govern campus mail and workload/operations decisions.
 
 ## Preparation work
 

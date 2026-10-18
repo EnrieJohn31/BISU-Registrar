@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\ClientIdentifier;
+use App\Models\ClientProfile;
 use App\Models\Office;
 use App\Models\User;
 use App\Models\UserRole;
@@ -42,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
             'user' => User::class,
             'user_role' => UserRole::class,
             'office' => Office::class,
+            'client_profile' => ClientProfile::class,
+            'client_identifier' => ClientIdentifier::class,
         ]);
 
         DB::prohibitDestructiveCommands(

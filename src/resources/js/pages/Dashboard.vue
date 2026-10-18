@@ -16,6 +16,7 @@ import { usePermissions } from '@/composables/usePermissions';
 import { dashboard } from '@/routes';
 import { index as auditIndex } from '@/routes/admin/audit';
 import { index as usersIndex } from '@/routes/admin/users';
+import { index as clientsIndex } from '@/routes/registrar/clients';
 
 defineOptions({
     layout: {
@@ -71,6 +72,24 @@ const isStaff = computed(() => auth.value.roles.length > 0);
                         Registrar's Office.
                     </CardDescription>
                 </CardHeader>
+            </Card>
+
+            <Card v-if="can('clients.view')">
+                <CardHeader>
+                    <CardTitle>Registrar</CardTitle>
+                    <CardDescription>
+                        Look up and maintain the students and alumni who request
+                        services.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent class="flex flex-wrap gap-2">
+                    <Button variant="outline" as-child>
+                        <Link :href="clientsIndex()">
+                            <IdCard />
+                            Client records
+                        </Link>
+                    </Button>
+                </CardContent>
             </Card>
 
             <Card v-if="can('users.view') || can('audit.view')">

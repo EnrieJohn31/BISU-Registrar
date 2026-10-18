@@ -5,12 +5,12 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft |
-| Implementation | Not started |
-| Validation | Not started |
+| Implementation | DEV-4 isolated renderer spike complete locally; document generation/approval module not started |
+| Validation | Synthetic matrix passed: 12 fixture/engine combinations, 36 renders, 19 visually reviewed pages; real-template/font/printer and workflow acceptance pending ([DEV-4](../docs/DEV-4-PDF-RENDERERS.md)) |
 | Deployment | Not deployed |
 | Owner | Registrar template/signatory owner with developer; names pending |
 | Dependencies | Parts 03–05, 08–09 |
-| Updated | 2026-10-17 |
+| Updated | 2026-10-18 |
 
 ## Features and screens
 
@@ -39,7 +39,13 @@ stateDiagram-v2
     released --> [*]
 ```
 
-Risk RK12 ([94](94-team-schedule-and-risks.md)): run a renderer spike in iteration I1 with one real, office-supplied template on the campus fonts and printer, before committing to a PDF library.
+Risk RK12 ([94](94-team-schedule-and-risks.md)): DEV-4 completed a preliminary synthetic comparison while offices answer. Dompdf 3.1.6 is the provisional direction for simple certificates; Chromium remains the alternative. Re-run against a real, office-supplied template on the approved fonts and campus printer before accepting production output. The technical spike does not approve D08 or implement the document lifecycle.
+
+### DEV-4 technical record — 2026-10-18
+
+The owner authorized the isolated comparison under C14. Separate Docker images and dependency locks live outside `src/`; rendering uses no network and only labelled synthetic inputs. A4/Legal, long accented names, local images and 60-row multipage tables passed for both candidates. All 19 pages were reviewed; the final two sample packs match the source page PNGs pixel for pixel. No application package, route, queue job, storage policy, template, numbering or signatory was added.
+
+Dompdf's six medians were 201–426 ms; fresh-browser Chromium medians were 512–596 ms for the same body fixtures. Chromium needed a margin-header adapter, and Legal table pagination differed (three Dompdf pages versus two Chromium pages). These observations inform the technical recommendation; actual template acceptance is still required. [Method, versions, complete table, findings and limits](../docs/DEV-4-PDF-RENDERERS.md). Run `./pdf-spike.ps1` to regenerate the comparison. Future feature implementation requires its own scoped task and the D08 gates below.
 
 ## Implementation steps
 

@@ -1,0 +1,671 @@
+{
+    "reviewed_date":  "2026-10-18",
+    "visual_review":  "All 19 individual Poppler page PNGs reviewed; final packs match their source pages pixel for pixel.",
+    "recommendation":  "Dompdf 3.1.6 provisionally for simple certificate layouts; revalidate against D08 templates/fonts/printer before integration.",
+    "results":  {
+                    "status":  "automated checks passed; visual review is a separate required step",
+                    "fixture_count":  6,
+                    "engines":  {
+                                    "dompdf":  {
+                                                   "engine":  "dompdf",
+                                                   "version":  "v3.1.6",
+                                                   "php":  "8.4.26",
+                                                   "repeats":  3,
+                                                   "font_sha256":  {
+                                                                       "DejaVuSans-Bold.ttf":  "0d977336a6d5fba34eab8e3199eb218327161b5143749f802982c2bc34df0c96",
+                                                                       "DejaVuSans.ttf":  "abdc775b21b1bc470d50c97e790d276f2054b7504e56e5bd3e64f48d68582322",
+                                                                       "DejaVuSerif-Bold.ttf":  "e2fd85eba2de65ac270d1cdb1685e252eb827f600850cf62af2d20c41b22e945"
+                                                                   },
+                                                   "timing_scope":  "Fresh Dompdf instance and font cache per repetition; HTML load through PDF bytes, file write excluded.",
+                                                   "fixtures":  [
+                                                                    {
+                                                                        "id":  "a4-standard",
+                                                                        "milliseconds":  [
+                                                                                             294.81,
+                                                                                             201.04,
+                                                                                             185.07
+                                                                                         ]
+                                                                    },
+                                                                    {
+                                                                        "id":  "a4-long-name",
+                                                                        "milliseconds":  [
+                                                                                             189.35,
+                                                                                             234.16,
+                                                                                             301
+                                                                                         ]
+                                                                    },
+                                                                    {
+                                                                        "id":  "a4-multipage",
+                                                                        "milliseconds":  [
+                                                                                             620.52,
+                                                                                             365.54,
+                                                                                             249.09
+                                                                                         ]
+                                                                    },
+                                                                    {
+                                                                        "id":  "legal-standard",
+                                                                        "milliseconds":  [
+                                                                                             196.64,
+                                                                                             239.9,
+                                                                                             249.36
+                                                                                         ]
+                                                                    },
+                                                                    {
+                                                                        "id":  "legal-long-name",
+                                                                        "milliseconds":  [
+                                                                                             199.36,
+                                                                                             208.04,
+                                                                                             293.21
+                                                                                         ]
+                                                                    },
+                                                                    {
+                                                                        "id":  "legal-multipage",
+                                                                        "milliseconds":  [
+                                                                                             426.39,
+                                                                                             318.82,
+                                                                                             443.03
+                                                                                         ]
+                                                                    }
+                                                                ]
+                                               },
+                                    "chromium":  {
+                                                     "engine":  "chromium",
+                                                     "playwright":  "1.64.1",
+                                                     "version":  "156.0.8078.4",
+                                                     "node":  "v24.21.0",
+                                                     "repeats":  3,
+                                                     "font_sha256":  {
+                                                                         "DejaVuSans-Bold.ttf":  "0d977336a6d5fba34eab8e3199eb218327161b5143749f802982c2bc34df0c96",
+                                                                         "DejaVuSans.ttf":  "abdc775b21b1bc470d50c97e790d276f2054b7504e56e5bd3e64f48d68582322",
+                                                                         "DejaVuSerif-Bold.ttf":  "e2fd85eba2de65ac270d1cdb1685e252eb827f600850cf62af2d20c41b22e945"
+                                                                     },
+                                                     "timing_scope":  "Fresh browser per repetition; browser launch, HTML/font load through PDF bytes, file write/close excluded.",
+                                                     "fixtures":  [
+                                                                      {
+                                                                          "id":  "a4-standard",
+                                                                          "milliseconds":  [
+                                                                                               1007.09,
+                                                                                               596.37,
+                                                                                               554.93
+                                                                                           ]
+                                                                      },
+                                                                      {
+                                                                          "id":  "a4-long-name",
+                                                                          "milliseconds":  [
+                                                                                               573.68,
+                                                                                               630.02,
+                                                                                               469
+                                                                                           ]
+                                                                      },
+                                                                      {
+                                                                          "id":  "a4-multipage",
+                                                                          "milliseconds":  [
+                                                                                               569.37,
+                                                                                               593.68,
+                                                                                               501.23
+                                                                                           ]
+                                                                      },
+                                                                      {
+                                                                          "id":  "legal-standard",
+                                                                          "milliseconds":  [
+                                                                                               559.82,
+                                                                                               497.9,
+                                                                                               562.06
+                                                                                           ]
+                                                                      },
+                                                                      {
+                                                                          "id":  "legal-long-name",
+                                                                          "milliseconds":  [
+                                                                                               509.44,
+                                                                                               511.6,
+                                                                                               539.73
+                                                                                           ]
+                                                                      },
+                                                                      {
+                                                                          "id":  "legal-multipage",
+                                                                          "milliseconds":  [
+                                                                                               535.26,
+                                                                                               587.78,
+                                                                                               592.74
+                                                                                           ]
+                                                                      }
+                                                                  ]
+                                                 }
+                                },
+                    "results":  [
+                                    {
+                                        "engine":  "dompdf",
+                                        "fixture":  "a4-standard",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             595.28,
+                                                             841.89
+                                                         ],
+                                        "bytes":  33264,
+                                        "sha256":  "6acc641ff2be3a3f6bb661e9aec74d6f7c10794aaa796cf071043c82d99646a1",
+                                        "milliseconds":  [
+                                                             294.81,
+                                                             201.04,
+                                                             185.07
+                                                         ],
+                                        "median_ms":  201.04,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "SUBAAB+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "SUBAAC+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     15  0",
+                                                          "SUBAAD+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes     20  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "dompdf",
+                                        "fixture":  "a4-long-name",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             595.28,
+                                                             841.89
+                                                         ],
+                                        "bytes":  34950,
+                                        "sha256":  "3259e903b4de9392cac88907703cb839ae07ae46da19ec7318a421d47700ddb4",
+                                        "milliseconds":  [
+                                                             189.35,
+                                                             234.16,
+                                                             301
+                                                         ],
+                                        "median_ms":  234.16,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "SUBAAB+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "SUBAAC+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     15  0",
+                                                          "SUBAAD+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes     20  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "dompdf",
+                                        "fixture":  "a4-multipage",
+                                        "pages":  3,
+                                        "paper_points":  [
+                                                             595.28,
+                                                             841.89
+                                                         ],
+                                        "bytes":  39310,
+                                        "sha256":  "13f835bd2723532a8b1399c5add1a3f18bc688e48ee5cfaf5c99cf3d95e0d05a",
+                                        "milliseconds":  [
+                                                             620.52,
+                                                             365.54,
+                                                             249.09
+                                                         ],
+                                        "median_ms":  365.54,
+                                        "rows_verified":  60,
+                                        "font_rows":  [
+                                                          "SUBAAB+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "SUBAAC+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     15  0",
+                                                          "SUBAAD+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes     20  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "dompdf",
+                                        "fixture":  "legal-standard",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             612.0,
+                                                             1008.0
+                                                         ],
+                                        "bytes":  33102,
+                                        "sha256":  "073887405948e81efe65602e9fc446176890048721d8a9953bf405e62de81b44",
+                                        "milliseconds":  [
+                                                             196.64,
+                                                             239.9,
+                                                             249.36
+                                                         ],
+                                        "median_ms":  239.9,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "SUBAAB+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "SUBAAC+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     15  0",
+                                                          "SUBAAD+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes     20  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "dompdf",
+                                        "fixture":  "legal-long-name",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             612.0,
+                                                             1008.0
+                                                         ],
+                                        "bytes":  34791,
+                                        "sha256":  "e3a8c249cfd25f48663fcef33e70e20b367c98139df8d39388a50d95bcca009e",
+                                        "milliseconds":  [
+                                                             199.36,
+                                                             208.04,
+                                                             293.21
+                                                         ],
+                                        "median_ms":  208.04,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "SUBAAB+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "SUBAAC+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     15  0",
+                                                          "SUBAAD+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes     20  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "dompdf",
+                                        "fixture":  "legal-multipage",
+                                        "pages":  3,
+                                        "paper_points":  [
+                                                             612.0,
+                                                             1008.0
+                                                         ],
+                                        "bytes":  39319,
+                                        "sha256":  "9d5c0303cbcb266b1eba22d7535b3a06bae4252bcfd517a6839e424db29725fd",
+                                        "milliseconds":  [
+                                                             426.39,
+                                                             318.82,
+                                                             443.03
+                                                         ],
+                                        "median_ms":  426.39,
+                                        "rows_verified":  60,
+                                        "font_rows":  [
+                                                          "SUBAAB+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "SUBAAC+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     15  0",
+                                                          "SUBAAD+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes     20  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "chromium",
+                                        "fixture":  "a4-standard",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             594.95996,
+                                                             841.91998
+                                                         ],
+                                        "bytes":  42690,
+                                        "sha256":  "f480d7f0970c55725f43a6e063a054a7e49b33cc27cbd26d257457f4dc253f68",
+                                        "milliseconds":  [
+                                                             1007.09,
+                                                             596.37,
+                                                             554.93
+                                                         ],
+                                        "median_ms":  596.37,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "AAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      4  0",
+                                                          "BAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      7  0",
+                                                          "CAAAAA+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "DAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      9  0",
+                                                          "EAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes     10  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "chromium",
+                                        "fixture":  "a4-long-name",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             594.95996,
+                                                             841.91998
+                                                         ],
+                                        "bytes":  44039,
+                                        "sha256":  "da920c2ba75babb3ac6d67f00191d9c27cb91b89c5c3adf0206d8f7760d0a6d6",
+                                        "milliseconds":  [
+                                                             573.68,
+                                                             630.02,
+                                                             469
+                                                         ],
+                                        "median_ms":  573.68,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "AAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      4  0",
+                                                          "BAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      7  0",
+                                                          "CAAAAA+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "DAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      9  0",
+                                                          "EAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes     10  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "chromium",
+                                        "fixture":  "a4-multipage",
+                                        "pages":  3,
+                                        "paper_points":  [
+                                                             594.95996,
+                                                             841.91998
+                                                         ],
+                                        "bytes":  49910,
+                                        "sha256":  "00deadf6dab498b76af68dceb04fd4a3bb85d33e98147a62b60f867dcae404eb",
+                                        "milliseconds":  [
+                                                             569.37,
+                                                             593.68,
+                                                             501.23
+                                                         ],
+                                        "median_ms":  569.37,
+                                        "rows_verified":  60,
+                                        "font_rows":  [
+                                                          "AAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      4  0",
+                                                          "BAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      7  0",
+                                                          "CAAAAA+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "DAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      9  0",
+                                                          "EAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes     10  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "chromium",
+                                        "fixture":  "legal-standard",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             612.0,
+                                                             1008.0
+                                                         ],
+                                        "bytes":  42268,
+                                        "sha256":  "ff828e4c2a3dc1c2cc7d0d48423bcc15fa35bfdab08730f24b0236d209f52584",
+                                        "milliseconds":  [
+                                                             559.82,
+                                                             497.9,
+                                                             562.06
+                                                         ],
+                                        "median_ms":  559.82,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "AAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      4  0",
+                                                          "BAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      7  0",
+                                                          "CAAAAA+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "DAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      9  0",
+                                                          "EAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes     10  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "chromium",
+                                        "fixture":  "legal-long-name",
+                                        "pages":  1,
+                                        "paper_points":  [
+                                                             612.0,
+                                                             1008.0
+                                                         ],
+                                        "bytes":  43549,
+                                        "sha256":  "2f7ccda8d9f8d2b11d7f8234c3e30ef8c0c2a3e1eb6552a92fa1c134a1cf9165",
+                                        "milliseconds":  [
+                                                             509.44,
+                                                             511.6,
+                                                             539.73
+                                                         ],
+                                        "median_ms":  511.6,
+                                        "rows_verified":  0,
+                                        "font_rows":  [
+                                                          "AAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      4  0",
+                                                          "BAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      7  0",
+                                                          "CAAAAA+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "DAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      9  0",
+                                                          "EAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes     10  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    },
+                                    {
+                                        "engine":  "chromium",
+                                        "fixture":  "legal-multipage",
+                                        "pages":  2,
+                                        "paper_points":  [
+                                                             612.0,
+                                                             1008.0
+                                                         ],
+                                        "bytes":  48044,
+                                        "sha256":  "1fe99aea4266177f114d4c40eecb82dc7c0c5664e2403f1b67ca24439ac9e36b",
+                                        "milliseconds":  [
+                                                             535.26,
+                                                             587.78,
+                                                             592.74
+                                                         ],
+                                        "median_ms":  587.78,
+                                        "rows_verified":  60,
+                                        "font_rows":  [
+                                                          "AAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes      4  0",
+                                                          "BAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      7  0",
+                                                          "CAAAAA+DejaVuSerif-Bold              CID TrueType      Identity-H       yes yes yes      8  0",
+                                                          "DAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes      9  0",
+                                                          "EAAAAA+DejaVuSans-Bold               CID TrueType      Identity-H       yes yes yes     10  0"
+                                                      ],
+                                        "first_page_images":  1,
+                                        "checks":  "PASS: paper, page count, Unicode/name, all rows, repeated headers, top-margin stamp/footer on every page, embedded/mapped bundled fonts, local image, text bounds, Poppler rendering"
+                                    }
+                                ],
+                    "fixtures":  [
+                                     {
+                                         "id":  "a4-standard",
+                                         "paper":  "A4",
+                                         "variant":  "standard",
+                                         "name":  "ZoÃ« PeÃ±a (Demo)",
+                                         "rows":  [
+
+                                                  ],
+                                         "html_sha256":  "f4cce05a32bae7c2c7f56eb9e4f5351aa696ac0e65d80bc3310812e84479b560"
+                                     },
+                                     {
+                                         "id":  "a4-long-name",
+                                         "paper":  "A4",
+                                         "variant":  "long-name",
+                                         "name":  "Maria ConcepciÃ³n Magdalena de los Santos-Villanueva y FernÃ¡ndez Ã‘uÃ±ez del Rosario de la Cruz (Demo)",
+                                         "rows":  [
+
+                                                  ],
+                                         "html_sha256":  "23821064d9412d9e8ad6ad57fc1cc560cafe48221e4c6ecb1db95d9f1981cad2"
+                                     },
+                                     {
+                                         "id":  "a4-multipage",
+                                         "paper":  "A4",
+                                         "variant":  "multipage",
+                                         "name":  "ZoÃ« PeÃ±a (Demo)",
+                                         "rows":  [
+                                                      "Row 001 (Demo)",
+                                                      "Row 002 (Demo)",
+                                                      "Row 003 (Demo)",
+                                                      "Row 004 (Demo)",
+                                                      "Row 005 (Demo)",
+                                                      "Row 006 (Demo)",
+                                                      "Row 007 (Demo)",
+                                                      "Row 008 (Demo)",
+                                                      "Row 009 (Demo)",
+                                                      "Row 010 (Demo)",
+                                                      "Row 011 (Demo)",
+                                                      "Row 012 (Demo)",
+                                                      "Row 013 (Demo)",
+                                                      "Row 014 (Demo)",
+                                                      "Row 015 (Demo)",
+                                                      "Row 016 (Demo)",
+                                                      "Row 017 (Demo)",
+                                                      "Row 018 (Demo)",
+                                                      "Row 019 (Demo)",
+                                                      "Row 020 (Demo)",
+                                                      "Row 021 (Demo)",
+                                                      "Row 022 (Demo)",
+                                                      "Row 023 (Demo)",
+                                                      "Row 024 (Demo)",
+                                                      "Row 025 (Demo)",
+                                                      "Row 026 (Demo)",
+                                                      "Row 027 (Demo)",
+                                                      "Row 028 (Demo)",
+                                                      "Row 029 (Demo)",
+                                                      "Row 030 (Demo)",
+                                                      "Row 031 (Demo)",
+                                                      "Row 032 (Demo)",
+                                                      "Row 033 (Demo)",
+                                                      "Row 034 (Demo)",
+                                                      "Row 035 (Demo)",
+                                                      "Row 036 (Demo)",
+                                                      "Row 037 (Demo)",
+                                                      "Row 038 (Demo)",
+                                                      "Row 039 (Demo)",
+                                                      "Row 040 (Demo)",
+                                                      "Row 041 (Demo)",
+                                                      "Row 042 (Demo)",
+                                                      "Row 043 (Demo)",
+                                                      "Row 044 (Demo)",
+                                                      "Row 045 (Demo)",
+                                                      "Row 046 (Demo)",
+                                                      "Row 047 (Demo)",
+                                                      "Row 048 (Demo)",
+                                                      "Row 049 (Demo)",
+                                                      "Row 050 (Demo)",
+                                                      "Row 051 (Demo)",
+                                                      "Row 052 (Demo)",
+                                                      "Row 053 (Demo)",
+                                                      "Row 054 (Demo)",
+                                                      "Row 055 (Demo)",
+                                                      "Row 056 (Demo)",
+                                                      "Row 057 (Demo)",
+                                                      "Row 058 (Demo)",
+                                                      "Row 059 (Demo)",
+                                                      "Row 060 (Demo)"
+                                                  ],
+                                         "html_sha256":  "81ed235aae18be8c947dc263f5206fa8bce635916b2dcd2d849fea87d89de85d"
+                                     },
+                                     {
+                                         "id":  "legal-standard",
+                                         "paper":  "Legal",
+                                         "variant":  "standard",
+                                         "name":  "ZoÃ« PeÃ±a (Demo)",
+                                         "rows":  [
+
+                                                  ],
+                                         "html_sha256":  "094f0a1303125a9bd32bc198fa8c941f50e1ad3fb066115025553c6d69245348"
+                                     },
+                                     {
+                                         "id":  "legal-long-name",
+                                         "paper":  "Legal",
+                                         "variant":  "long-name",
+                                         "name":  "Maria ConcepciÃ³n Magdalena de los Santos-Villanueva y FernÃ¡ndez Ã‘uÃ±ez del Rosario de la Cruz (Demo)",
+                                         "rows":  [
+
+                                                  ],
+                                         "html_sha256":  "c6c984d8c8d8e8bf26e51e910e2a4859c90abd15e84eff76e2d8a5f219f9ca94"
+                                     },
+                                     {
+                                         "id":  "legal-multipage",
+                                         "paper":  "Legal",
+                                         "variant":  "multipage",
+                                         "name":  "ZoÃ« PeÃ±a (Demo)",
+                                         "rows":  [
+                                                      "Row 001 (Demo)",
+                                                      "Row 002 (Demo)",
+                                                      "Row 003 (Demo)",
+                                                      "Row 004 (Demo)",
+                                                      "Row 005 (Demo)",
+                                                      "Row 006 (Demo)",
+                                                      "Row 007 (Demo)",
+                                                      "Row 008 (Demo)",
+                                                      "Row 009 (Demo)",
+                                                      "Row 010 (Demo)",
+                                                      "Row 011 (Demo)",
+                                                      "Row 012 (Demo)",
+                                                      "Row 013 (Demo)",
+                                                      "Row 014 (Demo)",
+                                                      "Row 015 (Demo)",
+                                                      "Row 016 (Demo)",
+                                                      "Row 017 (Demo)",
+                                                      "Row 018 (Demo)",
+                                                      "Row 019 (Demo)",
+                                                      "Row 020 (Demo)",
+                                                      "Row 021 (Demo)",
+                                                      "Row 022 (Demo)",
+                                                      "Row 023 (Demo)",
+                                                      "Row 024 (Demo)",
+                                                      "Row 025 (Demo)",
+                                                      "Row 026 (Demo)",
+                                                      "Row 027 (Demo)",
+                                                      "Row 028 (Demo)",
+                                                      "Row 029 (Demo)",
+                                                      "Row 030 (Demo)",
+                                                      "Row 031 (Demo)",
+                                                      "Row 032 (Demo)",
+                                                      "Row 033 (Demo)",
+                                                      "Row 034 (Demo)",
+                                                      "Row 035 (Demo)",
+                                                      "Row 036 (Demo)",
+                                                      "Row 037 (Demo)",
+                                                      "Row 038 (Demo)",
+                                                      "Row 039 (Demo)",
+                                                      "Row 040 (Demo)",
+                                                      "Row 041 (Demo)",
+                                                      "Row 042 (Demo)",
+                                                      "Row 043 (Demo)",
+                                                      "Row 044 (Demo)",
+                                                      "Row 045 (Demo)",
+                                                      "Row 046 (Demo)",
+                                                      "Row 047 (Demo)",
+                                                      "Row 048 (Demo)",
+                                                      "Row 049 (Demo)",
+                                                      "Row 050 (Demo)",
+                                                      "Row 051 (Demo)",
+                                                      "Row 052 (Demo)",
+                                                      "Row 053 (Demo)",
+                                                      "Row 054 (Demo)",
+                                                      "Row 055 (Demo)",
+                                                      "Row 056 (Demo)",
+                                                      "Row 057 (Demo)",
+                                                      "Row 058 (Demo)",
+                                                      "Row 059 (Demo)",
+                                                      "Row 060 (Demo)"
+                                                  ],
+                                         "html_sha256":  "5bbb55912f49c983fbfd6c02f065b8a3b31a7e970bbd563c96a47e6220168e80"
+                                     }
+                                 ],
+                    "qa":  {
+                               "pypdf":  "6.1.3",
+                               "poppler":  "pdftoppm version 22.12.0"
+                           },
+                    "constraints":  {
+                                        "network":  "none",
+                                        "root_filesystem":  "read-only",
+                                        "cpus":  1,
+                                        "memory_bytes":  1073741824,
+                                        "fonts":  "Identical bundled DejaVu TTF hashes in both engines"
+                                    },
+                    "pack_pixel_matches":  true
+                },
+    "images":  [
+                   {
+                       "tag":  "bisu-registrar-pdf-dompdf:latest",
+                       "id":  "sha256:62986494a384f83f6b3bce0b164044f12f00225b91ebc9d38e12c997a204de59",
+                       "bytes":  852640608
+                   },
+                   {
+                       "tag":  "bisu-registrar-pdf-chromium:latest",
+                       "id":  "sha256:963174aae75f18974d9afb4f4f4b4c77dd63ff5cb5528289e7c2a358313eef21",
+                       "bytes":  3627562671
+                   },
+                   {
+                       "tag":  "bisu-registrar-pdf-qa:latest",
+                       "id":  "sha256:44d7fdf873390cb9581793e7619bef2076688104596079b4dffc7b2c12dd3411",
+                       "bytes":  281393046
+                   }
+               ],
+    "outputs":  [
+                    {
+                        "name":  "dompdf-sample-pack.pdf",
+                        "bytes":  217404,
+                        "sha256":  "9c1de68d09774e3e60f058f0b69bb23d98ce825c3d4c74dde7f3b239b14d50d8"
+                    },
+                    {
+                        "name":  "chromium-sample-pack.pdf",
+                        "bytes":  270479,
+                        "sha256":  "7f57d3d32432741630a6c8eea6fe74fb12c8245e9f6444f94eced424f0075c4a"
+                    }
+                ]
+}

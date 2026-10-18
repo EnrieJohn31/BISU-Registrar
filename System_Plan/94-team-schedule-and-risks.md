@@ -99,4 +99,4 @@ Likelihood and impact use High / Medium / Low. Review this table at each iterati
 | RK09 | Power or network outages during operation | Medium | Medium | UPS, manual fallback log and reconciliation (Part 14) | MIS |
 | RK10 | Government-service rules missed (Citizen's Charter, priority lanes, CSM, collection reports) | Medium | Medium | Confirm in I0 interviews; plan items in Parts 05, 07, 09, 11, 12 | Project lead |
 | RK11 | Concurrency bugs produce duplicate tickets, payments or releases | Medium | High | MySQL concurrency tests (Part 13), locked actions | Backend lead |
-| RK12 | Generated documents don't match approved templates (fonts, security paper, alignment) | Medium | Medium | Renderer spike in I1 with one real template (Part 10) | Documents lead |
+| RK12 | Generated documents don't match approved templates (fonts, security paper, alignment) | Medium | Medium | DEV-4 synthetic comparison complete; provisional Dompdf direction. Repeat on one real approved template/fonts and campus printer under D08 before acceptance ([evidence](../docs/DEV-4-PDF-RENDERERS.md)) | Documents lead |

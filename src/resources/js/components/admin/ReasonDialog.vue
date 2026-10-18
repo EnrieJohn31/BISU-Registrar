@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { UrlMethodPair } from '@inertiajs/core';
-import { useForm } from '@inertiajs/vue3';
-import { ref, useId } from 'vue';
+import { router, useForm } from '@inertiajs/vue3';
+import { computed, ref, useId } from 'vue';
+import { toast } from 'vue-sonner';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,7 +19,9 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 
-// Every account-changing administrator action records a reason in the audit trail.
+// Every account- or record-changing action records a reason in the audit trail.
+// `data` adds fixed fields to the request, for example the profile `version`
+// that lets the server reject an edit made from a stale screen.
 const props = withDefaults(
     defineProps<{
         title: string;
@@ -28,22 +31,47 @@ const props = withDefaults(
         triggerLabel?: string;
         destructive?: boolean;
         disabled?: boolean;
+        data?: Record<string, string | number>;
+        reasonPlaceholder?: string;
     }>(),
-    { triggerLabel: undefined, destructive: false, disabled: false },
+    {
+        triggerLabel: undefined,
+        destructive: false,
+        disabled: false,
+        data: () => ({}),
+        reasonPlaceholder: 'Recorded in the audit trail',
+    },
 );
 
 const open = ref(false);
 const id = useId();
 const form = useForm({ reason: '' });
 
+// Any error that is not about the reason field, such as a rule the server enforces.
+const otherError = computed(
+    () =>
+        Object.entries(form.errors).find(([field]) => field !== 'reason')?.[1],
+);
+
 const submit = () => {
-    form.submit(props.action, {
-        preserveScroll: true,
-        onSuccess: () => {
-            open.value = false;
-            form.reset();
+    form.transform((payload) => ({ ...payload, ...props.data })).submit(
+        props.action,
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                open.value = false;
+                form.reset();
+            },
+            onError: (errors) => {
+                // Someone else changed the record: show the latest version.
+                if (errors.version) {
+                    toast.error(errors.version);
+                    open.value = false;
+                    router.reload();
+                }
+            },
         },
-    });
+    );
 };
 </script>
 
@@ -72,10 +100,10 @@ const submit = () => {
                         v-model="form.reason"
                         rows="3"
                         required
-                        placeholder="Recorded in the audit trail"
+                        :placeholder="reasonPlaceholder"
                         :aria-invalid="Boolean(form.errors.reason)"
                     />
-                    <InputError :message="form.errors.reason" />
+                    <InputError :message="form.errors.reason ?? otherError" />
                 </div>
 
                 <DialogFooter class="gap-2">

@@ -4,13 +4,13 @@
 
 | Tracking field | Value |
 |---|---|
-| Plan status | Detailed design draft; owner requested preparation, office approval pending |
-| Implementation | Not started; no Part 04 tables, routes or screens added |
-| Validation | Design checked against Part 03; implementation and records-custodian acceptance pending |
+| Plan status | Slice 1 approved by the project owner (C10); slices 2 and 3 still design only, office approval pending |
+| Implementation | Slice 1 implemented with follow-up QA fixes and included in [release PR #11](https://github.com/EnrieJohn31/BISU-Registrar/pull/11). Campus deployment pending; imports and account linking not started. See the [implementation record](#slice-1-implementation-record) |
+| Validation | 2026-10-18: DEV-3 saved Chromium suite passed 34 cases in four viewport/theme projects, including full-history paging and audit privacy; [browser evidence](../docs/DEV-3-BROWSER-REGRESSION.md). DEV-1 MySQL: 45 tests / 394 assertions; original race/Edge evidence: 2026-10-17. Records-custodian acceptance pending |
 | Deployment | Not deployed |
 | Owner | Registrar records custodian + developer; named custodian pending |
 | Dependencies | Parts 02–03; D03/D04/D09 gate real identity data and linkage |
-| Updated | 2026-10-17 |
+| Updated | 2026-10-18 |
 
 ## Confirmed direction and scope
 
@@ -29,6 +29,38 @@ Build profiles and safe imports first. Account linking follows only after Regist
 | 3 — Account linking | Neutral client claim submission, staff proof review, verified link/revocation and recovery | D03 proof/recovery/one-person rules, D09 notice/evidence retention, named office approvers | Impersonation/rate-limit/ownership/race tests and assisted-intake demonstration |
 
 **Suggested first implementation task:** slice 1 only, on a feature branch with synthetic fixtures. Keep import commit and client linking unavailable until their own gates pass. Completing this document does not authorize silently enabling real-data import or linking.
+
+## Slice 1 implementation record
+
+Implemented 2026-10-17 on the local branch `feat/part-04-client-records` (not pushed, not merged, not deployed), after the owner approved the design's proposed safe positions as decision [C10](90-decisions-and-open-questions.md). It uses **synthetic records only**. Evidence: [PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
+
+**What staff can do** (Registrar office only):
+- Search client records by name or the start of an ID (at least 2 characters), filter by category and verification, and page through results. Lists show masked IDs; the detail page shows full IDs.
+- Create a client with a first ID, source and reason; correct the name or category; add an ID to the same person (for example an Alumni ID after a Student ID); retire an ID; verify a profile; flag a profile for manual review.
+- See every profile's full history: version, who, when, why, and the old and new values.
+
+**Rules enforced** (server-side, in a transaction, with a revision and an audit event each):
+- IDs are text, so leading zeroes are kept, and compared in one canonical form. A database unique key on type + canonical value covers retired IDs too, so an ID is never reused or reassigned. The same text may be both a Student ID and an Alumni ID.
+- Two people may share a name; nothing is merged by name.
+- Every change to an existing profile carries the version the staff member saw. A stale screen is rejected and the page refreshes to the latest data.
+- Verification is a separate controlled action that records who and when. Correcting a verified profile returns it to "needs review". A profile cannot be verified without a current ID, and its last current ID cannot be retired.
+- The general audit trail records the action, office, revision number, category and verification changes, and only the last four characters of an ID. It never holds a name or a full ID.
+
+**Access** (existing permission catalogue, always scoped to the Registrar office): view = Intake staff, Registrar processor, Registrar approver, Release officer; change = Registrar processor only. Cashier, Cashier supervisor, Registrar supervisor, report exporter, supplier roles and system administrator are all denied; a test checks every role.
+
+**Code:** migrations `2026_10_17_100001–100003` (client profiles, identifiers, profile revisions; all additive); models `ClientProfile`, `ClientIdentifier`, `ClientProfileRevision`; actions in `app/Actions/Clients/`; `ClientProfileRecorder` (version, revision and audit in step); `IdentifierNormalizer` and `IdentifierMask`; `ClientProfilePolicy`; `routes/registrar.php` and controllers under `Http/Controllers/Registrar/`; pages `registrar/clients/{Index,Create,Show}`; sidebar "Registrar" group and dashboard card; `DevelopmentClientsSeeder` (20 clearly fake demo clients).
+
+**Choices beyond the written design** (each is easy to change, and listed in C10): the demo ID rule is 3 to 32 letters, digits or hyphens, case-insensitive, and is stored with a rule version; correcting a verified profile returns it to needs-review; the last current ID cannot be retired; the audit trail holds no client names; revisions keep the full old and new values and are shown only to staff who may view clients.
+
+**Not in slice 1:** imports, account linking, any real data, retention or erasure rules (D09), and the official ID format (D04). The demo ID rule is a placeholder and must be replaced by the Registrar's approved rule before real use. Viewing a record is not audited yet; whether it should be is part of D09.
+
+### Follow-up QA — 2026-10-18 (DEV-1)
+
+Fixed two defects under C10: the detail page now pages through the complete revision history instead of stopping at 50, and the central recorder keeps free-text client reasons in restricted revisions rather than copying them into general audit access. Audit events retain a fixed revision reference and the existing masked metadata. No migration, permission or office-rule change; historical audit rows remain untouched.
+
+Added regressions for 51 revisions, record isolation, view-only history, all role restrictions on older pages, every client mutation's reason and both administrator/supervisor audit responses. Both new tests failed before the fixes. Final DEV-1 foundation checks passed: **163 tests / 936 assertions**; Part 04 on disposable MySQL: **45 tests / 394 assertions**. Full findings: [QA report](../docs/PART-04-QA-2026-10-18.md).
+
+DEV-3 subsequently saved and ran 34 browser cases across desktop/phone widths and light/dark themes. The 51-revision fixture reaches creation on page 2 and returns to the newest history; screenshots confirm the controls and wrapping. Audit privacy and existing role boundaries pass through real authentication. This completes the pending developer visual follow-up; physical campus devices and custodian acceptance remain separate. [Suite and evidence](../docs/DEV-3-BROWSER-REGRESSION.md).
 
 ## Proposed records and constraints
 
@@ -119,7 +151,7 @@ flowchart LR
 6. **Retry:** resume only pending/retryable rows after reauthorizing/revalidating; never repeat a successful row or duplicate its audit entry. A data conflict discovered at commit requires renewed review and a new manifest/batch; do not mutate an already approved row. Repeated requests for a completed replay key return its result without new writes. An edited file is a new batch, still subject to existing-ID checks.
 7. **Cancel/cleanup:** before commit, cancellation prevents live writes. During commit, stop at a transaction boundary and retain honest partial outcomes. No “undo import” that deletes clients possibly referenced by requests; use a separately reviewed correction/reconciliation procedure. Scheduler removes raw/staged payloads/error reports only under the approved D09 retention policy, preserving approved minimal provenance/audit. Until retention is approved, use synthetic files only.
 
-Background jobs for slice 2 require a configured durable queue, worker, retry/timeout/lease settings, failed-job handling and monitored cleanup scheduler. The current dev Compose does **not** run a dedicated worker; document/start it as part of slice 2 and Part 14. Do not silently depend on Redis merely because a container exists. Use per-row transactions with database constraints; add locks in a consistent order and bounded deadlock retries with idempotent outcomes.
+Background jobs for slice 2 require a configured durable queue, worker, retry/timeout/lease settings, failed-job handling and monitored cleanup scheduler. DEV-2 supplies a development database-queue worker, scheduler and captured-email inbox ([setup and evidence](../docs/DEV-2-BACKGROUND-SERVICES.md)); it does not implement imports or approve their leases, retention or cleanup rules. Do not silently depend on Redis merely because a container exists. Use per-row transactions with database constraints; add locks in a consistent order and bounded deadlock retries with idempotent outcomes.
 
 ## Account linking design (later slice)
 
@@ -164,9 +196,9 @@ Run the existing `check.ps1` (PHP tests, Larastan, formatting, lint, Vue TypeScr
 
 - [x] Prepare field/model/permission/route/import/link design against Part 03.
 - [x] Identify office gates and catalogue mismatch without changing approved roles.
-- [ ] Team review and scope approval for slice 1; record reviewer/date/evidence.
+- [x] Team review and scope approval for slice 1; recorded as decision C10 (project owner, 2026-10-17).
 - [ ] D04/D09-approved source/columns/normalization/correction and retention decisions.
-- [ ] Slice 1 implementation, tests, MySQL checks and browser review.
+- [x] Slice 1 implementation, tests, MySQL checks and browser review (developer QA, synthetic data).
 - [ ] Slice 2 source/reviewer approvals, private import workflow and worker/cleanup operations.
 - [ ] D03/D09-approved identity proof/recovery, then slice 3 implementation/acceptance.
 - [ ] Registrar records-custodian UAT with synthetic demonstration; real-data/campus rollout evidence in Part 14.
