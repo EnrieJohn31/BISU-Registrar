@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BISU Registrar - Baseline observation kit</title>
+<style>
+  @page {
+    size: A4;
+    margin: 14mm 13mm 17mm 13mm;
+    @bottom-left { content: "BISU Registrar · Baseline observation kit · 18 October 2026"; font: 8pt "Segoe UI", Arial, sans-serif; color: #666; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt "Segoe UI", Arial, sans-serif; color: #666; }
+  }
+  :root { --ink: #1c1b22; --muted: #5b5a66; --line: #cfcdd8; --brand: #2d1a6b; --soft: #f3f1fa; --warn: #fff7e0; --warn-line: #e3c56b; --rule: #8a8896; }
+  * { box-sizing: border-box; }
+  html { font: 9.6pt/1.4 "Segoe UI", Arial, sans-serif; color: var(--ink); }
+  body { margin: 0; }
+  h1 { font-size: 19pt; line-height: 1.15; margin: 0 0 1.5mm; color: var(--brand); letter-spacing: -0.2px; }
+  .sub { color: var(--muted); margin: 0 0 4mm; font-size: 9.6pt; }
+  h2 { font-size: 11.5pt; margin: 5mm 0 2mm; padding: 1.6mm 3mm; background: var(--brand); color: #fff; border-radius: 1.2mm; break-after: avoid; }
+  h2 small { font-weight: 400; font-size: 9pt; opacity: .9; margin-left: 2mm; }
+  h3 { font-size: 10pt; margin: 3.5mm 0 1.2mm; color: var(--brand); break-after: avoid; }
+  p { margin: 0 0 2mm; }
+  .page { break-before: page; }
+  .box-note { border: 0.3mm solid var(--warn-line); background: var(--warn); border-radius: 1.5mm; padding: 2.6mm 3.5mm; margin: 0 0 3mm; break-inside: avoid; }
+  .box-note strong { color: #6b4b00; }
+  .box-note ul { margin: 1mm 0 0 4.5mm; padding: 0; }
+  .box-note li { margin: 0 0 0.8mm; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-bottom: 3mm; break-inside: avoid; }
+  .card { border: 0.3mm solid var(--line); border-radius: 1.5mm; padding: 2.4mm 3.2mm; background: var(--soft); }
+  .card h4 { margin: 0 0 1mm; font-size: 9.6pt; color: var(--brand); }
+  .card ul { margin: 0 0 0 4.2mm; padding: 0; }
+  .card li { margin: 0 0 0.8mm; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th { text-align: left; background: #e9e6f5; color: var(--brand); font-size: 8.4pt; letter-spacing: .2px; }
+  th, td { border: 0.25mm solid var(--line); padding: 1.5mm 2mm; vertical-align: top; }
+  tr { break-inside: avoid; }
+  .tick { display: inline-block; width: 3.6mm; height: 3.6mm; border: 0.35mm solid #444; border-radius: 0.6mm; vertical-align: -0.6mm; margin-right: 1.2mm; }
+  ol.steps { margin: 0 0 2mm 5mm; padding: 0; }
+  ol.steps li { margin: 0 0 1.2mm; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.4pt; }
+  /* Forms: ruled lines to write on */
+  .field { display: flex; gap: 2mm; align-items: flex-end; margin: 0 0 3.2mm; }
+  .field span { white-space: nowrap; font-size: 9pt; }
+  .field i { flex: 1; border-bottom: 0.3mm solid var(--rule); height: 5.5mm; }
+  .field.half { width: 49%; display: inline-flex; margin-right: 1%; }
+  .check { margin: 0 0 2.4mm; display: flex; gap: 2mm; }
+  .sheet-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 0.4mm solid var(--brand); margin: 0 0 3mm; padding-bottom: 1.5mm; }
+  .sheet-head h2 { margin: 0; padding: 0; background: none; color: var(--brand); font-size: 13pt; }
+  .sheet-head span { font-size: 8.4pt; color: var(--muted); }
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm 4mm; margin: 0 0 3mm; }
+  .meta .field { margin: 0; }
+  table.form th, table.form td { text-align: center; padding: 0 1mm; font-size: 8pt; }
+  table.form th { padding: 1.2mm 1mm; font-weight: 600; }
+  table.form td { height: 7.4mm; }
+  table.form td.l { text-align: left; color: var(--muted); }
+  table.form.tall td { height: 8.2mm; }
+  .code-line { border-bottom: 0.25mm solid var(--rule); display: inline-block; min-width: 16mm; height: 4mm; }
+  .foot { margin-top: 5mm; font-size: 8.4pt; color: var(--muted); border-top: 0.25mm solid var(--line); padding-top: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1: OVERVIEW ============================ -->
+<h1>Baseline observation kit</h1>
+<p class="sub">How the Registrar's and Cashier's offices work today, measured on paper before the system exists · BISU Registrar, Balilihan Campus · Version 1, 18 October 2026</p>
+
+<div class="grid2">
+  <div class="card">
+    <h4>Why we measure the "before"</h4>
+    <ul>
+      <li>The thesis claims the system makes service <strong>faster and clearer</strong>. A claim needs a "before" number to compare with.</li>
+      <li>Real waiting times, peak hours and turnaround days let us set <strong>honest targets</strong> for the queue, reports and server size instead of guessing.</li>
+      <li>It is cheap now and <strong>impossible later</strong>, because once the system runs the old way is gone.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>What it takes</h4>
+    <ul>
+      <li><strong>5 working days</strong> in each office, including one day the office calls busy.</li>
+      <li><strong>Two timed hours a day</strong> (morning and afternoon) at the public counters, plus a tally of arrivals.</li>
+      <li><strong>Counts and dates</strong> copied from the office's own records, by or with a staff member.</li>
+      <li>2 observers per office are comfortable; 1 is enough on a quiet day.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box-note">
+  <strong>Privacy rules. These come before anything else.</strong>
+  <ul>
+    <li><strong>No names. No ID numbers. No receipt numbers. No photos, video or audio.</strong> Not even "just for a moment".</li>
+    <li>Each client is a <strong>row number</strong> and a <strong>transaction code</strong>. Nothing on the sheets can identify a person.</li>
+    <li>The office head signs the permission form (page 2) <strong>before</strong> anyone observes. Inform the Data Protection Officer and the adviser as well.</li>
+    <li>Do <strong>not</strong> interview or ask clients anything. Stand where staff tell you. Never look at staff screens or papers.</li>
+    <li>If anyone, staff or client, asks you to stop, stop and tell the project lead.</li>
+  </ul>
+</div>
+
+<h2>What we measure <small>and what each number is used for later</small></h2>
+<table>
+  <thead><tr><th style="width:42mm">Measure</th><th>How we get it</th><th style="width:48mm">Used for</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Clients per day and per hour</strong>, and the peak hour</td><td>Tally of arrivals (Sheet A); the office's own daily counts (Sheet C)</td><td>Queue and counter design (Part 07); server size and load targets (D13)</td></tr>
+    <tr><td><strong>Waiting time</strong></td><td>Timed sample: arrival to start of service (Sheet B)</td><td>Thesis before/after comparison; queue targets (Parts 07, 12, 13)</td></tr>
+    <tr><td><strong>Service time</strong> per transaction type</td><td>Timed sample: start to end of service (Sheet B)</td><td>Counters needed; ticket-calling rules (Part 07)</td></tr>
+    <tr><td><strong>Left before service</strong>, or sent elsewhere</td><td>Outcome column (Sheet B)</td><td>No-show and recall rules (D06)</td></tr>
+    <tr><td><strong>Turnaround days</strong> per document type</td><td>Dates received and released, from the office's log (Sheet C)</td><td>Charter processing-time reports (Parts 05, 12)</td></tr>
+    <tr><td><strong>Mix of transaction types</strong> and priority-lane use</td><td>Tally columns (Sheet A)</td><td>First-release services (D01); priority lanes (D06)</td></tr>
+    <tr><td><strong>How the office queues clients today</strong> and what goes wrong</td><td>Day sheet (Sheet D)</td><td>The request workflow (Part 01)</td></tr>
+  </tbody>
+</table>
+<p class="small muted" style="margin-top:2mm">We report the <strong>median</strong> and the <strong>90th percentile</strong> (the wait that 9 in 10 clients stay under), not only the average, because a few very long waits hide in an average. Five days in each office gives a <strong>picture, not proof</strong>. Say so in the thesis limitations, and agree the method with the adviser first.</p>
+
+<!-- ============================ PAGE 2: PERMISSION ============================ -->
+<div class="page"></div>
+<div class="sheet-head"><h2>Permission to observe</h2><span>One form per office · keep the signed copy with the project lead</span></div>
+
+<p>The BISU Registrar project team asks permission to <strong>observe the public counter area</strong> of the office below. This is to count arrivals and time how long service takes, so that the planned system is designed from real figures and compared fairly after it is introduced.</p>
+
+<div class="box-note">
+  <strong>What the team will and will not do</strong>
+  <ul>
+    <li>Count arrivals and write down clock times and a transaction code for each client observed.</li>
+    <li>Copy <strong>dates and document types only</strong> from the office's own logbook, with a staff member present or by a staff member (Sheet C).</li>
+    <li><strong>Not</strong> record names, ID numbers, receipt numbers, or any photo, video or audio. <strong>Not</strong> speak to clients or interrupt service.</li>
+  </ul>
+</div>
+
+<div class="field"><span>Office</span><i></i></div>
+<div>
+  <div class="field half"><span>Dates of observation, from</span><i></i></div><div class="field half"><span>to</span><i></i></div>
+</div>
+<div class="field"><span>Hours and place observers may stand</span><i></i></div>
+<div class="field"><span>Days or periods to avoid (for example exams, or a day with special activity)</span><i></i></div>
+<div class="field"><span>Team members who will observe (names)</span><i></i></div>
+<div class="field"><span>Staff member who will help with Sheet C (name and position)</span><i></i></div>
+
+<h3>Please confirm</h3>
+<div class="check"><span class="tick"></span><span>The team may observe the public counter area as described above.</span></div>
+<div class="check"><span class="tick"></span><span>Office staff may give <strong>counts and dates only</strong> from existing records for Sheet C (the office may say no to this part).</span></div>
+<div class="check"><span class="tick"></span><span>The Data Protection Officer has been told about the observation. Date: <span class="code-line" style="min-width:28mm"></span></span></div>
+<div class="check"><span class="tick"></span><span>The thesis adviser has agreed the method. Date: <span class="code-line" style="min-width:28mm"></span></span></div>
+
+<h3 style="margin-top:5mm">Approval</h3>
+<div class="field"><span>Name of the office head</span><i></i></div>
+<div>
+  <div class="field half"><span>Position</span><i></i></div><div class="field half"><span>Date</span><i></i></div>
+</div>
+<div class="field" style="margin-top:7mm"><span>Signature</span><i></i></div>
+
+<div class="foot">Prepared by the BISU Registrar project team. This form is a permission request from students working on a thesis. It is not an official BISU form and does not change any office rule or policy.</div>
+
+<!-- ============================ PAGE 3: PROTOCOL ============================ -->
+<div class="page"></div>
+<h1 style="font-size:16pt">How to observe</h1>
+<p class="sub">Read this once, and keep it with the sheets.</p>
+
+<h2>The three clock times <small>write them to the minute (HH:MM) from your phone clock</small></h2>
+<table>
+  <thead><tr><th style="width:36mm">Time</th><th>The moment to record</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Arrived</strong></td><td>The client joins the line or waiting area, or takes a number if the office uses one. If you first notice them already waiting, write the time you noticed and tick "late" in Notes.</td></tr>
+    <tr><td><strong>Service start</strong></td><td>The client reaches the counter or window and the staff member begins to attend to them.</td></tr>
+    <tr><td><strong>Service end</strong></td><td>The client steps away from the counter after the transaction is done.</td></tr>
+  </tbody>
+</table>
+<p class="small muted" style="margin-top:1.5mm">Waiting time = start minus arrived. Service time = end minus start. We calculate them later; you only write the clock times.</p>
+
+<h2>Each day <small>do these in order</small></h2>
+<ol class="steps">
+  <li><strong>Before you start:</strong> check the signed permission form is on file. Fill in the top of Sheet D (the day sheet).</li>
+  <li><strong>Agree the transaction codes</strong> with the office. Ask staff for the <strong>five most common transactions</strong> and write them at the top of Sheet A (Type 1 to 5). Everything else is "Other". <strong>Use the office's words, not ours.</strong> Keep the same codes all week.</li>
+  <li><strong>Tally (Sheet A), whenever you are present:</strong> for each person who arrives, make one mark in the right column and the right 30-minute row. One mark per person, not per document.</li>
+  <li><strong>Timed windows (Sheet B):</strong> twice a day, one hour each: the first hour of the morning and of the afternoon, or the office's own <strong>peak hour</strong> if it names one. Follow <strong>every client who arrives</strong>, one row each. If more than 12 arrive in 30 minutes, follow every <strong>second</strong> arrival and tick that box on the sheet.</li>
+  <li><strong>Records (Sheet C):</strong> with the office's permission, copy the dates and document types, as the form describes. Only once per office.</li>
+  <li><strong>At closing:</strong> finish Sheet D, and check that every timed row has its times or an outcome.</li>
+</ol>
+
+<h2>Outcome codes and special cases</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Outcome (Sheet B)</h4>
+    <ul>
+      <li><strong>S</strong> served: the transaction was done at the counter.</li>
+      <li><strong>L</strong> left before service: they arrived and left without reaching the counter. Leave the start and end blank.</li>
+      <li><strong>R</strong> referred: sent to another office or window. Note which one if you can hear it without asking.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Special cases</h4>
+    <ul>
+      <li>Someone <strong>comes back later</strong> the same day: a <strong>new row</strong>.</li>
+      <li>Someone <strong>cuts in or is served out of turn</strong>: record the real times, and write "priority" in Notes if staff say it is a priority lane.</li>
+      <li>The counter <strong>closes for a break</strong>: note it in Sheet D; do not stop the clock for the client.</li>
+      <li>You are <strong>unsure</strong> of a time: write your best estimate and put "?" in Notes.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>After each day <small>within one day, while you remember</small></h2>
+<ol class="steps">
+  <li>Type every row into the matching CSV template (provided with this kit), with the same column names. Fix typing mistakes, but <strong>never change a recorded time</strong> to look tidier.</li>
+  <li>Add up Sheet A and compare the total with the office's own daily count, if it keeps one. Note any large difference.</li>
+  <li>Give the paper sheets to the project lead. They hold no personal data. Keep them until the thesis is accepted, or destroy them earlier if the office asks. The "after" measurements will repeat exactly this method.</li>
+</ol>
+
+
+<!-- ============================ PAGE 4: SHEET A ============================ -->
+<div class="page"></div>
+<div class="sheet-head"><h2>Sheet A · Arrivals tally</h2><span>One sheet per office per day · copy as needed</span></div>
+<div class="meta">
+  <div class="field"><span>Date</span><i></i></div>
+  <div class="field"><span>Office</span><i></i></div>
+  <div class="field"><span>Observer</span><i></i></div>
+  <div class="field"><span>Sheet no.</span><i></i></div>
+</div>
+<p class="small muted">One mark per person who arrives. Write the office's five most common transactions in the blanks, and count everything else under "Other".</p>
+
+<table class="form tall">
+  <thead>
+    <tr>
+      <th rowspan="2" style="width:24mm">30-minute block</th>
+      <th>Type 1</th><th>Type 2</th><th>Type 3</th><th>Type 4</th><th>Type 5</th>
+      <th rowspan="2" style="width:15mm">Other</th>
+      <th rowspan="2" style="width:19mm">Served in a priority lane</th>
+      <th rowspan="2" style="width:14mm">Total</th>
+    </tr>
+    <tr>
+      <th style="height:7mm"></th><th></th><th></th><th></th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="l">__:__ – __:__</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr style="background:#f3f1fa"><td class="l"><strong>Day total</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+<p class="small muted" style="margin-top:2mm">"Served in a priority lane": count only the clients that <strong>staff</strong> treat as priority (for example senior citizens, persons with disabilities). Never ask a client, and never judge by appearance. If the office has no priority lane, leave this column empty and say so in Sheet D.</p>
+
+<!-- ============================ PAGE 5: SHEET B ============================ -->
+<div class="page"></div>
+<div class="sheet-head"><h2>Sheet B · Timed sample</h2><span>One sheet per timed window · copy as needed</span></div>
+<div class="meta">
+  <div class="field"><span>Date</span><i></i></div>
+  <div class="field"><span>Office</span><i></i></div>
+  <div class="field"><span>Window (clock times)</span><i></i></div>
+  <div class="field"><span>Observer</span><i></i></div>
+</div>
+<div class="check" style="margin-bottom:2mm"><span class="tick"></span><span>Following <strong>every</strong> arrival</span><span class="tick" style="margin-left:6mm"></span><span>Following every <strong>2nd</strong> arrival (more than 12 per 30 minutes)</span></div>
+<p class="small muted">One row per person. No names. Codes: <strong>Type</strong> = 1–5 or O from Sheet A. <strong>Outcome</strong> = S served, L left before service, R referred. Times as HH:MM.</p>
+
+<table class="form tall">
+  <thead>
+    <tr><th style="width:9mm">Row</th><th style="width:14mm">Type</th><th style="width:25mm">Arrived</th><th style="width:25mm">Service start</th><th style="width:25mm">Service end</th><th style="width:17mm">Outcome</th><th>Notes (priority, "late", "?", closed counter)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>8</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>9</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>10</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>11</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>12</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>13</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>14</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>15</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>16</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>17</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>18</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>19</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>20</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ PAGE 6: SHEET C ============================ -->
+<div class="page"></div>
+<div class="sheet-head"><h2>Sheet C · From the office's own records</h2><span>Once per office · counts and dates only</span></div>
+
+<div class="box-note">
+  <strong>Only copy dates, document types and counts.</strong> Never copy a name, ID number, receipt number, address or signature. A staff member should be present, or fill this in themselves. The office may decline this sheet.
+</div>
+
+<div class="meta">
+  <div class="field"><span>Office</span><i></i></div>
+  <div class="field"><span>Records used (logbook, list, file name)</span><i></i></div>
+  <div class="field"><span>Copied by</span><i></i></div>
+  <div class="field"><span>Date</span><i></i></div>
+</div>
+
+<h3>C1 · Daily counts <small class="muted">ask for the last full semester, or the last 3 months</small></h3>
+<p class="small muted">Ask the office for <strong>daily or weekly totals</strong> if it already keeps them. A table or photocopy of the count columns only is fine. Write the period and the numbers below, or attach it.</p>
+<table class="form">
+  <thead><tr><th style="width:42mm">Day or week (dates)</th><th style="width:36mm">Clients served</th><th style="width:36mm">Documents or transactions issued</th><th>Notes (event, suspension, enrollment, graduation)</th></tr></thead>
+  <tbody>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>C2 · Turnaround of documents that take more than a day <small class="muted">the last 20 completed requests of each common type</small></h3>
+<p class="small muted">One row per completed request. <strong>Type</strong> uses the office's own name for the document. If the office records the date the client claimed the document, write it too.</p>
+<table class="form">
+  <thead><tr><th style="width:9mm">#</th><th style="width:54mm">Document type</th><th style="width:30mm">Date received</th><th style="width:30mm">Date ready or released</th><th style="width:30mm">Date claimed (if kept)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>6</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>7</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>8</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>9</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>10</td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+<p class="small muted" style="margin-top:2mm">Copy this table for more rows. We count the <strong>working days</strong> between received and released ourselves, using the office calendar, and compare them with the Citizen's Charter processing time once we have it.</p>
+
+<!-- ============================ PAGE 7: SHEET D ============================ -->
+<div class="page"></div>
+<div class="sheet-head"><h2>Sheet D · Day sheet</h2><span>One per office per day</span></div>
+<div class="meta">
+  <div class="field"><span>Date</span><i></i></div>
+  <div class="field"><span>Office</span><i></i></div>
+  <div class="field"><span>Observer(s)</span><i></i></div>
+  <div class="field"><span>Weather or event</span><i></i></div>
+</div>
+
+<h3>The office today</h3>
+<div class="meta" style="grid-template-columns: repeat(3,1fr)">
+  <div class="field"><span>Opens</span><i></i></div>
+  <div class="field"><span>Closes</span><i></i></div>
+  <div class="field"><span>Break or lunch closed</span><i></i></div>
+  <div class="field"><span>Counters open</span><i></i></div>
+  <div class="field"><span>Staff at counters</span><i></i></div>
+  <div class="field"><span>Staff in back office</span><i></i></div>
+</div>
+
+<h3>How clients are lined up today <small class="muted">tick what you see</small></h3>
+<div class="check"><span class="tick"></span><span>One line, first come first served</span></div>
+<div class="check"><span class="tick"></span><span>Numbered tickets or slips</span></div>
+<div class="check"><span class="tick"></span><span>By appointment or schedule</span></div>
+<div class="check"><span class="tick"></span><span>A separate priority or express lane (describe what staff say it is for): <span class="code-line" style="min-width:50mm"></span></span></div>
+<div class="check"><span class="tick"></span><span>No priority lane in this office</span></div>
+<div class="check"><span class="tick"></span><span>Other: <span class="code-line" style="min-width:70mm"></span></span></div>
+
+<h3>What happened</h3>
+<div class="field"><span>Longest line seen</span><i></i><span>people at</span><i style="max-width:25mm"></i></div>
+<div class="field"><span>Power, network or computer problem (what and from–to)</span><i></i></div>
+<div class="field"><i></i></div>
+<div class="field"><span>Counter closed unexpectedly (which and from–to)</span><i></i></div>
+<div class="field"><span>Anything staff called a bottleneck or a repeated problem</span><i></i></div>
+<div class="field"><i></i></div>
+<div class="field"><i></i></div>
+<div class="field"><span>Anything else worth knowing</span><i></i></div>
+<div class="field"><i></i></div>
+
+<h3>Closing check</h3>
+<div class="check"><span class="tick"></span><span>No names, ID numbers or receipt numbers are written on any sheet.</span></div>
+<div class="check"><span class="tick"></span><span>Sheet A total added up. Sheet B rows each have times or an outcome.</span></div>
+<div class="check"><span class="tick"></span><span>Sheets given to the project lead. Date: <span class="code-line" style="min-width:28mm"></span></span></div>
+
+<div class="foot">Source plan: item OF-4 in the project's "work while waiting" list. Measures feed Parts 07 (queue), 12 (reports), 13 (evaluation) and the go-live comparison in Part 14.</div>
+
+</body>
+</html>

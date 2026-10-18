@@ -299,3 +299,10 @@ Known issue / next action / optimization suggestion:
 
 - Owner answered “Login page opens” to the same-Wi-Fi check at http://192.168.1.8:8085. Recorded this as physical phone reachability evidence, without assuming successful sign-in, navigation, device/browser versions or a firewall change.
 - Updated the handoff, index, Part 14, waiting-work status and preview report. OPS-1 remains partial until phone sign-in/navigation, model/OS/browser details and second-laptop access are checked. No application/runtime/account change; all 133 local Markdown links in six affected documents resolved and `git diff --check` passed. Part 05 still awaits proposed C15 approval. Local commit only; no push or campus deployment.
+
+## 2026-10-18 - Baseline observation kit (OF-4, documentation)
+
+- Project owner chose to start the "before" baseline. Added [baseline-kit.pdf](baseline-kit.pdf) (7 A4 pages; editable source [baseline-kit.html](baseline-kit.html)): what is measured and why, privacy rules, an office permission form, observation protocol, and four sheets (arrivals tally, timed sample, records extract, day sheet), plus header-only [CSV templates](baseline-templates/README.md).
+- Measures: clients per day and hour, waiting time and service time (median and 90th percentile), share leaving before service, turnaround days per document type, transaction mix and priority-lane use, and how clients are lined up today. They feed Parts 07, 12, 13 and the Part 14 cutover comparison.
+- Safeguards: no names, ID numbers, receipt numbers or recordings; office head signs first; Data Protection Officer and adviser informed; records extract limited to dates, types and counts and optional for the office. The sample (about five days, two timed hours a day per office) gives a picture, not statistical proof; the adviser should agree the method.
+- Nothing has been observed or sent. The proposed windows, codes and sample sizes are defaults for the team and adviser to change. Documentation only; the PDF was printed from Edge and checked page by page. No application code or tests changed.
