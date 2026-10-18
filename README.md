@@ -150,6 +150,8 @@ Staff provisioning, office-scoped roles, session controls and an append-only aud
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).
 
+The shared/sidebar mark and browser icons use local derivatives of the BISU seal from the official campus website. Source provenance, regeneration instructions and validation are in [DEV-8 branding](docs/DEV-8-BISU-BRANDING.md). The app makes no external request to load these assets.
+
 ## Commit attribution
 
 AI author/co-author credits are disabled for this project. Keep actual human authorship. Setup activates the local commit/push guards; existing checkouts can run `./install-git-hooks.ps1` (PowerShell) or `git config --local core.hooksPath .githooks` (Git Bash/Linux/macOS). Existing custom hooks are preserved for manual integration. The required Foundation checks also reject AI attribution, including if local hooks were bypassed or were not installed.

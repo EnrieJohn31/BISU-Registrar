@@ -38,6 +38,7 @@
 *.log
 
 # OS/editor files.
+/src/nul
 .DS_Store
 Thumbs.db
 **/.idea/

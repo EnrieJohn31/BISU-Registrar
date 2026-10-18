@@ -15,7 +15,7 @@ The requirements checklist has gone out, and its answers decide fees, ID formats
 2. **Reduce later risk.** Concurrency, document rendering, testing and deployment problems are cheaper to find now.
 3. **Prepare the thesis and the offices.** Members who don't code can write, draw diagrams and prepare office visits in parallel.
 
-**Owner direction, 2026-10-18 (C11): current work is limited to items that can proceed while the offices answer.** DEV-2 is authorized next. Keep the separate design/approval gates for later slices. Record incoming office answers, but do not automatically start a previously gated business feature; obtain its own scoped task first. The [handoff](handoff.md) says what each answer unblocks.
+**Owner direction, 2026-10-18 (C11): current work is limited to items that can proceed while the offices answer.** DEV-2, DEV-3 and DEV-8 were authorized in sequence (C11–C13). Keep the separate design/approval gates for later slices. Record incoming office answers, but do not automatically start a previously gated business feature; obtain its own scoped task first. The [handoff](handoff.md) says what each answer unblocks.
 
 ```mermaid
 flowchart LR
@@ -46,7 +46,7 @@ In this order. Each build slice gets a design or approval first, as for Parts 03
 | DEV-5 | Write the Part 05 design (services, requirements, fees) to match the Citizen's Charter entry format. Page 115 already shows the fields: office, classification, type of transaction, who may avail, checklist of requirements and where to secure them, client steps, agency actions, fees, processing time, person responsible | 05 | The charter format is standard across entries, so the data model can follow it now | Low | S | D05 |
 | DEV-6 | Part 05 slice 1, after you approve DEV-5: a catalog with versions, effective-dated fees, staff editing with audit, and a read-only client catalog, with 3–5 services labelled "(Demo)" and obviously fake amounts | 05 | Next part in the build order; real services become data entry | Medium: unusual fee rules (per page, per copy, waivers) may need fields added | L | D05, D07 |
 | DEV-7 | Part 07 slice 1: a basic queue with counters, daily ticket numbers allocated under a lock, call next, recall and no-show, and ticket history. First in, first out by default; hours and priority lanes are settings | 07 | Concurrency is the hard part, and it doesn't depend on office rules | Medium: the priority-lane alternation rule may change | L | D06, D10 |
-| DEV-8 | Quick wins: BISU logo in the sidebar and as the favicon (still the starter's); delete the stray `src/nul` file | — | Polish before any office demo | None | S | — |
+| DEV-8 | **Done locally 2026-10-18:** campus-hosted BISU seal in the shared/sidebar mark, PNG/ICO/touch browser icons, reproducible assets and exact stray-file cleanup; 136 browser checks and desktop/collapsed/phone visual review passed; [source/design/validation](../docs/DEV-8-BISU-BRANDING.md) | 00 | Polish before any office demo | None | S | — |
 
 ## Thesis and documentation track
 

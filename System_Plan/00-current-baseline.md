@@ -5,12 +5,12 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft, based on inspected files |
-| Implementation | Foundation + Part 03 staff account slice implemented; client/transaction modules not started |
-| Validation | Foundation: 40 tests / 138 assertions (2026-10-16); Part 03: 97 tests / 498 assertions, browser QA and GitHub CI passed (2026-10-17) |
+| Implementation | Foundation and Part 03 merged; Part 04 client records, DEV-2 background services, DEV-3 browser suite and DEV-8 BISU branding implemented locally; transaction modules not started |
+| Validation | Historical foundation/Part 03 evidence below; latest local checks and browser/branding evidence in [DEV-8](../docs/DEV-8-BISU-BRANDING.md). Office acceptance pending |
 | Deployment | Local Docker configured; staging and production not recorded |
 | Owner | Project developer / MIS, assignment pending |
 | Dependencies | None |
-| Updated | 2026-10-17 |
+| Updated | 2026-10-18 |
 
 ## Purpose
 
@@ -23,9 +23,9 @@ Establish the starting point so future work extends the existing application and
 | Backend | Laravel 13; setup lockfile resolved framework 13.36.0; PHP 8.4 in Docker |
 | Frontend | Vue 3, Inertia 3, TypeScript, Tailwind CSS 4, shadcn-vue, Vite |
 | Authentication | Starter login, registration, email verification, password recovery, account settings, two-factor/passkey support |
-| Screens | BISU-branded welcome/authentication, role-aware dashboard, staff Users/role/credential screens and audit viewer |
-| Database | MySQL 8.4; starter migrations plus offices, account status, role assignments and audit events; 9 migrations applied locally |
-| Docker | app, node/Vite, MySQL and Redis services in `../docker-compose.dev.yml` |
+| Screens | BISU-branded welcome/authentication, role-aware dashboard, staff Users/role/credential screens, audit viewer and client records; DEV-8 replaces shared/browser starter marks with the campus-hosted BISU seal |
+| Database | MySQL 8.4; starter migrations plus offices, account status, role assignments, audit events and client profiles/identifiers/revisions |
+| Docker | app, node/Vite, MySQL, Redis, worker, scheduler and Mailpit in `../docker-compose.dev.yml`; separate disposable browser project in `../docker-compose.browser.yml` |
 | URLs | Configured local app: `http://localhost:8085`; Vite: `http://localhost:5178` |
 | Application location | `../src/`; Docker files and setup script live at project root |
 | Existing evidence | [Setup validation](../SETUP-VALIDATION.md), [setup instructions](../README.md) |
@@ -36,7 +36,7 @@ On 2026-10-15 the planning inspection could not contact the Docker Desktop Linux
 
 ## Features that still need implementation
 
-- Client identity linkage and verified student/alumni records.
+- Client identity linkage and reviewed imports. Manual client records on synthetic data are implemented in Part 04 slice 1.
 - Later modules must enforce their own office/ownership rules and business audits; Part 03 staff roles and audit foundation are implemented.
 - Service catalog, fees, document requests and request histories.
 - Registrar and Cashier workspaces and their coordinated workflow.
@@ -72,3 +72,5 @@ Retain the existing Inertia application and component library. Measured 2026-10-
 2026-10-16: established repository-wide setup/check scripts, root GitHub Actions/Dependabot configuration, contribution instructions and LAN-independent system fonts. Business features remain not started. See [foundation validation](../docs/FOUNDATION-VALIDATION.md).
 
 2026-10-16: published the foundation and verified GitHub clean-checkout CI. [Run evidence](https://github.com/EnrieJohn31/BISU-Registrar/actions/runs/38878033808). The remaining unchecked business-policy/authorization items belong to the upcoming feature work.
+
+2026-10-18 (DEV-8): replaced the starter shared/sidebar logo and browser icons with local derivatives of the campus-hosted BISU seal. Preserved original source/provenance and added a Windows icon-regeneration script. Removed the exact untracked `src/nul` diagnostic file and ignored that path. Authentication/generated routes, office rules and database are unchanged. [Design, source and validation](../docs/DEV-8-BISU-BRANDING.md).

@@ -6,33 +6,33 @@ Rewrite this file after each completed slice; dated history belongs in the chang
 
 ## Current handoff — 2026-10-18
 
-**Stage:** M1 development. Part 03 slice 1 is merged. Part 04 slice 1, DEV-1 QA fixes (`896e59e`), DEV-2 background services (`b614386`) and DEV-3 browser regression remain local. Current branch: `test/browser-regression-2026-10-18`, based on `feat/dev-background-services-2026-10-18`. Campus staging/production are not deployed.
+**Stage:** M1 development. Part 03 slice 1 is merged. Part 04 slice 1, DEV-1 QA fixes (`896e59e`), DEV-2 background services (`b614386`), DEV-3 browser regression (`0dc56c6`) and DEV-8 branding remain local. Current branch: `feat/bisu-branding-2026-10-18`, based on `test/browser-regression-2026-10-18`. Campus staging/production are not deployed.
 
-**Current scope (C11/C12): work only on items that can proceed while offices answer.** The owner authorized DEV-3 as the next eligible item. Preserve later slices' design/approval gates; an incoming office answer does not automatically authorize a gated business feature. Keep synthetic data labelled. Imports, linking, office workflows and real fees/IDs/templates remain outside current work.
+**Current scope (C11–C13): work only on items that can proceed while offices answer.** The owner authorized DEV-8 as the next eligible item. Preserve later slices' design/approval gates; an incoming office answer does not automatically authorize a gated business feature. Keep synthetic data labelled. Imports, linking, office workflows and real fees/IDs/templates remain outside current work.
 
 **Git policy:** local commits only; no push, PR or GitHub merge without an explicit owner request. Preserve actual human authorship and the active commit/push guards. Historical attribution details: [record](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md).
 
-### Just completed — DEV-3
+### Just completed — DEV-8
 
-- Saved 34 named client-record browser cases with Playwright, each run at desktop/phone widths in light/dark mode: 136 checks, zero retries. Coverage includes real authentication/TOTP, search/filtering, writes/conflicts, stale screens, permissions, audit privacy, all 51 history revisions and keyboard/layout checks.
-- Added `./browser-tests.ps1` and a separate fixed `bisu-registrar-browser` Compose project. It copies allowlisted source read-only into a disposable workspace, installs locked dependencies, builds assets and seeds SQLite. Development environment files, credentials, runtime data, dependency volumes and network/database are excluded. It exposes no host app port.
-- Generated keys, credentials, TOTP secrets and sessions disappear with the workspace. Seeder guards require testing mode, explicit opt-in, SQLite and the exact isolated path; a nonempty database is refused. Four guard tests run in the foundation suite.
-- Saved reports, failure traces and layout captures in ignored `.browser-artifacts/`. Browser TypeScript joins `check.ps1`; a separate CI browser job uses the same runner and seven-day synthetic artifact retention. No GitHub execution/upload is claimed because this branch is unpublished.
-- Part 04's pending developer visual follow-up is complete: history page 2 reaches creation and returns to the newest revisions; desktop/phone controls and wrapping were reviewed. No application UI/controller/route, permission, migration or office rule changed in DEV-3.
+- Replaced the starter shared/sidebar mark with the existing BISU seal from the official campus media library, verified against the campus header. The unchanged original and provenance live in `src/resources/branding/`; a 96-pixel local derivative serves the shared component. Expanded/collapsed desktop and phone drawer captures were reviewed in both themes.
+- Replaced browser icons with local 64-pixel PNG, 16/32/48-pixel ICO and 180-pixel touch assets. The Blade shell uses new cache keys; the starter SVG is removed. Public/login/staff pages receive the same local references. No external request is needed to load branding.
+- Added a Windows maintenance generator, `scripts/build-brand-icons.ps1`. Repeated generation produces identical hashes; no package or app dependency was added. The shared prop/attribute contract, app name, generated dashboard link and authentication remain connected.
+- Removed only the verified untracked `src/nul` diagnostic file and ignored its exact path. No database, credential, runtime record, office rule, controller, route or permission changed.
 
-Design, complete case map, commands, findings and evidence: [DEV-3 report](../docs/DEV-3-BROWSER-REGRESSION.md).
+Source, design, commands and current validation: [DEV-8 report](../docs/DEV-8-BISU-BRANDING.md). Saved browser suite/case map: [DEV-3 report](../docs/DEV-3-BROWSER-REGRESSION.md).
 
 ### Validation and runtime
 
-- Browser matrix: **136 checks passed**, covering Chromium at 1440 × 900 and phone emulation at 390 × 844, both themes. Final strengthened B21/B27/B33 assertions passed another 12/12 focused checks. Both reports are retained locally as documented in the DEV-3 record. Real Edge/Safari/Firefox installations and physical campus devices remain D20 acceptance work.
+- Branding inspection passed: 32-pixel seal fits its generated dashboard link in expanded/collapsed desktop navigation and phone drawers, in both themes. Six captures and an inspection JSON stay in ignored `.browser-artifacts/branding/`. Browser icon responses match the committed files byte for byte; public/login shell references are also verified.
+- The saved browser matrix rerun passed **136 checks**, covering Chromium at 1440 × 900 and phone emulation at 390 × 844, both themes. Real Edge/Safari/Firefox installations and physical campus devices remain D20 acceptance work.
 - `./check.ps1`: **167 tests / 944 assertions passed**, Composer validation, production build/Wayfinder, frontend formatting/lint, Vue/browser TypeScript, Pint and Larastan level 7. Vite/worker/scheduler were restored afterwards.
 - Browser isolation checks matched the development `.env` SHA-256 and user/profile/revision/audit counts plus profile-version sum before/after full runs. Only the separate test project's workspace/network/containers are removed; no development records were reset or edited by this suite.
-- Seven development services remain in place: app, Vite, database worker, scheduler, Mailpit, MySQL and Redis. DEV-2's live retry/email/failure probes are historical evidence in [its report](../docs/DEV-2-BACKGROUND-SERVICES.md), not rerun by DEV-3.
+- Seven development services remain in place: app, Vite, database worker, scheduler, Mailpit, MySQL and Redis. DEV-2's live retry/email/failure probes are historical evidence in [its report](../docs/DEV-2-BACKGROUND-SERVICES.md), not rerun by branding QA.
 - URLs: app http://localhost:8085; Vite http://localhost:5178; captured test inbox http://localhost:8026. This is development Docker, not campus deployment.
 
 ### Part 04 state
 
-Client records retain C10's approved permissions and demo rules. Full history is paginated; free-text client reasons stay in restricted revisions and general audit events reference the revision. Existing demo accounts/clients were preserved by DEV-3.
+Client records retain C10's approved permissions and demo rules. Full history is paginated; free-text client reasons stay in restricted revisions and general audit events reference the revision. The full-history developer visual follow-up was completed in DEV-3. Existing demo accounts/clients were preserved by branding QA.
 
 [DEV-1 QA](../docs/PART-04-QA-2026-10-18.md): disposable MySQL 45 tests / 394 assertions. The original Edge/race evidence remains dated 2026-10-17. DEV-3 adds repeatable Chromium evidence, not new MySQL race probes or office acceptance.
 
@@ -47,13 +47,13 @@ Development access remains `processor@bisu.test` (changes) and `intake@bisu.test
 | D08 | Registrar | Real templates, signatures, numbering and release rules |
 | D11 / D13 / D20 | MIS + offices | Campus mail/assisted delivery, workload and operational targets, supported browsers/devices |
 
-The browser suite resolves a technical regression prerequisite. It does not approve any of these office decisions.
+Development branding and browser regression do not approve any of these office decisions.
 
 ### Next work, within the waiting-work list
 
-1. DEV-8: use a supplied/verified official BISU logo for sidebar/browser icons and clean up the pre-existing stray `src/nul`. Inspect available assets first; do not invent an official mark. These files remain untouched by DEV-3.
-2. DEV-4: compare two PDF renderers using only a made-up certificate stamped “SAMPLE – NOT VALID”; then DEV-5: write the Part 05 design from the charter field layout. Part 05 implementation still requires approval of that design.
-3. Team/office preparation remains in [97](97-work-while-waiting.md): names/dates, thesis drafts/diagrams, demo/device checks, privacy draft and permission-based anonymous timing baseline. No messages or bookings were sent by DEV-3.
+1. DEV-4: compare two PDF renderers using only a made-up certificate stamped “SAMPLE – NOT VALID”, with bundled fonts, A4/Legal, long names and multiple pages. No real wording, signature or numbering; D08 remains open.
+2. DEV-5: write the Part 05 design from the charter field layout. Part 05 implementation still requires approval of that design. Later build slices keep their own scoped tasks/gates.
+3. Team/office preparation remains in [97](97-work-while-waiting.md): names/dates, thesis drafts/diagrams, demo/device checks, privacy draft and permission-based anonymous timing baseline. No messages or bookings were sent by DEV-8.
 4. Record office answers in the decision register and preserve C11. Publishing local branches requires a separate explicit request.
 
 ### Watch-outs and useful optimizations
@@ -62,4 +62,5 @@ The browser suite resolves a technical regression prerequisite. It does not appr
 - Keep Playwright package/image versions aligned. Run one local browser runner at a time because its project name is fixed. Consider test-only download caches if repeated fresh installs become slow; do not share writable dev runtime/dependency volumes.
 - Restart worker/scheduler after PHP job/config changes. Keep timeout below reservation expiry; future jobs need measured retry/idempotency settings. Do not invent cleanup schedules before retention approval.
 - Preserve generated routes and server-side permissions. Every client write goes through `ClientProfileRecorder`; full details/reasons remain outside general audit.
-- Keep secrets, real records, runtime data and backups out of Git. `.browser-artifacts/` and the unrelated `src/nul` are excluded from this commit.
+- Keep the full seal source outside public assets; use the 96-pixel derivative across layouts. Regenerate on Windows from the preserved source and update browser cache keys when replacing assets. A dedicated small official icon can replace the seal later if MIS supplies one.
+- Keep secrets, real records, runtime data and backups out of Git. `.browser-artifacts/` stays ignored; the stray `src/nul` is now removed and explicitly ignored.

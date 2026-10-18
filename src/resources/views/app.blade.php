@@ -30,9 +30,9 @@
             }
         </style>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" href="/favicon.ico?v=bisu-20261018" sizes="16x16 32x32 48x48">
+        <link rel="icon" href="/favicon.png?v=bisu-20261018" type="image/png" sizes="64x64">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=bisu-20261018" sizes="180x180">
 
         @vite(['resources/css/app.css', 'resources/js/app.ts', "resources/js/pages/{$page['component']}.vue"])
         <x-inertia::head>
