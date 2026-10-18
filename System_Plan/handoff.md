@@ -4,21 +4,23 @@
 
 ## Current position — 2026-10-18
 
-**We are in M1 development. For daily phone access, start Docker Desktop and double-click `start-lan.cmd` (or run `./lan-preview.ps1`); it detects the LAN IP and prints connection links.** The owner confirmed the physical phone login page opens (2026-10-18). OPS-1 still needs phone sign-in/navigation, device/browser details and a second-laptop check. DEV-5 awaits your approval; do not build Part 05 yet. C16/C17 cover development LAN access/startup only; office gates remain unchanged.
+**M1 release handoff: Part 04 and the completed waiting-work slices are included in [PR #11](https://github.com/EnrieJohn31/BISU-Registrar/pull/11), under the owner's explicit commit/push/main-merge authorization (C18).** GitHub records the final head, checks and merge result. Campus deployment remains pending. Next development still needs approval of the Part 05 design; publishing it does not approve implementation.
 
-Current local branch: `chore/lan-startup-links-2026-10-18`, based on `e2599a8` (requirements checklist v2), preserving the baseline kit, phone-access evidence, Part 05 design (`08febd1`), DEV-4 (`461ed51`) and DEV-8 (`265e695`). Part 03 slice 1 is merged. Part 04 and later waiting-work slices are local, unpushed and not campus-deployed. No push, PR or merge is authorized by this handoff.
+Release source branch: `release/part04-and-waiting-work-2026-10-18`, including all 20 previously local commits through `358583f`, plus this release record. Use the [release report](../docs/RELEASE-2026-10-18.md) and PR for publication evidence; use up-to-date `main` after publication. Preserve human authorship and protected-main checks. C18 applies to this release only; later publication still needs an explicit request.
+
+Daily phone access: start Docker Desktop and double-click `start-lan.cmd` (or run `./lan-preview.ps1`); it detects the LAN IP and prints links. The owner confirmed the physical phone login page opens. OPS-1 still needs sign-in/navigation, device/browser details and a second-laptop check. Office gates remain unchanged.
 
 ### Project status at a glance
 
 | Area | Where it stands | What is next / still gated |
 |---|---|---|
 | Foundation / Part 03 accounts, roles and audit | Implemented; Part 03 merged (`fa2246a`) | Institutional UAT and campus rollout pending |
-| Part 04 slice 1 client records | Implemented locally, QA fixes `896e59e`; full history and audit privacy covered | Official ID/data/privacy/custodian acceptance remain D04/D09 |
+| Part 04 slice 1 client records | Implemented and included in release PR #11, QA fixes `896e59e`; full history and audit privacy covered | Official ID/data/privacy/custodian acceptance remain D04/D09 |
 | Part 04 imports and account linking | Design only, not implemented | D03/D04/D09 and separately scoped feature work |
-| DEV-2 worker, scheduler, Mailpit | Complete locally (`b614386`) | Campus mail/operations decisions still open |
-| DEV-3 saved browser regression | Complete locally (`0dc56c6`): 34 cases × four projects | Extend when later features are scoped; physical device acceptance remains D20 |
-| DEV-8 BISU shared/browser branding and stray-file cleanup | Complete locally (`265e695`) | Existing local assets and generator retained |
-| DEV-4 PDF renderer comparison | Complete locally: 12 combinations, 36 renders, 19 reviewed pages | Provisional Dompdf direction; actual templates/fonts/printer still require D08 acceptance |
+| DEV-2 worker, scheduler, Mailpit | Complete (`b614386`), included in release PR #11 | Campus mail/operations decisions still open |
+| DEV-3 saved browser regression | Complete (`0dc56c6`): 34 cases × four projects, included in release PR #11 | Extend when later features are scoped; physical device acceptance remains D20 |
+| DEV-8 BISU shared/browser branding and stray-file cleanup | Complete (`265e695`), included in release PR #11 | Existing local assets and generator retained |
+| DEV-4 PDF renderer comparison | Complete: 12 combinations, 36 renders, 19 reviewed pages; experiment included in PR #11 | Provisional Dompdf direction; actual templates/fonts/printer still require D08 acceptance |
 | OPS-1 same-network phone preparation | Optional LAN preview implemented locally; PC HTTP/assets and stop/restore checked; owner confirmed physical phone login page opens | Still needed: phone sign-in/navigation, model/OS/browser versions and second-laptop access |
 | Part 05 services, requirements and fees | Slice 1 design written (DEV-5), not built | **You approve the design (proposed C15)**, then DEV-6 builds the staff catalog on synthetic data |
 | Part 07 basic queue | Not implemented | Later scoped design/build task, following the waiting-work sequence; office settings remain open |
@@ -29,7 +31,11 @@ Current local branch: `chore/lan-startup-links-2026-10-18`, based on `e2599a8` (
 
 At your request I prepared the "before" baseline kit: [baseline-kit.pdf](baseline-kit.pdf), 7 A4 pages, editable source [baseline-kit.html](baseline-kit.html), with [CSV entry templates](baseline-templates/README.md). It holds the privacy rules, a permission form for each office head, the observation protocol and four sheets: arrivals tally, timed sample, records extract and day sheet. **Nobody has observed anything yet, and nothing has been sent to an office.** The two timed hours a day, the codes and the five-day sample are proposals for you and the adviser to change. Documentation only; committed locally on `docs/baseline-kit-2026-10-18`.
 
-### Latest slice — daily LAN startup and connection links
+### Latest slice — combined GitHub release
+
+The owner requested committing all changes, pushing and merging to main. The working tree was already clean, with 20 local commits. They are published together through [PR #11](https://github.com/EnrieJohn31/BISU-Registrar/pull/11), preserving the full human-authored history. `main` requires a PR, strict/up-to-date Foundation checks, administrator enforcement and resolved conversations. Required protections stay intact, and both foundation and browser jobs must pass on the exact final PR head before merge. Full local foundation checks passed again (167 tests / 944 assertions), along with 16 attribution cases and outgoing history/path/credential checks. [Release evidence and remaining checks](../docs/RELEASE-2026-10-18.md).
+
+### Previous slice — daily LAN startup and connection links
 
 The owner asked how to know the current IP and links every time the app starts. Added automatic selection to `lan-preview.ps1`: it uses the single active private IPv4 address with an IPv4 gateway, excluding gateway-less virtual adapters. Multiple qualifying addresses stop before container changes and require explicit `-Address`. `start-lan.cmd` launches the helper by absolute path, preserves its exit code and keeps the window open with links or errors. `-Links` reads actual running Docker bindings and active adapter addresses without restarting or rebuilding. It does not present an inactive bound address as a working phone link.
 

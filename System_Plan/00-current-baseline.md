@@ -5,8 +5,8 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft, based on inspected files |
-| Implementation | Foundation and Part 03 merged; Part 04 client records, DEV-2 background services, DEV-3 browser suite and DEV-8 BISU branding implemented locally; transaction modules not started |
-| Validation | Historical foundation/Part 03 evidence below; latest local checks and browser/branding evidence in [DEV-8](../docs/DEV-8-BISU-BRANDING.md). Office acceptance pending |
+| Implementation | Foundation and Part 03 merged; Part 04 and completed waiting-work slices included in [release PR #11](https://github.com/EnrieJohn31/BISU-Registrar/pull/11); transaction modules not started |
+| Validation | Fresh local release foundation: 167 tests / 944 assertions; [release evidence and GitHub checks](../docs/RELEASE-2026-10-18.md). Historical foundation/Part 03 evidence below. Office acceptance pending |
 | Deployment | Local Docker configured; staging and production not recorded |
 | Owner | Project developer / MIS, assignment pending |
 | Dependencies | None |

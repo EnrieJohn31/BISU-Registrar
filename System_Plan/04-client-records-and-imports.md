@@ -5,7 +5,7 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Slice 1 approved by the project owner (C10); slices 2 and 3 still design only, office approval pending |
-| Implementation | Slice 1 implemented locally, with follow-up fixes on `fix/part-04-qa-2026-10-18`; not pushed, merged or deployed. Imports and account linking not started. See the [implementation record](#slice-1-implementation-record) |
+| Implementation | Slice 1 implemented with follow-up QA fixes and included in [release PR #11](https://github.com/EnrieJohn31/BISU-Registrar/pull/11). Campus deployment pending; imports and account linking not started. See the [implementation record](#slice-1-implementation-record) |
 | Validation | 2026-10-18: DEV-3 saved Chromium suite passed 34 cases in four viewport/theme projects, including full-history paging and audit privacy; [browser evidence](../docs/DEV-3-BROWSER-REGRESSION.md). DEV-1 MySQL: 45 tests / 394 assertions; original race/Edge evidence: 2026-10-17. Records-custodian acceptance pending |
 | Deployment | Not deployed |
 | Owner | Registrar records custodian + developer; named custodian pending |
