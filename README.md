@@ -146,6 +146,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch/review conventions and [docs/F
 
 ## Current scope and campus hosting
 
+DEV-4's isolated PDF comparison can be rerun with `powershell -NoProfile -ExecutionPolicy Bypass -File ./pdf-spike.ps1`. It uses fictional stamped certificates and adds no application PDF package. Two sample packs and page previews are written to ignored `output/pdf/`; structural checks and visual review are both required. [Instructions](experiments/pdf-renderers/README.md) and [results/provisional recommendation](docs/DEV-4-PDF-RENDERERS.md).
+
 Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Part 04 slice 1 implements client records with synthetic data, complete paginated revision history and client reasons restricted to that history. Public self-registration grants no staff roles. Imports, identity linkage, requests, office ticket queues, payments and documents remain unimplemented. DEV-2 adds a development database-job worker, scheduler and captured-email inbox; campus email delivery remains gated by D11. Current authorization covers work that can proceed while offices answer (C11), with existing per-task approval gates preserved. See the [Part 04 QA report](docs/PART-04-QA-2026-10-18.md) and [saved browser evidence](docs/DEV-3-BROWSER-REGRESSION.md).
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).

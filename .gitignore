@@ -23,6 +23,8 @@
 /.browser-artifacts/
 /src/playwright-report/
 /src/test-results/
+/output/
+/tmp/
 
 # Runtime data and exports. Retain Laravel's directory placeholder files.
 /src/bootstrap/cache/*

@@ -6,7 +6,7 @@
 |---|---|
 | Plan status | Draft |
 | Implementation | DEV-3 saved client-record browser regression suite implemented locally; end-to-end office workflows and acceptance remain pending |
-| Validation | Local foundation and browser evidence in [DEV-3](../docs/DEV-3-BROWSER-REGRESSION.md); campus/office acceptance pending. Historical GitHub checks do not validate this unpublished branch |
+| Validation | Latest foundation: 167 tests / 944 assertions; DEV-4 PDF matrix: 12 combinations / 36 renders / 19 reviewed pages ([record](../docs/DEV-4-PDF-RENDERERS.md)). Saved browser evidence in [DEV-3](../docs/DEV-3-BROWSER-REGRESSION.md); campus/office acceptance pending. Historical GitHub checks do not validate this unpublished branch |
 | Deployment | Not deployed |
 | Owner | Developer/QA with Registrar, Cashier and MIS acceptance owners; names pending |
 | Dependencies | Tests accompany Parts 03–12; final acceptance requires all in-scope features |
@@ -74,6 +74,8 @@ There are 34 named client-record cases, each run at desktop/phone widths in both
 The four fixture-safety guards and browser TypeScript checks join the foundation suite. Browser execution stays separate to keep PHP feedback fast. Full case mapping, commands, visual review and final results: [DEV-3 record](../docs/DEV-3-BROWSER-REGRESSION.md). This does not replace MySQL race probes, physical-device testing, screen-reader checks or office UAT.
 
 ## Nonfunctional checks
+
+DEV-4 provides a separate `./pdf-spike.ps1` command for offline, synthetic PDF regression. Its six fixtures cover both paper sizes, accented/long names, local images, embedded fonts, repeating tables and per-page sample stamps. QA combines text/font/paper/header-position checks, Poppler rasterization and final-pack pixel comparisons; human page review is still required. It leaves application dependencies unchanged and does not replace actual-template or campus-printer acceptance. [Instructions and limits](../experiments/pdf-renderers/README.md).
 
 - Agree on peak concurrent users, request volume, expected response time, queue-display freshness and document-generation time with MIS before assigning pass/fail thresholds.
 - Measure on representative campus workstations, Wi-Fi/LAN segments, printers and kiosk equipment.

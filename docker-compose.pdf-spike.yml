@@ -1,0 +1,41 @@
+name: bisu-registrar-pdf-spike
+x-runtime: &runtime
+  network_mode: none
+  read_only: true
+  init: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  cpus: 1
+  mem_limit: 1g
+  tmpfs:
+    - /tmp:size=256m
+  environment:
+    PYTHONDONTWRITEBYTECODE: "1"
+    PDF_SPIKE_REPEATS: "3"
+  volumes:
+    - ./experiments/pdf-renderers:/spike:ro
+    - ./tmp/pdfs:/work
+    - ./output/pdf:/output
+services:
+  qa:
+    <<: *runtime
+    image: bisu-registrar-pdf-qa
+    build:
+      context: ./experiments/pdf-renderers
+      target: qa
+    command: ["timeout", "180s", "python", "verify.py"]
+  dompdf:
+    <<: *runtime
+    image: bisu-registrar-pdf-dompdf
+    build:
+      context: ./experiments/pdf-renderers
+      target: dompdf
+    command: ["timeout", "180s", "php", "render-dompdf.php"]
+  chromium:
+    <<: *runtime
+    image: bisu-registrar-pdf-chromium
+    build:
+      context: ./experiments/pdf-renderers
+      target: chromium
+    shm_size: 256m
+    command: ["timeout", "180s", "node", "render-chromium.mjs"]

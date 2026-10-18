@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-18 · **Current stage:** M1 development (accounts slice merged; Part 04 and DEV-2/3/8 infrastructure, tests and branding local) · **Current focus:** work that can proceed while office answers are pending (C11) · **Next development task:** DEV-4 PDF renderer comparison using a fictional “SAMPLE – NOT VALID” certificate. Later slices retain their own scoped approval and office gates · **Where to pick up:** [handoff.md](handoff.md)
+**Last updated:** 2026-10-18 · **Current stage:** M1 development (accounts slice merged; Part 04 and waiting-work infrastructure/tests/branding/PDF spike local) · **Current focus:** work that can proceed while office answers are pending (C11) · **Next development task:** DEV-5, Part 05 design for review; implementation waits for design approval. Later slices retain their own scoped approval and office gates · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -87,10 +87,11 @@ Part 16 technically needs only Parts 02–03, but is scheduled after M2 by decis
 | Area | Current status | Evidence |
 |---|---|---|
 | Laravel/Vue/Docker foundation | Implemented, repository published and verified for development | [Part 00](00-current-baseline.md), [existing setup report](../SETUP-VALIDATION.md) |
-| Latest local foundation validation | DEV-8: 167 tests / 944 assertions, build, frontend/browser TypeScript and PHP checks passed on 2026-10-18; unpublished | [DEV-8 validation](../docs/DEV-8-BISU-BRANDING.md); [historical foundation/CI report](../docs/FOUNDATION-VALIDATION.md) |
+| Latest local foundation validation | DEV-4: 167 tests / 944 assertions, build, frontend/browser TypeScript and PHP checks passed on 2026-10-18; unpublished | [DEV-4 validation](../docs/DEV-4-PDF-RENDERERS.md); [historical foundation/CI report](../docs/FOUNDATION-VALIDATION.md) |
 | Current local runtime | Seven dev services running; worker/scheduler/Mailpit validated. Isolated browser runs leave dev environment/data aggregates unchanged | [DEV-2 validation](../docs/DEV-2-BACKGROUND-SERVICES.md); [DEV-3 isolation evidence](../docs/DEV-3-BROWSER-REGRESSION.md) |
 | Saved browser regression | DEV-3: 34 cases × four Chromium viewport/theme projects passed; full-history visual follow-up complete; local branch `test/browser-regression-2026-10-18` | [Design, case map and validation](../docs/DEV-3-BROWSER-REGRESSION.md) |
 | Shared/browser branding | DEV-8: campus-hosted BISU seal, local browser icons and exact stray-file cleanup on `feat/bisu-branding-2026-10-18`; 136 browser checks plus six navigation captures reviewed | [Source, design and validation](../docs/DEV-8-BISU-BRANDING.md) |
+| PDF technical spike | DEV-4: 12 combinations / 36 renders / 19 reviewed pages; provisional Dompdf choice on `spike/pdf-renderers-2026-10-18`. No app integration or document lifecycle | [Method, results and remaining gates](../docs/DEV-4-PDF-RENDERERS.md) |
 | Development background services | DEV-2 adds a database queue worker, scheduler and Mailpit test inbox on `feat/dev-background-services-2026-10-18`; local only | [Design and validation](../docs/DEV-2-BACKGROUND-SERVICES.md) |
 | Accounts, roles and audit trail | Part 03 slice 1 + browser fixes merged in [PR #7](https://github.com/EnrieJohn31/BISU-Registrar/pull/7), `fa2246a`; office UAT/campus deployment pending | [Part 03 implementation record](03-accounts-permissions-and-audit.md#slice-1-implementation-record) |
 | Client records | Part 04 slice 1 with follow-up QA fixes on `fix/part-04-qa-2026-10-18`; not pushed, merged or deployed | [Part 04 implementation record](04-client-records-and-imports.md#slice-1-implementation-record), [follow-up QA](../docs/PART-04-QA-2026-10-18.md) |
@@ -115,7 +116,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 07 | [Queues, counters, display and kiosk](07-queues-counters-and-kiosk.md) | Not started | Not started | Not deployed |
 | 08 | [Registrar workspace](08-registrar-workspace.md) | Not started | Not started | Not deployed |
 | 09 | [Cashier and payment control](09-cashier-and-payment-control.md) | Not started | Not started | Not deployed |
-| 10 | [Document generation and approval](10-document-generation-and-approval.md) | Not started | Not started | Not deployed |
+| 10 | [Document generation and approval](10-document-generation-and-approval.md) | Isolated DEV-4 renderer spike complete locally; document module not started | Synthetic comparison passed; D08 actual-template/font/printer and workflow acceptance pending | Not deployed |
 | 11 | [Release, tracking and notifications](11-release-tracking-and-notifications.md) | Not started | Not started | Not deployed |
 | 12 | [Reporting and analytics](12-reporting-and-analytics.md) | Not started | Not started | Not deployed |
 | 13 | [Testing and campus acceptance](13-testing-and-campus-acceptance.md) | Saved client-record browser suite implemented locally; integrated workflows/office UAT pending | 136 Chromium checks and foundation 167 tests / 944 assertions passed; physical devices and campus acceptance pending | Not deployed |
@@ -132,6 +133,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 - [DEV-2 development background services](../docs/DEV-2-BACKGROUND-SERVICES.md) - worker/scheduler/test inbox design, checks and boundaries while office answers are pending.
 - [DEV-3 saved browser regression](../docs/DEV-3-BROWSER-REGRESSION.md) - isolated fixtures, 34-case mapping, viewport/theme checks and completed history visual follow-up.
 - [DEV-8 BISU branding](../docs/DEV-8-BISU-BRANDING.md) - verified seal source, local sidebar/browser icons, reproducible asset generation and cleanup evidence.
+- [DEV-4 PDF renderer comparison](../docs/DEV-4-PDF-RENDERERS.md) - isolated offline fixtures, result matrix, provisional renderer choice and remaining template/printer gates.
 - [Requirements checklist (PDF)](requirements.pdf) — 29 items to collect from the offices, in priority order, for the team to send out; editable source [requirements.html](requirements.html).
 - [Work while waiting](97-work-while-waiting.md) — low-rework tasks for development, thesis, office preparation and deployment readiness until the office answers arrive.
 
