@@ -142,6 +142,7 @@ One person can hold several roles. Nobody can assign a role to themselves. `repo
 | `clients.view` | 04 | intake_staff, registrar_processor, registrar_approver, release_officer | Part 04 slice 1 (built) |
 | `clients.manage` | 04 | registrar_processor | Part 04 slice 1 (built) |
 | `clients.import`, `client_links.review` | 04 | registrar_processor (import also office_supervisor, per D04) | Part 04 slices 2 and 3 (not built) |
+| `services.view` (**proposed 2026-10-18** in the Part 05 slice 1 design; pending approval) | 05 | intake_staff, registrar_processor, registrar_approver, release_officer, cashier, office_supervisor (any office, read-only) | Part 05 slice 1 |
 | `services.manage`, `waivers.approve` | 05 | office_supervisor (Registrar) | Part 05 |
 | `fees.manage` | 05 | office_supervisor (office per D05) | Part 05 |
 | `requests.intake` | 06 | intake_staff, registrar_processor | Part 06 |

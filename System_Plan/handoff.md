@@ -4,9 +4,9 @@
 
 ## Current position — 2026-10-18
 
-**We are in M1 development. DEV-4 is complete. Resume with DEV-5: write the Part 05 design for review; do not implement Part 05 yet.** No task or PDF renderer is left running from this slice. Office-dependent work remains on hold under C11–C14.
+**We are in M1 development. DEV-4 (PDF renderer comparison) is complete and DEV-5 (the Part 05 design) is written and waiting for your approval. Do not build Part 05 until you approve it.** No task or PDF renderer is left running. Office-dependent work remains on hold under C11–C14.
 
-Current local branch: `spike/pdf-renderers-2026-10-18`, based on `feat/bisu-branding-2026-10-18` (`265e695`). Part 03 slice 1 is merged. Part 04 and later waiting-work slices are local, unpushed and not campus-deployed. No push, PR or merge is authorized by this handoff.
+Current local branch: `docs/part-05-design-2026-10-18`, based on `spike/pdf-renderers-2026-10-18` (`461ed51`, DEV-4), which sits on the DEV-8 branding branch (`265e695`). Part 03 slice 1 is merged. Part 04 and later waiting-work slices are local, unpushed and not campus-deployed. No push, PR or merge is authorized by this handoff.
 
 ### Project status at a glance
 
@@ -19,12 +19,22 @@ Current local branch: `spike/pdf-renderers-2026-10-18`, based on `feat/bisu-bran
 | DEV-3 saved browser regression | Complete locally (`0dc56c6`): 34 cases × four projects | Extend when later features are scoped; physical device acceptance remains D20 |
 | DEV-8 BISU shared/browser branding and stray-file cleanup | Complete locally (`265e695`) | Existing local assets and generator retained |
 | DEV-4 PDF renderer comparison | Complete locally: 12 combinations, 36 renders, 19 reviewed pages | Provisional Dompdf direction; actual templates/fonts/printer still require D08 acceptance |
-| Part 05 services, requirements and fees | Plan draft; design/build not completed | **DEV-5 design only**, then owner review before DEV-6 implementation |
+| Part 05 services, requirements and fees | Slice 1 design written (DEV-5), not built | **You approve the design (proposed C15)**, then DEV-6 builds the staff catalog on synthetic data |
 | Part 07 basic queue | Not implemented | Later scoped design/build task, following the waiting-work sequence; office settings remain open |
 | Portal, Registrar and Cashier workflows; document lifecycle/release/reports | Not implemented | Office answers and each part's design/approval gates |
 | Campus staging / production | Not deployed | MIS infrastructure, acceptance and release approval |
 
-### Just completed — DEV-4
+### Just completed — DEV-5, Part 05 slice 1 design
+
+Written into [Part 05](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18) for your review. Documentation only: no application code, migration or test changed.
+
+- **Checked against page 115 of the charter** (Enrollment, 5.2.1). It shows the entry header (office, classification, type of transaction, who may avail) and requirements grouped by client situation, each with a "How to Avail" column. It does **not** show the client steps, agency actions, fees, processing time or person responsible. I had wrongly written in [97](97-work-while-waiting.md) that it did; that is corrected, and the step table is deferred to slice 2.
+- **Shape proposed:** a service has separately versioned content and fee records; published versions never change and have only a start date; requirements sit in groups the client chooses between, with three kinds (information field, attachment, staff check); fee models are free, fixed and per-unit; money is whole centavos; snapshot and fee-at-endorsement code is ready for Parts 06, 08 and 09.
+- **Access:** one new read-only permission, `services.view`, is proposed; services and fees are managed in the Registrar office until D05 says otherwise, so a Cashier supervisor can read but not change them.
+- **Demo data:** five "(Demo)" services with fake amounts (11.11 to 44.44), including a grouped-requirements example and a scheduled fee change.
+- Seven decisions to approve and eight office questions are listed at the end of the design. A confirmed trade-off: a version published with today's date and found wrong cannot be replaced until tomorrow.
+
+### Previous slice — DEV-4
 
 Compared Dompdf 3.1.6 with Chromium through Playwright 1.64.1 in separate Docker images, using the same fictional body layout and identical bundled DejaVu fonts. Six fixtures cover A4/Legal, standard and long accented names, a local DEMO image and a 60-row multipage table. Every page is stamped “SAMPLE – NOT VALID”. No real template, seal, signature, numbering, fee or identity data was used.
 
@@ -52,19 +62,20 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ./check.ps1
 
 Read the output JSON and inspect new page PNGs before accepting a later run. The runner removes its previous packs/result manifest first, refreshes only its named previews and cleans up only `bisu-registrar-pdf-spike`. A failed run cannot present an old success manifest. Renderer/QA processes are capped at 180 seconds; Chromium page/action waits are capped at 15 seconds.
 
-### Next action — DEV-5, Part 05 design only
+### Next action
 
-1. Read [Part 05](05-services-requirements-and-fees.md), the decision register and the charter field-layout reference in [97](97-work-while-waiting.md). Verify the page 115 source/reference when drafting the design.
-2. Design services, requirements, client/agency steps, office/classification/transaction/eligible-client fields, processing-time/person-responsible fields and fee/version metadata. Keep missing office rules explicit; use labelled synthetic examples without real fees, ID formats or template wording.
-3. Prepare a concrete reviewable design and record open D05/D07 decisions. **Stop before implementing Part 05 until the owner approves the design.** DEV-6's synthetic catalog and DEV-7's basic queue remain later scoped tasks.
-4. Record incoming office answers; they do not automatically authorize a previously gated feature. Team thesis/office/LAN preparation remains in [97](97-work-while-waiting.md); no messages, appointments or office permissions were sent/obtained by this slice.
+1. **You review the [Part 05 design](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18)** and approve, change or reject the seven proposals (including the new `services.view` permission). On approval I record it as decision C15, then build DEV-6 on a new local branch with `./check.ps1`, MySQL race probes and new browser cases. Nothing in Part 05 is built before then.
+2. **Alternative or parallel:** DEV-7 (basic queue) needs its own short design and approval first. Thesis and office-preparation tasks in [97](97-work-while-waiting.md) need no code.
+3. **Send the [requirements checklist](requirements.pdf)** if not yet sent. The rest of the Citizen's Charter (steps, fees, processing times and the Cashier section) is item 1 and unlocks Part 05 slice 2.
+4. Record incoming office answers; they do not automatically authorize a previously gated feature. No messages, appointments or office permissions were sent or obtained by this slice.
 
 ### Office decisions still needed
 
 | Decisions | Owner | Still needed |
 |---|---|---|
 | D03 / D04 / D09 | Registrar + MIS + DPO | Linking/recovery proof, official IDs, approved import source/reviewer/correction authority, permitted fields, privacy/retention/access auditing |
-| D05 / D07 | Registrar + Cashier | Approved services/requirements, fees, financial rules and complete charter source |
+| **C15 (proposed)** | Project owner | Approve, change or reject the seven Part 05 slice 1 proposals, including `services.view` |
+| D05 / D07 | Registrar + Cashier | Approved services/requirements, fees, financial rules and complete charter source; the eight questions in the Part 05 design |
 | D08 | Registrar | Approved templates/fonts, signatories, signatures, numbering, release rules and actual output/printer acceptance |
 | D11 / D13 / D20 | MIS + offices | Campus mail/assisted delivery, workload/operational targets, supported devices/browsers |
 | D02 / D14 | MIS + sponsor + offices | Campus infrastructure, staging/release owners and deployment approval |
@@ -76,3 +87,4 @@ Read the output JSON and inspect new page PNGs before accepting a later run. The
 - Existing registration-disabled builds fail because `Register.vue` imports a route omitted by generation in that configuration. Record a separate technical fix before using that setting; this slice did not change registration policy.
 - Dompdf needs print-specific CSS; flex/grid and oversized table rows need reconsideration. Future real templates, complex scripts, signing/PDF standards, printer behavior, private storage, approval/versioning and queued retry/idempotency require their own design/acceptance.
 - Font-metric caching and browser reuse may improve future throughput, but this spike measures fresh instances. Profile real workload before choosing operational limits. Restart long-running worker/scheduler after PHP job/config changes and keep job timeout below reservation expiry.
+- For Part 05, enforce the office in the policy (the shared Office supervisor role lists `services.manage` and `fees.manage` for both offices), give composite index names explicitly (MySQL's 64-character limit failed in Part 04), compare JSON in tests with `assertEquals`, and keep PHP and TypeScript permission lists in step.

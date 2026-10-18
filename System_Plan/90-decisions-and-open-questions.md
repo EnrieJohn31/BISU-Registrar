@@ -35,6 +35,7 @@ flowchart LR
 
 ## Proposed defaults, awaiting process review
 
+- **Part 05 slice 1 (proposed C15, awaiting owner approval):** content and fee versioned separately with immutable published versions; requirements grouped by client situation; fee models free/fixed/per-unit only; new read-only `services.view`; services and fees managed in the Registrar office until D05; no waivers, step table or client catalog in slice 1. See the [design](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18).
 - One service type per request, with validated copy quantity; mixed-service carts and partial release deferred.
 - Reuse Laravel/Inertia; avoid a separate frontend API application initially.
 - Campus portal plus staff-assisted intake before shared-device kiosk deployment.
@@ -56,7 +57,7 @@ flowchart LR
 | D02 | Hosting machine/OS, internal hostname, HTTPS trust, VLAN/Wi-Fi access, Internet-independent operation, time sync (NTP), upload malware scanning | MIS | Part 14; campus staging/production | LAN hosting confirmed; infrastructure details open |
 | D03 | Proof for identity linkage, unlinked account access, account recovery and staff provisioning; staff account policies (temporary password expiry, idle timeout, roles requiring 2FA/passkey, replacement for self-service deletion with D09) | Registrar + MIS | Parts 03–04, 06; real-client access | Open; slice 1 proposals in [Part 03](03-accounts-permissions-and-audit.md#slice-1-design-staff-accounts-roles-and-audit) |
 | D04 | Import format/approved columns, source custodian, ID formats, duplicates and correction authority | Registrar records custodian | Part 04; reliable identity source | Maintained/imported list confirmed; format open |
-| D05 | Approved services/requirements, effective fees, waivers, assessment timing and targets; Citizen's Charter edition used and processing-time classification per service | Registrar + Cashier | Parts 05, 08–09, 12 | Open; no fee amounts invented |
+| D05 | Approved services/requirements, effective fees, waivers, assessment timing and targets; Citizen's Charter edition used and processing-time classification per service | Registrar + Cashier | Parts 05, 08–09, 12 | Open; no fee amounts invented. Charter page 115 (Enrollment) reviewed 2026-10-18; rest of the charter awaited. Part 05 slice 1 design awaits owner approval (proposed C15) |
 | D06 | Service hours/day, reserved-ticket validity, check-in, no-show/transfer and printing; legally required priority lanes (seniors, PWDs, others), eligibility checks and lane alternation; suspension-day rollover | Both offices | Parts 06–07 | Open |
 | D07 | Receipt source/numbering, payment channels, verifier duties, partial/overpayments, adjustments/refunds and reconciliation dates | Cashier | Part 09; any real financial use | Open |
 | D08 | Approved templates, record sources, signatories, separation of duties, document numbering and claimant/representative/reissue rules | Registrar | Parts 03, 08, 10–11 | Open |

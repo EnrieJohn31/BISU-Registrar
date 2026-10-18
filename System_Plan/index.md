@@ -2,7 +2,7 @@
 
 **Project:** Integrated Registrar–Cashier Document Request, Queuing, and Transaction Management System for Bohol Island State University – Balilihan Campus.
 
-**Last updated:** 2026-10-18 · **Current stage:** M1 development (accounts slice merged; Part 04 and waiting-work infrastructure/tests/branding/PDF spike local) · **Current focus:** work that can proceed while office answers are pending (C11) · **Next development task:** DEV-5, Part 05 design for review; implementation waits for design approval. Later slices retain their own scoped approval and office gates · **Where to pick up:** [handoff.md](handoff.md)
+**Last updated:** 2026-10-18 · **Current stage:** M1 development (accounts slice merged; Part 04 and waiting-work infrastructure/tests/branding/PDF spike local) · **Current focus:** work that can proceed while office answers are pending (C11) · **Next development task:** approve the Part 05 slice 1 design (drafted 2026-10-18), then DEV-6. Later slices retain their own scoped approval and office gates · **Where to pick up:** [handoff.md](handoff.md)
 
 This is the navigation and status source for the project. Each part contains the features to build, implementation steps, connections to other modules, acceptance criteria and evidence to collect. Drafting a plan does not mark its features implemented, tested or deployed.
 
@@ -111,7 +111,7 @@ The configured developer URL is `http://localhost:8085`. It is not a BISU networ
 | 02 | [Architecture and data model](02-architecture-and-data-model.md) | Not started | Not started | Not deployed |
 | 03 | [Accounts, permissions, privacy and audit](03-accounts-permissions-and-audit.md) | Slice 1 implemented and merged (PR #7, `fa2246a`) | Slice 1: 97 tests / 498 assertions, MySQL smoke, browser QA and GitHub CI passed | Not deployed |
 | 04 | [Verified client records and imports](04-client-records-and-imports.md) | Slice 1 + follow-up fixes local; slices 2 (imports) and 3 (linking) design only | DEV-3: 136 saved browser checks passed, including full-history paging/audit privacy. DEV-1 MySQL: 45 tests / 394 assertions; original race evidence: 2026-10-17. Custodian acceptance pending | Not deployed |
-| 05 | [Services, requirements and fees](05-services-requirements-and-fees.md) | Not started | Not started | Not deployed |
+| 05 | [Services, requirements and fees](05-services-requirements-and-fees.md) | Slice 1 design drafted 2026-10-18 (DEV-5), awaiting owner approval; not built | Not started | Not deployed |
 | 06 | [Campus portal and assisted intake](06-portal-and-request-intake.md) | Not started | Not started | Not deployed |
 | 07 | [Queues, counters, display and kiosk](07-queues-counters-and-kiosk.md) | Not started | Not started | Not deployed |
 | 08 | [Registrar workspace](08-registrar-workspace.md) | Not started | Not started | Not deployed |
