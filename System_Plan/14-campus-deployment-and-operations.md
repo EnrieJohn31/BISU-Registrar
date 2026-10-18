@@ -5,8 +5,8 @@
 | Tracking field | Value |
 |---|---|
 | Plan status | Draft; campus LAN hosting confirmed |
-| Implementation | Development Docker includes a database queue worker, scheduler and Mailpit (DEV-2); operational deployment not started |
-| Validation | Development service evidence in [DEV-2](../docs/DEV-2-BACKGROUND-SERVICES.md); production/restore/rollback checks not started |
+| Implementation | Development Docker includes worker/scheduler/Mailpit (DEV-2) and an optional same-network phone preview (OPS-1); operational deployment not started |
+| Validation | Development service evidence in [DEV-2](../docs/DEV-2-BACKGROUND-SERVICES.md); [LAN preview PC checks](../docs/LAN-PHONE-PREVIEW.md#validation--2026-10-18) passed, physical phone results pending; production/restore/rollback checks not started |
 | Deployment | No staging or campus-production deployment recorded |
 | Owner | Campus MIS/IT deployment owner with office sponsors; names pending |
 | Dependencies | Parts 03–12, Part 13 acceptance, Part 15 handover readiness |
@@ -16,7 +16,7 @@
 
 Host BISU Registrar on BISU-managed local infrastructure and expose it to approved campus LAN/Wi-Fi devices. “Online” means campus browser access. Public Internet hosting, public DNS exposure and off-campus access are outside the initial scope.
 
-Development at `localhost:8085` is accessible only on the developer machine under the current Compose binding. It is not campus deployment. A campus system used for real transactions is **production**, even though it is private and local-network-only.
+Default development at `localhost:8085` is accessible only on the developer machine. For OPS-1 phone testing, the owner-authorized optional [LAN preview](../docs/LAN-PHONE-PREVIEW.md) temporarily adds app access on a selected private IPv4 address, builds assets and pauses Vite. This is not campus deployment. A campus system used for real transactions is **production**, even though it is private and local-network-only.
 
 ## Proposed topology
 
@@ -41,7 +41,7 @@ Select exact host OS, PHP runtime/web server, queue backend and Docker productio
 
 | Environment | Current evidence | Planned access |
 |---|---|---|
-| Developer Docker | Foundation and DEV-2 background services validated locally; see [development service evidence](../docs/DEV-2-BACKGROUND-SERVICES.md). Historical GitHub checks do not validate this unpublished branch | Developer loopback ports 8085/5178/8026; SMTP internal only |
+| Developer Docker | Foundation and DEV-2 background services validated locally; optional OPS-1 LAN preview prepared and PC HTTP/assets checked. Physical phone/browser acceptance remains pending. Historical GitHub checks do not validate this unpublished branch | Default loopback ports 8085/5178/8026; optional selected-LAN-address app 8085 with compiled assets and Vite paused; SMTP internal only |
 | Campus staging | Not configured / no deployment recorded | Restricted MIS/tester LAN segment; synthetic or authorized test data |
 | Campus production | Not configured / no deployment recorded | Approved BISU LAN/Wi-Fi segments through internal HTTPS |
 
