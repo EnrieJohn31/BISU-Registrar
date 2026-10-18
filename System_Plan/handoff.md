@@ -25,6 +25,10 @@ Current local branch: `chore/lan-preview-2026-10-18`, based on the Part 05 desig
 | Portal, Registrar and Cashier workflows; document lifecycle/release/reports | Not implemented | Office answers and each part's design/approval gates |
 | Campus staging / production | Not deployed | MIS infrastructure, acceptance and release approval |
 
+### Also done — baseline observation kit (OF-4)
+
+At your request I prepared the "before" baseline kit: [baseline-kit.pdf](baseline-kit.pdf), 7 A4 pages, editable source [baseline-kit.html](baseline-kit.html), with [CSV entry templates](baseline-templates/README.md). It holds the privacy rules, a permission form for each office head, the observation protocol and four sheets: arrivals tally, timed sample, records extract and day sheet. **Nobody has observed anything yet, and nothing has been sent to an office.** The two timed hours a day, the codes and the five-day sample are proposals for you and the adviser to change. Documentation only; committed locally on `docs/baseline-kit-2026-10-18`.
+
 ### Latest slice — same-network phone preview (OPS-1 preparation)
 
 The user asked to access the app from a phone on the same network. Added `lan-preview.ps1` and an optional `docker-compose.lan.yml`: only app port 8085 is added on the selected private IPv4 address, with localhost retained. Assets are compiled and Vite is paused, so phone requests do not depend on its own localhost or a second port. App/worker/scheduler use the LAN `APP_URL` with debug disabled. The source `.env`, account/role data, database bindings and Mailpit access are preserved. No application source changed.
@@ -76,10 +80,11 @@ Read the output JSON and inspect new page PNGs before accepting a later run. The
 ### Next action
 
 1. **Continue phone testing:** the login page already opens at http://192.168.1.8:8085. Sign in and check dashboard/navigation; record phone model/OS/browser version and results, then test a second laptop. Finish with `./lan-preview.ps1 -Stop` before returning to ordinary development or foundation checks; remove the preview firewall rule if created. [Preview instructions](../docs/LAN-PHONE-PREVIEW.md).
-2. **You review the [Part 05 design](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18)** and approve, change or reject the seven proposals (including the new `services.view` permission). On approval I record it as decision C15, then build DEV-6 on a new local branch with `./check.ps1`, MySQL race probes and new browser cases. Nothing in Part 05 is built before then.
-3. **Alternative or parallel:** DEV-7 (basic queue) needs its own short design and approval first. Thesis and office-preparation tasks in [97](97-work-while-waiting.md) need no code.
-4. **Send the [requirements checklist](requirements.pdf)** if not yet sent. The rest of the Citizen's Charter (steps, fees, processing times and the Cashier section) is item 1 and unlocks Part 05 slice 2.
-5. Record incoming office answers; they do not automatically authorize a previously gated feature. No messages, appointments or office permissions were sent or obtained by this slice.
+2. **Start the baseline (OF-4):** agree the method with the adviser, tell the Data Protection Officer, get each office head to sign the permission form (page 2 of the kit), print the sheets and observe. Nothing is measured until the signature is on file.
+3. **You review the [Part 05 design](05-services-requirements-and-fees.md#slice-1-design-catalog-core-dev-5-2026-10-18)** and approve, change or reject the seven proposals (including the new `services.view` permission). On approval I record it as decision C15, then build DEV-6 on a new local branch with `./check.ps1`, MySQL race probes and new browser cases. Nothing in Part 05 is built before then.
+4. **Alternative or parallel:** DEV-7 (basic queue) needs its own short design and approval first. Thesis and office-preparation tasks in [97](97-work-while-waiting.md) need no code.
+5. **Send the [requirements checklist](requirements.pdf)** if not yet sent. The rest of the Citizen's Charter (steps, fees, processing times and the Cashier section) is item 1 and unlocks Part 05 slice 2.
+6. Record incoming office answers; they do not automatically authorize a previously gated feature. No messages, appointments or office permissions were sent or obtained by this slice.
 
 ### Office decisions still needed
 
