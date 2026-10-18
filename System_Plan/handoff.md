@@ -4,100 +4,55 @@
 
 Rewrite this file after each completed slice; dated history belongs in the change log.
 
-## Current handoff — 2026-10-17
+## Current handoff — 2026-10-18
 
-**Git policy (project owner, 2026-10-17): local commits only.** Work on a local branch and commit there. Do **not** push, open pull requests or merge on GitHub unless the owner explicitly asks. Earlier work (PRs #5–#9) was published before this rule; the owner separately approved the credit-history cleanup and prevention PR #10. Part 04 implementation and the current local-only records remain unpushed.
+**Stage:** M1 development. Part 03 slice 1 is merged. Part 04 slice 1 and its follow-up QA fixes are local on `fix/part-04-qa-2026-10-18`, based on `docs/while-waiting-plan-2026-10-18`. Campus staging and production are not deployed.
 
-**Stage:** M1 development. Part 03 slice 1 (staff accounts, roles, audit) is merged. **Part 04 slice 1 (client records) is built and committed on the local branch `feat/part-04-client-records`, ready for you to test.** Imports (slice 2) and account linking (slice 3) are design only. Campus staging and production: not deployed.
+**Git policy:** commit locally only. Do not push, open a PR or merge on GitHub without the owner's explicit request. Preserve actual human authorship; local hooks and required CI enforce the attribution rule. Historical cleanup/configuration details are in the [attribution record](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md) and change log.
 
-### Commit attribution cleanup - 2026-10-17
+### Just completed — Part 04 follow-up QA (DEV-1)
 
-- **Completed with owner approval:** three published Claude trailers removed by an atomic exact-lease history rewrite; clean main `2e83568`. Every application tree and human identity/time preserved. All original main protection settings restored and verified. Four old signatures were removed from changed commit objects, as approved; recovery bundles/maps remain local.
-- Cleaned the two unpublished credits and aligned local ancestry: policy `878964d` -> `8402d30` -> `069e6cb`; Part 04 implementation `cca3936` -> `d577d76` -> `0ae71f6`. Current client code and local test data are unchanged; Part 04 stays unpushed.
-- **Human authors only:** the owner explicitly requires actual people as authors/co-authors. AGENTS.md records that rule; tested commit/push guards and required-CI attribution checks are delivered through [PR #10](https://github.com/EnrieJohn31/BISU-Registrar/pull/10). Activate hooks in existing clones with `./install-git-hooks.ps1`; new setup runs it automatically. PR #10 merged as `c331ae3` after all required checks passed. Local commit/push hooks are active via the installer; setup installs them in new checkouts.
-- Verified 24 GitHub commits: zero Claude credits, human account author names only; clean-main CI passed. GitHub contributor caches may take about 24 hours to refresh. See the [cleanup/guard record](../docs/CONTRIBUTOR-ATTRIBUTION-CLEANUP.md) for mappings, validation and recovery. Owners must not deliberately bypass the guards; other clones need to resynchronize before pushing.
+- Fixed inaccessible history beyond the latest 50 changes. Detail history now uses the shared pagination component, with 50 revisions per page, newest first; Intake may read older history without change access.
+- Fixed free-text client reasons leaking into the general audit viewer. All six client actions keep the original reason in restricted revision history; general audit records point to that revision and retain action/actor/office and masked metadata. Existing audit rows are not rewritten.
+- Added regressions for 51 revisions, separate-profile isolation, the actual next-page link, role restrictions on history pages, every action's reason and both administrator/supervisor audit views. Both new tests failed before the fixes; an independent review found no regression in the final diff.
+- No migrations, new permissions, office-rule changes, imports or linking. Existing demo records were not reset or edited. Details: [QA report](../docs/PART-04-QA-2026-10-18.md).
 
-### Claude Code automatic attribution disabled - 2026-10-17
+### Validation and local runtime
 
-- Confirmed the installed Claude Code version is 2.1.120 and checked the official settings reference. Added project-scoped `.claude/settings.json` with empty `attribution.commit` and `attribution.pr` strings. This suppresses Claude Code's default commit co-author and PR attribution text; existing commit/push hooks and required CI remain the backup checks. Human author/co-author policy is unchanged.
-- Uses the compatible string settings, not the newer Boolean `attribution: false`, which requires v2.1.281+. No global settings or session records were changed. A new Claude Code session in this project ensures the settings are read. These configuration/documentation changes are committed locally only; no new GitHub publication or Part 04 feature push.
-- JSON values validated and whitespace checked. No application code changed; existing application/guard checks remain applicable. Reference: [official attribution settings](https://code.claude.com/docs/en/settings-reference#attribution).
+- Final `./check.ps1`: **163 tests / 936 assertions passed**, plus Composer validation, production build/Wayfinder generation, frontend formatting/lint, Vue TypeScript, Pint and Larastan level 7. Baseline before the fixes: 161 tests / 844 assertions.
+- Part 04 on disposable MySQL 8.4: **45 tests / 394 assertions passed**; the test database was removed afterwards. Tests use an in-memory SQLite database or that separately created MySQL database, never the development database. Details are in the QA report.
+- Docker Desktop and the existing app/Vite/MySQL/Redis containers were started for QA. App URL: http://localhost:8085. The development Compose still has no worker, scheduler or test inbox.
+- **Browser confirmation pending:** the computer-use tool exposed no enabled apps/browsers. The 34-check Edge walkthrough and race probes dated 2026-10-17 remain historical evidence in the [original validation](../docs/PART-04-SLICE-1-VALIDATION.md); neither was rerun here. Visually check history paging on desktop and phone when a browser is available. Office/custodian acceptance remains pending.
 
-### Just completed: Part 04 slice 1 — client records
+### Demo and access reference
 
-The owner approved the design's safe positions as decision [C10](90-decisions-and-open-questions.md). Details, rules and code are in the [implementation record](04-client-records-and-imports.md#slice-1-implementation-record); evidence is in [PART-04-SLICE-1-VALIDATION.md](../docs/PART-04-SLICE-1-VALIDATION.md).
+Sign in as `processor@bisu.test` (changes allowed) or `intake@bisu.test` (view only); sign-in details remain in ignored `src/Credentials.md`. The README documents development seeders if fixtures are missing; do not reset existing data merely to repeat QA.
 
-- **Screens:** Registrar → **Client records**: search by name or the start of an ID, filter by category and verification, create a client, and a detail page with correct details, add or retire an ID, verify, flag for review, and a full history.
-- **Rules:** IDs are exact text (leading zeroes kept) and can never be reused, even retired ones; two people may share a name and are never merged; every change needs a reason and rejects a stale screen; correcting a verified profile returns it to "needs review"; the last current ID cannot be retired; the audit trail holds no names or full IDs.
-- **Access:** view = Intake staff, Registrar processor, approver, release officer; change = Registrar processor only. Cashier, both supervisors, report exporter, supplier roles and the system administrator are denied.
-- **Data:** 20 clearly fake demo clients (names end in "(Demo)", IDs start with "DEMO"). Your demo data was reset to this clean set after my testing.
+C10 still controls the slice: minimal fields; labelled demo ID normalization; IDs never reused, even retired; same names never merged; reasons and stale versions required; name/category corrections return verified profiles to needs-review; the last current ID cannot be retired. Intake, Registrar processor/approver and release officer may view; only the Registrar processor may change. Supervisors and system administrators receive no general client access.
 
-### How to test it (about 10 minutes)
+### Decisions needed
 
-Sign in at http://localhost:8085 with `processor@bisu.test` (can change records) and `intake@bisu.test` (view only); passwords are in `src/Credentials.md`. If the demo clients are missing, run the two seeders in the README.
-
-1. **Dashboard / sidebar:** a "Registrar" card and a "Client records" link appear for the processor and intake accounts, but not for the cashier or supervisors.
-2. **Search:** try `DEMO-S-0001`, `DEMO-A`, `reyes` (two people share this name), `zoë`, `00123456` (leading zeroes) and `villanueva` (very long name). IDs are masked in the list.
-3. **Open a record** to see the full ID and the history. Open "Rosa Villanueva (Demo)" (one person with a Student ID and an Alumni ID) and "Retired ID Case (Demo)" (a retired ID kept as history).
-4. **New client:** create one. Then try the same ID again, in lower case; it is refused with a clear message.
-5. **Correct details, Verify, Flag for review.** Correct a verified client's name and watch it return to "Needs review".
-6. **Add ID, then Retire the old one.** Try to retire the only current ID; it is refused.
-7. **Stale edit:** open the same client in two tabs, save in one, then save in the other; the second is refused and refreshes.
-8. **View-only:** sign in as `intake@bisu.test`; no change buttons appear and `/registrar/clients/create` shows 403.
-9. **Audit trail:** as `admin@bisu.test` (password then two-factor; see Credentials.md) open Administration → Audit trail. Client events appear with no names and only the last 4 characters of an ID.
-10. **Phone width:** narrow the browser to about 390 px; the list and detail pages should not scroll sideways.
-
-### Validation
-
-- `./check.ps1` passed on the final code: **161 tests / 844 assertions** (64 new), Larastan level 7, formatting, lint, Vue TypeScript and production build.
-- The whole suite also passed on a disposable **MySQL** database. That run exposed a too-long index name and four tests that assumed JSON key order (fixed; two were Part 03 tests). Parallel race probes on MySQL gave exactly one winner each for same-ID creation, stale saves, cross-profile ID adds and concurrent retirement, with no duplicates or version drift.
-- A 34-check Edge walkthrough passed (desktop and phone) with no page errors. See the validation document for coverage and what is not covered.
-
-### Decisions still needed
-
-| Decision | Owner | Required answer |
+| Decision | Owner | Needed answer |
 |---|---|---|
-| **After you test:** any change to slice 1 | Project owner | For example: may Registrar supervisors see client records? Should viewing a record be audited (also part of D09)? Should verification need a second person? |
-| D04 | Registrar records custodian | The **official ID formats** (the current rule is a labelled demo placeholder), who maintains and verifies profiles, duplicate and correction authority, and a sample source for imports |
-| D03 / D09 | Registrar + MIS + DPO | Identity proof and recovery (slice 3); which fields may be stored, retention, correction and erasure, access auditing |
-| D05 | Registrar + Cashier | The Citizen's Charter, services, requirements and fees (Part 05) |
-| D01, D13, D20 | Sponsor/offices + MIS | Release scope, import volume and worker resources, supported campus browsers |
+| D04 | Registrar records custodian | Official ID formats, source/sample columns, verification and correction authority, duplicate handling |
+| D03 / D09 | Registrar + MIS + DPO | Linking proof/recovery; permitted fields, privacy notice, retention, correction/erasure and access auditing |
+| D05 / D07 | Registrar + Cashier | Complete Citizen's Charter, approved service/requirement/fee entries and financial rules |
+| D01 / D13 / D20 | Sponsor/offices + MIS | Release scope, workload/worker resources and supported browser/device baseline |
+
+Do not infer policy changes from QA. Supervisor client access, access auditing and independent verification still need explicit decisions. Only charter page 115 has been received; it establishes an entry layout, not approved fees or services.
 
 ### Next steps, in order
 
-1. **You test slice 1** with the checklist above and tell me what to change. I will fix it on the same local branch.
-2. **Send the [requirements checklist](requirements.pdf)** (A4, 3 pages, 29 items in priority order; editable source [requirements.html](requirements.html)) to the team and the offices. Only page 115 of the Citizen's Charter (2024, 1st Edition: Enrollment) has been received; the rest of the charter, the Cashier section and the fee schedule are item 1 on that list. Record each answer as a decision in [90](90-decisions-and-open-questions.md).
-3. **Take the ID question to the Registrar** (D04, questions R3 and R4 in the [office checklist](95-office-interview-checklist.md)). The demo ID rule (3–32 letters, digits or hyphens, case-insensitive) must be replaced by the approved format before any real record is entered. Changing it needs a versioned rule and a reviewed backfill.
-4. **While waiting for answers,** follow [97 — Work while waiting](97-work-while-waiting.md): four tracks (development, thesis, office preparation, deployment readiness) with low-rework tasks in a suggested order. The first development items are your Part 04 fixes, a dev queue worker and test mail inbox, a committed browser test suite and the BISU logo; Part 05 needs a design approval first.
-5. **Next build, whichever input arrives first:**
-   - **Part 05 (services and fees)** needs the Citizen's Charter, services and fees. I can write its design first, as was done for Parts 03 and 04.
-   - **Part 04 slice 2 (imports)** needs the D04 answers, a sample source file, a queue worker and the D09 retention rules.
-6. Publishing: when you want these branches pushed or merged, say so. Merge order: `docs/handoff-local-only-2026-10-17`, then `feat/part-04-client-records`; the documentation branches `docs/requirements-checklist-2026-10-17` and `docs/while-waiting-plan-2026-10-18` sit on top of it.
+1. Confirm the new history controls visually on desktop and phone when browser access is available; record the result in the QA report. The full-history regression constructs 51 revisions in an isolated test database.
+2. DEV-2: prepare the scoped design for a development queue worker, scheduler and Mailpit, then obtain the build approval required by [97](97-work-while-waiting.md). No change to the campus mail relay or production deployment is authorized by this QA task.
+3. Follow the waiting-work plan for saved browser tests, supplied BISU branding, the synthetic PDF comparison and Part 05 design. Part 05 implementation waits for owner approval of that design.
+4. Team/office work remains in [97](97-work-while-waiting.md): assign names/dates, chapters/diagrams, office demo and device checks, privacy draft and permission-based anonymous timing baseline. No messages or bookings were sent by this QA task.
+5. Record office answers in the decision register. Imports (slice 2) and account linking (slice 3) retain their separate gates. Publishing any local branch requires an explicit owner request.
 
-### Blocked or waiting
+### Blockers and watch-outs
 
-- Imports and account linking wait for D03/D04/D09 and a configured queue worker (the dev Compose has none).
-- Office acceptance of Parts 03 and 04 is still pending; everything so far is developer QA with synthetic data.
-
-### Watch out
-
-- The **demo ID rule is a placeholder**; do not enter real IDs until D04 is answered.
-- `clients.import` is still in the shared Office supervisor role for both offices. Slice 2 must require the Registrar office so a Cashier supervisor is denied; the policy approach used in slice 1 already does this for view and change.
-- MySQL stores JSON objects with their keys re-ordered. Compare audit and revision JSON in tests with `assertEquals`, not `assertSame`.
-- Write every client change through `ClientProfileRecorder` (version, revision and audit together) and keep names and full IDs out of the audit trail.
-- Keep PHP and TypeScript permission lists and the Part 03 catalogue in step. Install packages inside the containers; run `./setup.ps1` once after pulling the dependency-volume change.
-- Do not commit credentials, real records or the walkthrough scripts. The unrelated untracked `src/nul` is left alone and excluded from commits.
-
-## Template for the next handoff
-
-```text
-## Current handoff — YYYY-MM-DD
-
-Stage / milestone / working branch:
-Just completed (with links):
-Validation done:
-Decisions needed (question | recommendation | who decides | answer):
-Next steps, in order:
-Blocked or waiting:
-Watch out:
-```
+- Real data and the official ID rule wait for D04/D09; linking also waits for D03. Import work needs its approved source/reviewer/retention rules and a worker.
+- Keep every client write through `ClientProfileRecorder`; free-text reasons belong only in restricted history. New code must never pass client names/full IDs into general audit fields.
+- `revisions` is now `Paginated<ClientRevision>`; use `revisions.data`. Preserve the generated route and existing auth/permission connections.
+- MySQL reorders JSON keys; compare audit/revision objects without assuming key order. Keep PHP/TypeScript permission catalogues synchronized.
+- Keep secrets, private records, runtime data and local backups out of Git. The pre-existing untracked `src/nul` is unrelated and remains excluded; its cleanup belongs to DEV-8.

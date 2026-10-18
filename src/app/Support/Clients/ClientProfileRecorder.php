@@ -42,8 +42,9 @@ final class ClientProfileRecorder
      * event. Revision numbers equal profile versions, so the two never drift.
      *
      * The revision holds the full old and new values and is shown only to staff
-     * who may view clients. The audit trail gets only what the caller passes as
-     * `$auditChanges` and `$auditContext`: no names and no full identifiers.
+     * who may view clients, including the free-text reason. The audit trail gets
+     * only `$auditChanges`, `$auditContext` and a fixed reference to the revision:
+     * no client names, full identifiers or free-text reasons.
      *
      * @param  array<string, array{old: mixed, new: mixed}>  $changes
      * @param  array<string, array{old: mixed, new: mixed}>  $auditChanges
@@ -79,7 +80,7 @@ final class ClientProfileRecorder
         $this->audit->record(
             $auditAction,
             subject: $profile,
-            reason: $reason,
+            reason: __('Reason recorded in restricted client history (revision :revision).', ['revision' => $next]),
             changes: $auditChanges,
             context: ['revision' => $next, ...$auditContext],
             office: $profile->office,

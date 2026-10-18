@@ -97,11 +97,16 @@ class ClientProfileController extends Controller
     {
         $clientProfile->load(['verifiedBy', 'createdBy', 'identifiers.addedBy', 'identifiers.retiredBy']);
 
-        $revisions = $clientProfile->revisions()->with('actor')->limit(50)->get();
+        $revisions = $clientProfile->revisions()
+            ->with('actor')
+            ->paginate(50, ['*'], 'history_page')
+            ->withQueryString()
+            ->fragment('client-history')
+            ->through(fn ($revision): array => $this->revisionSummary($revision));
 
         return Inertia::render('registrar/clients/Show', [
             'profile' => $this->clientDetail($clientProfile),
-            'revisions' => $revisions->map(fn ($revision): array => $this->revisionSummary($revision))->values()->all(),
+            'revisions' => $revisions,
             'options' => $this->clientOptions(),
             'can' => [
                 'manage' => Gate::allows('manage', $clientProfile),

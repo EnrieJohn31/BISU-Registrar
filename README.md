@@ -1,6 +1,6 @@
 # BISU Registrar
 
-Integrated Registrar-Cashier system planned for Bohol Island State University - Balilihan Campus. The repository currently contains the clean development foundation; registrar/cashier business features are planned in [System_Plan/index.md](System_Plan/index.md).
+Integrated Registrar-Cashier system planned for Bohol Island State University - Balilihan Campus. The development foundation, staff accounts and client-record slice are implemented; current local validation and remaining modules are tracked in [System_Plan/index.md](System_Plan/index.md).
 
 [![Foundation checks](https://github.com/EnrieJohn31/BISU-Registrar/actions/workflows/checks.yml/badge.svg)](https://github.com/EnrieJohn31/BISU-Registrar/actions/workflows/checks.yml)
 
@@ -99,7 +99,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch/review conventions and [docs/F
 
 ## Current scope and campus hosting
 
-Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Public self-registration grants no staff roles; identity linkage, client records/imports, requests, queues, payments and documents remain unimplemented. Part 04 has a detailed design draft for review. Mail uses the log driver. Database-backed sessions/cache/jobs are configured; future asynchronous work needs a worker and scheduler.
+Staff provisioning, office-scoped roles, session controls and an append-only audit viewer are implemented in Part 03. Part 04 slice 1 implements client records with synthetic data, complete paginated revision history and client reasons restricted to that history. Public self-registration grants no staff roles. Imports, identity linkage, requests, queues, payments and documents remain unimplemented. Mail uses the log driver. Database-backed sessions/cache/jobs are configured; future asynchronous work needs a worker and scheduler. See the [Part 04 QA report](docs/PART-04-QA-2026-10-18.md) for current evidence and remaining browser confirmation.
 
 The intended operational host is inside BISU's campus LAN/Wi-Fi. This Docker setup binds to developer loopback and is not campus deployment. Internal HTTPS/DNS, production web serving, access controls, backups and office approval are planned in [Part 14](System_Plan/14-campus-deployment-and-operations.md).
 

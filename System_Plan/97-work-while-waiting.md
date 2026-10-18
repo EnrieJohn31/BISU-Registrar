@@ -39,7 +39,7 @@ In this order. Each build slice gets a design or approval first, as for Parts 03
 
 | # | Task | Part | Why now | Rework risk | Size | Office input that plugs in later |
 |---|---|---|---|---|---|---|
-| DEV-1 | Fix what you find when testing Part 04 slice 1 | 04 | Finishes the current slice | None | S | — |
+| DEV-1 | Fix what you find when testing Part 04 slice 1. **2026-10-18:** full-history paging and restricted audit reasons fixed; 163 tests / 936 assertions pass. Browser confirmation pending ([QA evidence](../docs/PART-04-QA-2026-10-18.md)) | 04 | Finishes the current slice | None | S | — |
 | DEV-2 | Add a queue worker, scheduler and Mailpit (a test mail inbox) to `docker-compose.dev.yml` | 14, 04, 11 | Imports, document jobs and notifications all need a worker. Mailpit lets us test emails with no campus mail relay | Low | S | D11 mail relay |
 | DEV-3 | Turn the 34-check browser walkthrough into a committed test suite (Playwright recommended, which can drive Edge) | 13 | Today it lives in a temporary folder; every later slice can reuse it as a regression check | Low | M | D20 browser list |
 | DEV-4 | Document renderer spike: compare two PDF renderers offline in Docker with bundled fonts, on a made-up certificate stamped "SAMPLE – NOT VALID" (A4 and Legal, long names, multi-page) | 10 | Addresses risk RK12 before any template work; choosing the tool doesn't depend on the real template | Low; the real template repeats the test | M | D08 templates and signatories |

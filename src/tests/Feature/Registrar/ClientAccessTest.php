@@ -52,6 +52,7 @@ class ClientAccessTest extends TestCase
 
         $this->actingAs($user)->get(route('registrar.clients.index'))->assertStatus($viewStatus);
         $this->actingAs($user)->get(route('registrar.clients.show', $profile))->assertStatus($viewStatus);
+        $this->actingAs($user)->get(route('registrar.clients.show', ['clientProfile' => $profile, 'history_page' => 2]))->assertStatus($viewStatus);
 
         $changeStatus = $mayChange ? 200 : 403;
 

@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Registrar;
 
+use App\Actions\Clients\CorrectClientProfile;
 use App\Actions\Clients\CreateClientProfile;
 use App\Enums\ClientCategory;
 use App\Enums\IdentifierType;
+use App\Enums\OfficeCode;
 use App\Enums\Role;
 use App\Enums\VerificationState;
 use App\Models\AuditEvent;
@@ -193,7 +195,45 @@ class ClientRecordsTest extends TestCase
                 ->component('registrar/clients/Show')
                 ->where('profile.identifiers.0.display_value', 'DEMO-S-0001')
                 ->where('profile.version', 1)
-                ->has('revisions', 1));
+                ->has('revisions.data', 1));
+    }
+
+    public function test_full_history_remains_accessible_after_fifty_changes(): void
+    {
+        $processor = $this->processor();
+        $profile = $this->createProfile($processor);
+        $this->createProfile($processor, 'Separate Person (Demo)', 'DEMO-S-9999');
+
+        for ($version = 1; $version <= 50; $version++) {
+            app(CorrectClientProfile::class)->handle(
+                $processor, $profile, $version, "Correction {$version} (Demo)", ClientCategory::Student, "Correction {$version}",
+            );
+        }
+
+        $response = $this->actingAs($processor)->get(route('registrar.clients.show', $profile));
+        $response->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->has('revisions.data', 50)
+            ->where('revisions.total', 51)
+            ->where('revisions.current_page', 1)
+            ->where('revisions.data.0.revision_number', 51)
+            ->where('revisions.data.49.revision_number', 2));
+
+        $revisions = $response->viewData('page')['props']['revisions'];
+        $this->assertSame(range(51, 2), array_column($revisions['data'], 'revision_number'));
+        $this->assertStringContainsString('history_page=2', $revisions['next_page_url']);
+        $this->assertStringEndsWith('#client-history', $revisions['next_page_url']);
+
+        // Follow the server's next link as a view-only user, without its browser fragment.
+        $intake = User::factory()->withRole(Role::IntakeStaff)->create();
+        $this->actingAs($intake)->get(explode('#', $revisions['next_page_url'])[0])
+            ->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->has('revisions.data', 1)
+            ->where('revisions.current_page', 2)
+            ->where('revisions.data.0.revision_number', 1)
+            ->where('revisions.data.0.action', 'created')
+            ->where('revisions.data.0.reason', 'Test creation')
+            ->where('revisions.next_page_url', null)
+            ->where('can.manage', false));
     }
 
     public function test_search_finds_names_and_the_start_of_ids(): void
@@ -496,15 +536,58 @@ class ClientRecordsTest extends TestCase
         $this->actingAs($processor)->patch(route('registrar.clients.update', $profile), ['display_name' => 'Renamed Person (Demo)', 'category' => 'alumni', 'reason' => 'Fix', 'version' => 1]);
         $this->actingAs($processor)->post(route('registrar.clients.identifiers.store', $profile), ['identifier_type' => 'alumni', 'identifier_value' => 'DEMO-A-5556', 'reason' => 'Graduated', 'version' => 2]);
 
-        $text = AuditEvent::query()->where('action', 'like', 'client.%')->get()
-            ->map(fn (AuditEvent $event): string => json_encode([$event->changes, $event->context]) ?: '')
-            ->implode(' ');
+        $text = AuditEvent::query()->where('action', 'like', 'client.%')->get()->toJson();
 
         foreach (['Confidential Person', 'Renamed Person', 'DEMO-S-5555', 'DEMO-A-5556'] as $secret) {
             $this->assertStringNotContainsString($secret, $text, "Audit data must not contain {$secret}.");
         }
 
         $this->assertStringContainsString('5555', $text, 'Only the masked tail of an ID is recorded.');
+    }
+
+    public function test_free_text_client_reasons_stay_in_restricted_history_for_every_action(): void
+    {
+        $processor = $this->processor();
+        $secrets = ['Confidential Person (Demo)', 'Renamed Person (Demo)', 'DEMO-S-5555', 'DEMO-A-5556'];
+        $reason = 'Checked '.implode(', ', $secrets);
+
+        $this->actingAs($processor)->post(route('registrar.clients.store'), $this->newClientPayload([
+            'display_name' => $secrets[0], 'identifier_value' => $secrets[2], 'reason' => $reason,
+        ]))->assertSessionHasNoErrors();
+        $profile = ClientProfile::query()->sole();
+        $identifier = $profile->identifiers()->sole();
+
+        $this->patch(route('registrar.clients.update', $profile), ['display_name' => $secrets[1], 'category' => 'both', 'reason' => $reason, 'version' => 1])->assertSessionHasNoErrors();
+        $this->post(route('registrar.clients.verify', $profile), ['reason' => $reason, 'version' => 2])->assertSessionHasNoErrors();
+        $this->post(route('registrar.clients.identifiers.store', $profile), ['identifier_type' => 'alumni', 'identifier_value' => $secrets[3], 'reason' => $reason, 'version' => 3])->assertSessionHasNoErrors();
+        $this->delete(route('registrar.clients.identifiers.destroy', [$profile, $identifier]), ['reason' => $reason, 'version' => 4])->assertSessionHasNoErrors();
+        $this->post(route('registrar.clients.flag', $profile), ['reason' => $reason, 'version' => 5])->assertSessionHasNoErrors();
+
+        $this->assertSame(6, $profile->revisions()->where('reason', $reason)->count());
+        $audit = AuditEvent::query()->where('action', 'like', 'client.%')->get();
+        $this->assertCount(6, $audit);
+        foreach ($audit as $event) {
+            $this->assertSame("Reason recorded in restricted client history (revision {$event->context['revision']}).", $event->reason);
+        }
+        foreach ($secrets as $secret) {
+            $this->assertStringNotContainsString($secret, $audit->toJson());
+        }
+        $this->assertSame([1, 2, 3, 4, 5, 6], $audit->sortBy('id')->map(fn (AuditEvent $event) => $event->context['revision'])->values()->all());
+
+        $intake = User::factory()->withRole(Role::IntakeStaff)->create();
+        $this->actingAs($intake)->get(route('registrar.clients.show', $profile))
+            ->assertOk()->assertInertia(fn (Assert $page) => $page->where('revisions.data.0.reason', $reason));
+
+        foreach ([Role::SystemAdmin, Role::OfficeSupervisor] as $role) {
+            $viewer = User::factory()->withTwoFactor()->withRole($role, $role === Role::OfficeSupervisor ? OfficeCode::Registrar : null)->create();
+            $this->actingAs($viewer)->get(route('registrar.clients.show', $profile))->assertForbidden();
+            $response = $this->get(route('admin.audit.index'));
+            $response->assertOk();
+            $events = json_encode($response->viewData('page')['props']['events']['data'], JSON_THROW_ON_ERROR);
+            foreach ($secrets as $secret) {
+                $this->assertStringNotContainsString($secret, $events);
+            }
+        }
     }
 
     public function test_revisions_cannot_be_changed_or_deleted(): void

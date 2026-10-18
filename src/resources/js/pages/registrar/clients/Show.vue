@@ -8,6 +8,7 @@ import AddIdentifierDialog from '@/components/clients/AddIdentifierDialog.vue';
 import CorrectClientDialog from '@/components/clients/CorrectClientDialog.vue';
 import VerificationBadge from '@/components/clients/VerificationBadge.vue';
 import Heading from '@/components/Heading.vue';
+import Pagination from '@/components/Pagination.vue';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -28,11 +29,16 @@ import {
 } from '@/components/ui/table';
 import { formatDateTime } from '@/lib/format';
 import { index, show } from '@/routes/registrar/clients';
-import type { ClientDetail, ClientOptions, ClientRevision } from '@/types';
+import type {
+    ClientDetail,
+    ClientOptions,
+    ClientRevision,
+    Paginated,
+} from '@/types';
 
 const props = defineProps<{
     profile: ClientDetail;
-    revisions: ClientRevision[];
+    revisions: Paginated<ClientRevision>;
     options: ClientOptions;
     can: { manage: boolean };
 }>();
@@ -298,18 +304,17 @@ const currentIdentifiers = computed(() =>
             </CardContent>
         </Card>
 
-        <Card>
+        <Card id="client-history">
             <CardHeader>
                 <CardTitle>History</CardTitle>
                 <CardDescription>
-                    Every change, with who made it and why. The latest
-                    {{ revisions.length }} are shown.
+                    Every change, with who made it and why. Newest first.
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <ol class="divide-y">
                     <li
-                        v-for="revision in revisions"
+                        v-for="revision in revisions.data"
                         :key="revision.revision_number"
                         class="flex flex-col gap-1 py-3"
                     >
@@ -347,6 +352,7 @@ const currentIdentifiers = computed(() =>
                         </ul>
                     </li>
                 </ol>
+                <Pagination :page="revisions" noun="changes" />
             </CardContent>
         </Card>
     </div>
