@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
+import { ScrollText } from '@lucide/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { reactive, ref, watch } from 'vue';
-import Heading from '@/components/Heading.vue';
+import EmptyState from '@/components/EmptyState.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -109,7 +111,7 @@ const display = (value: unknown): string =>
     <Head title="Audit trail" />
 
     <div class="flex flex-col gap-6 p-4">
-        <Heading
+        <PageHeader
             title="Audit trail"
             :description="
                 scope === 'all'
@@ -165,17 +167,32 @@ const display = (value: unknown): string =>
                 placeholder="Actor name or email"
                 aria-label="Actor"
             />
-            <div class="grid gap-1">
-                <Label for="from" class="sr-only">From</Label>
-                <Input id="from" v-model="filters.from" type="date" />
+            <div class="relative">
+                <Label
+                    for="from"
+                    class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 font-normal text-muted-foreground"
+                >
+                    From
+                </Label>
+                <Input
+                    id="from"
+                    v-model="filters.from"
+                    type="date"
+                    class="pl-14"
+                />
             </div>
-            <div class="grid gap-1">
-                <Label for="to" class="sr-only">To</Label>
-                <Input id="to" v-model="filters.to" type="date" />
+            <div class="relative">
+                <Label
+                    for="to"
+                    class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 font-normal text-muted-foreground"
+                >
+                    To
+                </Label>
+                <Input id="to" v-model="filters.to" type="date" class="pl-14" />
             </div>
         </div>
 
-        <div class="rounded-xl border">
+        <div class="stack-table md:rounded-xl md:border">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -200,7 +217,7 @@ const display = (value: unknown): string =>
                         <TableCell class="text-sm text-muted-foreground">
                             {{ formatDateTime(event.occurred_at) }}
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-label="Action" data-stack="full">
                             <span class="font-medium">
                                 {{ event.action_label }}
                             </span>
@@ -212,10 +229,10 @@ const display = (value: unknown): string =>
                                 Denied
                             </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-label="Actor">
                             {{ event.actor?.name ?? 'System' }}
                         </TableCell>
-                        <TableCell class="text-sm">
+                        <TableCell data-label="Subject" class="text-sm">
                             {{
                                 event.subject_label ??
                                 (event.subject_type
@@ -223,15 +240,26 @@ const display = (value: unknown): string =>
                                     : '—')
                             }}
                         </TableCell>
-                        <TableCell class="text-sm">
+                        <TableCell data-label="Office" class="text-sm">
                             {{ event.office ?? '—' }}
                         </TableCell>
-                        <TableCell class="max-w-xs truncate text-sm">
-                            {{ event.reason ?? '—' }}
+                        <TableCell
+                            data-label="Reason"
+                            data-stack="full"
+                            class="max-w-xs truncate text-sm"
+                        >
+                            <span class="max-md:line-clamp-2">
+                                {{ event.reason ?? '—' }}
+                            </span>
                         </TableCell>
                     </TableRow>
                     <TableEmpty v-if="events.data.length === 0" :colspan="6">
-                        No audit events match these filters.
+                        <EmptyState
+                            :icon="ScrollText"
+                            title="No audit events match these filters."
+                        >
+                            Try a wider date range or clear a filter.
+                        </EmptyState>
                     </TableEmpty>
                 </TableBody>
             </Table>

@@ -184,3 +184,71 @@
         @apply bg-background text-foreground;
     }
 }
+
+/*
+  Phone-width lists (DEV-9). Wrap a table in `.stack-table` and each row shows
+  as a card below the md breakpoint, with cells in two columns. Cells name
+  their column with `data-label`; `data-stack="full"` (and the first cell)
+  spans the card. The markup stays one table, so screen readers and tests
+  read the same rows on every screen. Unlayered so it outranks the table
+  primitives' utility classes.
+*/
+@media (width < 48rem) {
+    .stack-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    .stack-table table,
+    .stack-table tbody {
+        display: block;
+    }
+
+    .stack-table tbody {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .stack-table tbody tr,
+    .stack-table tbody tr:last-child {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+        row-gap: 0.5rem;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background-color: var(--card);
+    }
+
+    .stack-table td {
+        display: block;
+        min-width: 0;
+        padding: 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .stack-table td:first-child,
+    .stack-table td[colspan],
+    .stack-table td[data-stack='full'] {
+        grid-column: 1 / -1;
+    }
+
+    .stack-table td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 0.125rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: 500;
+        color: var(--muted-foreground);
+    }
+}
