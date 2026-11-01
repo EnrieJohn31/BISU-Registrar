@@ -76,7 +76,7 @@ The page shows the date, the viewer's role badges, four count tiles that open th
 
 ## Commits
 
-Branch `feat/ui-refresh-2026-11-01`, pushed to GitHub at the owner's request (C20); no pull request or merge. Each commit message lists what it changed.
+Branch `feat/ui-refresh-2026-11-01`, pushed at the owner's request (C20) and published through [PR #12](https://github.com/EnrieJohn31/BISU-Registrar/pull/12) for merge into `main` (C21). Each commit message lists what it changed.
 
 | Commit | What it changed |
 |---|---|
@@ -86,6 +86,7 @@ Branch `feat/ui-refresh-2026-11-01`, pushed to GitHub at the owner's request (C2
 | `c4884c4` feat: phone-friendly client, user and audit lists | `.stack-table` card layout CSS; the three lists use it with `PageHeader` and `EmptyState`; audit reason clamp and visible From/To labels |
 | `8344d66` feat: dashboard shortcuts and client totals | `DashboardController`; policy-based shortcut tiles; client totals by verification state with filtered links; dashboard tests |
 | docs commit | Decisions C19/C20, this report, OPS-1 phone-test record, waiting-work list, index, change log and handoff |
+| publication record | Decision C21 and PR #12 in the plan documents |
 
 The single tested commit was split into these commits without changing the code: the final tree under `src/` and `scripts/` is identical to the one that passed `./check.ps1` and the browser suite. Intermediate commits were not tested one by one.
 
