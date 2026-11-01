@@ -48,6 +48,7 @@ Use password/TOTP for this HTTP preview. Passkeys on the phone require trusted H
 - Final runtime checks confirmed the LAN URL and `debug=false` inside app, worker and scheduler, both intended app bindings and both login responses. All 152 local Markdown links across eight changed documents resolved; `git diff --check` passed.
 - No application source/package/database/permission change. Full foundation/browser regression was not repeated for this root-only slice. Earlier 167 tests / 944 assertions and 136 browser checks remain historical evidence.
 - Owner-confirmed physical phone result (2026-10-18): “Login page opens” at http://192.168.1.8:8085 over the same Wi-Fi. Basic reachability passed; phone sign-in/navigation, model/OS/browser versions and second-laptop access remain pending. The agent installed no firewall rule; whether the owner added one was not reported. No runtime/account change was made for this evidence follow-up.
+- Owner-reported result (2026-11-01): the phone test is done. Phone model/OS/browser versions and whether a second laptop was checked were not recorded; add them to D20 evidence when known. The preview was then stopped with `-Stop`, restoring loopback-only development.
 
 ### Daily-startup follow-up — 2026-10-18
 
