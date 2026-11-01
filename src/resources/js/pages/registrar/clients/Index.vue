@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Plus, Search } from '@lucide/vue';
+import { Plus, Search, SearchX } from '@lucide/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { reactive, watch } from 'vue';
 import VerificationBadge from '@/components/clients/VerificationBadge.vue';
-import Heading from '@/components/Heading.vue';
+import EmptyState from '@/components/EmptyState.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -76,18 +77,19 @@ watch(() => [filters.category, filters.state], apply);
     <Head title="Client records" />
 
     <div class="flex flex-col gap-6 p-4">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-            <Heading
-                title="Client records"
-                description="Students and alumni who request services. These records identify a person; they do not confirm enrolment, graduation or eligibility."
-            />
-            <Button v-if="canCreate" as-child>
-                <Link :href="create()">
-                    <Plus />
-                    New client
-                </Link>
-            </Button>
-        </div>
+        <PageHeader
+            title="Client records"
+            description="Students and alumni who request services. These records identify a person; they do not confirm enrolment, graduation or eligibility."
+        >
+            <template v-if="canCreate" #actions>
+                <Button as-child>
+                    <Link :href="create()">
+                        <Plus />
+                        New client
+                    </Link>
+                </Button>
+            </template>
+        </PageHeader>
 
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
             <div class="relative">
@@ -138,7 +140,7 @@ watch(() => [filters.category, filters.state], apply);
             record to see the full ID.
         </p>
 
-        <div class="rounded-xl border">
+        <div class="stack-table md:rounded-xl md:border">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -162,7 +164,7 @@ watch(() => [filters.category, filters.state], apply);
                                 {{ profile.display_name }}
                             </Link>
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-label="IDs" data-stack="full">
                             <div class="flex flex-wrap gap-1">
                                 <Badge
                                     v-for="identifier in profile.identifiers"
@@ -175,24 +177,34 @@ watch(() => [filters.category, filters.state], apply);
                                 </Badge>
                             </div>
                         </TableCell>
-                        <TableCell class="text-sm">
+                        <TableCell data-label="Category" class="text-sm">
                             {{ profile.category_label }}
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-label="Verification">
                             <VerificationBadge
                                 :state="profile.verification_state"
                                 :label="profile.verification_label"
                             />
                         </TableCell>
-                        <TableCell class="text-sm text-muted-foreground">
+                        <TableCell
+                            data-label="Updated"
+                            data-stack="full"
+                            class="text-sm text-muted-foreground"
+                        >
                             {{ formatDateTime(profile.updated_at) }}
                         </TableCell>
                     </TableRow>
                     <TableEmpty v-if="profiles.data.length === 0" :colspan="5">
-                        No client records match these filters.
-                        <template v-if="canCreate">
-                            Check the spelling, or create a new client.
-                        </template>
+                        <EmptyState
+                            :icon="SearchX"
+                            title="No client records match these filters."
+                        >
+                            {{
+                                canCreate
+                                    ? 'Check the spelling or clear a filter, or create a new client.'
+                                    : 'Check the spelling or clear a filter.'
+                            }}
+                        </EmptyState>
                     </TableEmpty>
                 </TableBody>
             </Table>

@@ -1,12 +1,18 @@
 <?php
 
 use App\Http\Controllers\Auth\PasswordChangeController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Laravel\Fortify\Features;
 
-Route::inertia('/', 'Welcome')->name('home');
+// Read per request so a cached route never shows a stale registration link.
+Route::get('/', fn () => Inertia::render('Welcome', [
+    'canRegister' => Features::enabled(Features::registration()),
+]))->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
 
 // Forced replacement of a temporary password at first sign-in.

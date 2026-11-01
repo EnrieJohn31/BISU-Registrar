@@ -7,6 +7,8 @@ defineOptions({
 
 type Props = {
     className?: HTMLAttributes['class'];
+    // The 320px derivative, for panels that show the seal above 96 pixels.
+    large?: boolean;
 };
 
 defineProps<Props>();
@@ -14,10 +16,12 @@ defineProps<Props>();
 
 <template>
     <img
-        src="/branding/bisu-seal.png"
+        :src="
+            large ? '/branding/bisu-seal-large.png' : '/branding/bisu-seal.png'
+        "
         alt="BISU seal"
-        width="96"
-        height="96"
+        :width="large ? 320 : 96"
+        :height="large ? 320 : 96"
         :class="className"
         v-bind="$attrs"
     />

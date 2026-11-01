@@ -7,7 +7,7 @@
 | Plan status | Draft for the team, 2026-10-18 |
 | Purpose | Useful work while the offices answer the [requirements checklist](requirements.pdf) |
 | Owner | Project lead assigns the tracks; names pending ([94](94-team-schedule-and-risks.md)) |
-| Updated | 2026-10-18 |
+| Updated | 2026-11-01 |
 
 The requirements checklist has gone out, and its answers decide fees, ID formats, services, queue rules and templates. Until they arrive, the team works on three kinds of task that cause little rework:
 
@@ -15,7 +15,7 @@ The requirements checklist has gone out, and its answers decide fees, ID formats
 2. **Reduce later risk.** Concurrency, document rendering, testing and deployment problems are cheaper to find now.
 3. **Prepare the thesis and the offices.** Members who don't code can write, draw diagrams and prepare office visits in parallel.
 
-**Owner direction, 2026-10-18 (C11): current work is limited to items that can proceed while the offices answer.** DEV-2, DEV-3, DEV-8 and DEV-4 were authorized in sequence (C11–C14). Keep the separate design/approval gates for later slices. Record incoming office answers, but do not automatically start a previously gated business feature; obtain its own scoped task first. The [handoff](handoff.md) says what each answer unblocks.
+**Owner direction, 2026-10-18 (C11): current work is limited to items that can proceed while the offices answer.** DEV-2, DEV-3, DEV-8 and DEV-4 were authorized in sequence (C11–C14), and DEV-9 (UI improvements) by C19 on 2026-11-01. Keep the separate design/approval gates for later slices. Record incoming office answers, but do not automatically start a previously gated business feature; obtain its own scoped task first. The [handoff](handoff.md) says what each answer unblocks.
 
 ```mermaid
 flowchart LR
@@ -47,6 +47,7 @@ In this order. Each build slice gets a design or approval first, as for Parts 03
 | DEV-6 | Part 05 slice 1, **after you approve the DEV-5 design (proposed C15)**: a staff catalog with content and fee versions, effective dates, staff editing with audit and read-only staff views, with five services labelled "(Demo)" and obviously fake amounts. The client-readable catalog waits for client accounts (design slices 2–3) | 05 | Next part in the build order; real services become data entry | Medium: unusual fee rules (per page, per copy, waivers) may need fields added | L | D05, D07 |
 | DEV-7 | Part 07 slice 1: a basic queue with counters, daily ticket numbers allocated under a lock, call next, recall and no-show, and ticket history. First in, first out by default; hours and priority lanes are settings | 07 | Concurrency is the hard part, and it doesn't depend on office rules | Medium: the priority-lane alternation rule may change | L | D06, D10 |
 | DEV-8 | **Done locally 2026-10-18:** campus-hosted BISU seal in the shared/sidebar mark, PNG/ICO/touch browser icons, reproducible assets and exact stray-file cleanup; 136 browser checks and desktop/collapsed/phone visual review passed; [source/design/validation](../docs/DEV-8-BISU-BRANDING.md) | 00 | Polish before any office demo | None | S | — |
+| DEV-9 | **Done 2026-11-01 (C19); published through PR #12 (C21):** navy/gold theme from the seal, rebuilt welcome and sign-in pages, phone card lists (clients, users, audit), dashboard shortcuts and client totals by verification state, shared page header, empty states, skip link and keyboard fixes; 174 tests / 1,055 assertions and all 136 browser checks passed; 17 of 56 review captures inspected; [design/validation](../docs/DEV-9-UI-REFRESH.md) | 00, 03, 04 | Office answers pending; a clearer, branded UI helps the office demo | Low: presentation only, colours are tokens in one file | M | D10/D20 displays and devices |
 
 ## Thesis and documentation track
 
@@ -79,7 +80,7 @@ Deployment liaison, with development help.
 
 | # | Task | Why | Size |
 |---|---|---|---|
-| OPS-1 | **Partial, 2026-10-18:** [LAN preview instructions](../docs/LAN-PHONE-PREVIEW.md); double-click `start-lan.cmd` to detect the address and show links. PC HTTP/assets checks passed; owner confirmed the physical phone login page opens. Still open: phone sign-in/navigation, model/OS/browser versions and second-laptop access | Catches old-browser and LAN access problems early (RK05, RK08) | S |
+| OPS-1 | **Done, owner-reported 2026-11-01:** [LAN preview instructions](../docs/LAN-PHONE-PREVIEW.md); double-click `start-lan.cmd` to detect the address and show links. PC HTTP/assets checks passed; the owner confirmed the phone login page on 2026-10-18 and reported the phone test done on 2026-11-01. Not recorded: phone model/OS/browser versions and whether a second laptop was checked; add them to D20 evidence when known | Catches old-browser and LAN access problems early (RK05, RK08) | S |
 | OPS-2 | Draft a production image (compiled assets, no CDN, debug off) and a backup-and-restore script, then run one restore drill on a spare laptop | Part 14 needs a practiced restore before staging; MIS details plug in later | M |
 
 ## Not yet

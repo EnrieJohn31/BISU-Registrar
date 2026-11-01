@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Plus, ShieldCheck } from '@lucide/vue';
+import { Plus, ShieldCheck, UserRoundSearch } from '@lucide/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { reactive, watch } from 'vue';
 import RoleBadges from '@/components/admin/RoleBadges.vue';
-import Heading from '@/components/Heading.vue';
+import EmptyState from '@/components/EmptyState.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -80,18 +81,19 @@ watch(() => [filters.role, filters.office, filters.status], apply);
     <Head title="Users" />
 
     <div class="flex flex-col gap-6 p-4">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-            <Heading
-                title="Users"
-                description="Staff accounts, their roles, and client accounts"
-            />
-            <Button v-if="canCreate" as-child>
-                <Link :href="create()">
-                    <Plus />
-                    Create staff account
-                </Link>
-            </Button>
-        </div>
+        <PageHeader
+            title="Users"
+            description="Staff accounts, their roles, and client accounts."
+        >
+            <template v-if="canCreate" #actions>
+                <Button as-child>
+                    <Link :href="create()">
+                        <Plus />
+                        Create staff account
+                    </Link>
+                </Button>
+            </template>
+        </PageHeader>
 
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Input
@@ -144,7 +146,7 @@ watch(() => [filters.role, filters.office, filters.status], apply);
             </Select>
         </div>
 
-        <div class="rounded-xl border">
+        <div class="stack-table md:rounded-xl md:border">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -168,10 +170,14 @@ watch(() => [filters.role, filters.office, filters.status], apply);
                                 {{ user.email }}
                             </div>
                         </TableCell>
-                        <TableCell class="whitespace-normal">
+                        <TableCell
+                            data-label="Roles"
+                            data-stack="full"
+                            class="whitespace-normal"
+                        >
                             <RoleBadges :roles="user.roles" />
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-label="Status">
                             <Badge
                                 :variant="
                                     user.status === 'active'
@@ -193,7 +199,7 @@ watch(() => [filters.role, filters.office, filters.status], apply);
                                 First sign-in pending
                             </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-label="Two-factor">
                             <span
                                 v-if="user.two_factor_enabled"
                                 class="inline-flex items-center gap-1 text-sm"
@@ -204,12 +210,21 @@ watch(() => [filters.role, filters.office, filters.status], apply);
                                 Off
                             </span>
                         </TableCell>
-                        <TableCell class="text-sm text-muted-foreground">
+                        <TableCell
+                            data-label="Last sign-in"
+                            data-stack="full"
+                            class="text-sm text-muted-foreground"
+                        >
                             {{ formatDateTime(user.last_login_at) }}
                         </TableCell>
                     </TableRow>
                     <TableEmpty v-if="users.data.length === 0" :colspan="5">
-                        No accounts match these filters.
+                        <EmptyState
+                            :icon="UserRoundSearch"
+                            title="No accounts match these filters."
+                        >
+                            Check the spelling or clear a filter.
+                        </EmptyState>
                     </TableEmpty>
                 </TableBody>
             </Table>

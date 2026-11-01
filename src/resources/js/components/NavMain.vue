@@ -10,7 +10,7 @@ import {
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import type { NavItem } from '@/types';
 
-const { label = 'Platform' } = defineProps<{
+const { label = 'Overview' } = defineProps<{
     items: NavItem[];
     label?: string;
 }>();
@@ -27,6 +27,7 @@ const { isCurrentUrl } = useCurrentUrl();
                     as-child
                     :is-active="isCurrentUrl(item.href, undefined, true)"
                     :tooltip="item.title"
+                    class="data-[active=true]:shadow-[inset_3px_0_0_var(--gold)]"
                 >
                     <Link :href="item.href">
                         <component :is="item.icon" />

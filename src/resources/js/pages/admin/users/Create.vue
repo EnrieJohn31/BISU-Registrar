@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
-import Heading from '@/components/Heading.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -74,7 +74,7 @@ const submit = () => form.submit(store());
     <Head title="Create staff account" />
 
     <div class="flex max-w-2xl flex-col gap-6 p-4">
-        <Heading
+        <PageHeader
             title="Create staff account"
             description="The person receives a temporary password in person and must replace it at first sign-in."
         />

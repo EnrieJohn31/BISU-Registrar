@@ -7,7 +7,7 @@ import ReasonDialog from '@/components/admin/ReasonDialog.vue';
 import AddIdentifierDialog from '@/components/clients/AddIdentifierDialog.vue';
 import CorrectClientDialog from '@/components/clients/CorrectClientDialog.vue';
 import VerificationBadge from '@/components/clients/VerificationBadge.vue';
-import Heading from '@/components/Heading.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -96,30 +96,25 @@ const currentIdentifiers = computed(() =>
     <Head :title="profile.display_name" />
 
     <div class="flex max-w-5xl flex-col gap-6 p-4">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-            <div class="min-w-0 space-y-2">
-                <Heading
-                    :title="profile.display_name"
-                    :description="profile.category_label"
-                />
-                <div class="-mt-6 flex flex-wrap gap-2">
-                    <VerificationBadge
-                        :state="profile.verification_state"
-                        :label="profile.verification_label"
-                    />
-                    <Badge
-                        v-for="identifier in currentIdentifiers"
-                        :key="identifier.id"
-                        variant="secondary"
-                        class="font-mono"
-                    >
-                        {{ identifier.type_label }}
-                        {{ identifier.display_value }}
-                    </Badge>
-                </div>
-            </div>
+        <PageHeader
+            :title="profile.display_name"
+            :description="profile.category_label"
+        >
+            <VerificationBadge
+                :state="profile.verification_state"
+                :label="profile.verification_label"
+            />
+            <Badge
+                v-for="identifier in currentIdentifiers"
+                :key="identifier.id"
+                variant="secondary"
+                class="font-mono"
+            >
+                {{ identifier.type_label }}
+                {{ identifier.display_value }}
+            </Badge>
 
-            <div v-if="can.manage" class="flex flex-wrap gap-2">
+            <template v-if="can.manage" #actions>
                 <CorrectClientDialog
                     :profile="profile"
                     :categories="options.categories"
@@ -148,8 +143,8 @@ const currentIdentifiers = computed(() =>
                     :action="ClientVerificationController.flag(profile.id)"
                     :data="{ version: profile.version }"
                 />
-            </div>
-        </div>
+            </template>
+        </PageHeader>
 
         <Alert v-if="!can.manage">
             <AlertTitle>View only</AlertTitle>
