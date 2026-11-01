@@ -7,7 +7,7 @@ import UserStatusController from '@/actions/App/Http/Controllers/Admin/UserStatu
 import AssignRoleDialog from '@/components/admin/AssignRoleDialog.vue';
 import EditUserDialog from '@/components/admin/EditUserDialog.vue';
 import ReasonDialog from '@/components/admin/ReasonDialog.vue';
-import Heading from '@/components/Heading.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -78,43 +78,31 @@ const isOwnAccount =
     <Head :title="user.name" />
 
     <div class="flex max-w-5xl flex-col gap-6 p-4">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-            <div class="min-w-0 space-y-2 break-words">
-                <Heading :title="user.name" :description="user.email" />
-                <div class="-mt-6 flex flex-wrap gap-2">
-                    <Badge
-                        :variant="
-                            user.status === 'active' ? 'outline' : 'destructive'
-                        "
-                    >
-                        {{
-                            user.status === 'active' ? 'Active' : 'Deactivated'
-                        }}
-                    </Badge>
-                    <Badge variant="secondary">
-                        {{ user.roles.length ? 'Staff' : 'Client account' }}
-                    </Badge>
-                    <Badge v-if="user.two_factor_enabled" variant="outline">
-                        <ShieldCheck /> Two-factor on
-                    </Badge>
-                    <Badge
-                        v-else-if="user.requires_two_factor"
-                        variant="destructive"
-                    >
-                        <ShieldAlert /> Two-factor required, not set up
-                    </Badge>
-                    <Badge
-                        v-if="user.must_change_password"
-                        variant="secondary"
-                        class="max-w-full whitespace-normal"
-                    >
-                        First sign-in pending · temporary password expires
-                        {{ formatDateTime(user.temporary_password_expires_at) }}
-                    </Badge>
-                </div>
-            </div>
+        <PageHeader :title="user.name" :description="user.email">
+            <Badge
+                :variant="user.status === 'active' ? 'outline' : 'destructive'"
+            >
+                {{ user.status === 'active' ? 'Active' : 'Deactivated' }}
+            </Badge>
+            <Badge variant="secondary">
+                {{ user.roles.length ? 'Staff' : 'Client account' }}
+            </Badge>
+            <Badge v-if="user.two_factor_enabled" variant="outline">
+                <ShieldCheck /> Two-factor on
+            </Badge>
+            <Badge v-else-if="user.requires_two_factor" variant="destructive">
+                <ShieldAlert /> Two-factor required, not set up
+            </Badge>
+            <Badge
+                v-if="user.must_change_password"
+                variant="secondary"
+                class="max-w-full whitespace-normal"
+            >
+                First sign-in pending · temporary password expires
+                {{ formatDateTime(user.temporary_password_expires_at) }}
+            </Badge>
 
-            <div class="flex flex-wrap gap-2">
+            <template #actions>
                 <EditUserDialog :user="user" :disabled="!can.update" />
                 <ReasonDialog
                     title="Issue a temporary password"
@@ -153,8 +141,8 @@ const isOwnAccount =
                     :action="UserStatusController.reactivate(user.id)"
                     :disabled="!can.changeStatus"
                 />
-            </div>
-        </div>
+            </template>
+        </PageHeader>
 
         <Alert v-if="isOwnAccount">
             <AlertTitle>This is your own account</AlertTitle>
