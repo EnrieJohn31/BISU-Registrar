@@ -25,4 +25,19 @@ return [
 
     'temporary_password_hours' => (int) env('BISU_TEMPORARY_PASSWORD_HOURS', 72),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Development-only two-factor email (C22)
+    |--------------------------------------------------------------------------
+    |
+    | Emails the current authenticator code to the local test inbox for testers
+    | without an authenticator app. It only works when APP_ENV=local, so campus
+    | servers never send two-factor codes by email. TOTP stays the factor (C09).
+    |
+    */
+
+    'dev_two_factor_email' => (bool) env('BISU_DEV_TWO_FACTOR_EMAIL', true),
+
+    'dev_mail_inbox_url' => (string) env('BISU_DEV_MAIL_INBOX_URL', 'http://localhost:8026'),
+
 ];

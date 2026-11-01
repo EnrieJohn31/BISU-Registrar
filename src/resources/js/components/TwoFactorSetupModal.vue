@@ -4,6 +4,7 @@ import { useClipboard } from '@vueuse/core';
 import { Check, Copy, ScanLine } from '@lucide/vue';
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue';
 import AlertError from '@/components/AlertError.vue';
+import DevTwoFactorCodeEmail from '@/components/DevTwoFactorCodeEmail.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,12 +22,14 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { useAppearance } from '@/composables/useAppearance';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
+import { setup } from '@/routes/dev/two-factor-code';
 import { confirm } from '@/routes/two-factor';
 import type { TwoFactorConfigContent } from '@/types';
 
 type Props = {
     requiresConfirmation: boolean;
     twoFactorEnabled: boolean;
+    devTwoFactorInboxUrl?: string | null;
 };
 
 const { resolvedAppearance } = useAppearance();
@@ -291,6 +294,12 @@ watch(
                             </div>
                         </div>
                     </Form>
+
+                    <DevTwoFactorCodeEmail
+                        v-if="devTwoFactorInboxUrl"
+                        :action="setup()"
+                        :inbox-url="devTwoFactorInboxUrl"
+                    />
                 </template>
             </div>
         </DialogContent>

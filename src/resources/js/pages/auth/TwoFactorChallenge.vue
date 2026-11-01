@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Form, Head, setLayoutProps } from '@inertiajs/vue3';
 import { computed, ref, watchEffect } from 'vue';
+import DevTwoFactorCodeEmail from '@/components/DevTwoFactorCodeEmail.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,8 +10,13 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { challenge } from '@/routes/dev/two-factor-code';
 import { store } from '@/routes/two-factor/login';
 import type { TwoFactorConfigContent } from '@/types';
+
+defineProps<{
+    devTwoFactorInboxUrl?: string | null;
+}>();
 
 const showRecoveryInput = ref<boolean>(false);
 const code = ref<string>('');
@@ -96,6 +102,12 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
                     </button>
                 </div>
             </Form>
+
+            <DevTwoFactorCodeEmail
+                v-if="devTwoFactorInboxUrl"
+                :action="challenge()"
+                :inbox-url="devTwoFactorInboxUrl"
+            />
         </template>
 
         <template v-else>

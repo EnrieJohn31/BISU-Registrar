@@ -21,6 +21,8 @@ class RequireTwoFactorForSensitiveRoles
         'password.confirmation',
         'two-factor.*',
         'passkey.*',
+        // Development-only setup code by email (C22); refused outside local.
+        'dev.two-factor-code.setup',
         'logout',
     ];
 

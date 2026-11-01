@@ -111,6 +111,7 @@ defineOptions({
         :canManageTwoFactor="canManageTwoFactor"
         :requiresConfirmation="requiresConfirmation"
         :twoFactorEnabled="twoFactorEnabled"
+        :devTwoFactorInboxUrl="devTwoFactorInboxUrl"
     />
 
     <ManagePasskeys

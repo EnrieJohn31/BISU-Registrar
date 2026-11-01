@@ -7,6 +7,7 @@ use App\Actions\Fortify\ResetUserPassword;
 use App\Enums\AuditAction;
 use App\Enums\AuditOutcome;
 use App\Models\User;
+use App\Support\Accounts\DevelopmentTwoFactorEmail;
 use App\Support\Audit\AuditRecorder;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -135,7 +136,9 @@ class FortifyServiceProvider extends ServiceProvider
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
         ]));
 
-        Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/TwoFactorChallenge'));
+        Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/TwoFactorChallenge', [
+            'devTwoFactorInboxUrl' => DevelopmentTwoFactorEmail::inboxUrl(),
+        ]));
 
         Fortify::confirmPasswordView(fn () => Inertia::render('auth/ConfirmPassword'));
     }

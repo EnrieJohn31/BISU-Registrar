@@ -13,12 +13,14 @@ export type Props = {
     canManageTwoFactor?: boolean;
     requiresConfirmation?: boolean;
     twoFactorEnabled?: boolean;
+    devTwoFactorInboxUrl?: string | null;
 };
 
 withDefaults(defineProps<Props>(), {
     canManageTwoFactor: false,
     requiresConfirmation: false,
     twoFactorEnabled: false,
+    devTwoFactorInboxUrl: null,
 });
 
 const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth();
@@ -88,6 +90,7 @@ onUnmounted(() => clearTwoFactorAuthData());
             v-model:isOpen="showSetupModal"
             :requiresConfirmation="requiresConfirmation"
             :twoFactorEnabled="twoFactorEnabled"
+            :devTwoFactorInboxUrl="devTwoFactorInboxUrl"
         />
     </div>
 </template>
