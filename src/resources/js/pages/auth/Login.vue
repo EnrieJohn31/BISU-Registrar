@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
+import PasskeyVerify from '@/components/PasskeyVerify.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -11,18 +12,19 @@ import { Spinner } from '@/components/ui/spinner';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import PasskeyVerify from '@/components/PasskeyVerify.vue';
 
 defineOptions({
     layout: {
-        title: 'Welcome Back 👋',
-        description: 'Enter your email and password to sign in',
+        title: 'Sign in',
+        description:
+            'Use the email and password for your BISU Registrar account.',
     },
 });
 
 defineProps<{
     status?: string;
     canResetPassword: boolean;
+    canRegister: boolean;
 }>();
 </script>
 
@@ -42,29 +44,26 @@ defineProps<{
         class="flex flex-col gap-4"
     >
         <div class="grid gap-2">
-            <Label for="email" class="sr-only">Email address</Label>
+            <Label for="email">Email address</Label>
             <Input
                 id="email"
                 type="email"
                 name="email"
                 required
                 v-focus
-                :tabindex="1"
                 autocomplete="email"
-                placeholder="Enter your email address"
+                placeholder="name@example.com"
             />
             <InputError :message="errors.email" />
         </div>
 
         <div class="grid gap-2">
-            <Label for="password" class="sr-only">Password</Label>
+            <Label for="password">Password</Label>
             <PasswordInput
                 id="password"
                 name="password"
                 required
-                :tabindex="2"
                 autocomplete="current-password"
-                placeholder="Enter your password"
             />
             <InputError :message="errors.password" />
         </div>
@@ -74,10 +73,10 @@ defineProps<{
                 for="remember"
                 class="flex items-center gap-2 font-normal text-muted-foreground"
             >
-                <Checkbox id="remember" name="remember" :tabindex="3" />
+                <Checkbox id="remember" name="remember" />
                 <span>Remember me</span>
             </Label>
-            <TextLink v-if="canResetPassword" :href="request()" :tabindex="5">
+            <TextLink v-if="canResetPassword" :href="request()">
                 Forgot password?
             </TextLink>
         </div>
@@ -85,7 +84,6 @@ defineProps<{
         <Button
             type="submit"
             class="w-full"
-            :tabindex="4"
             :disabled="processing"
             data-test="login-button"
         >
@@ -94,8 +92,8 @@ defineProps<{
         </Button>
     </Form>
 
-    <div class="text-center text-sm text-muted-foreground">
+    <div v-if="canRegister" class="text-center text-sm text-muted-foreground">
         Don't have an account yet?
-        <TextLink :href="register()" :tabindex="6">Sign up</TextLink>
+        <TextLink :href="register()">Sign up</TextLink>
     </div>
 </template>

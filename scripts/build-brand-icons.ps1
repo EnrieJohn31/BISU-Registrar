@@ -36,6 +36,8 @@ function Convert-SealToPngBytes([int]$Size) {
 
 try {
     [System.IO.File]::WriteAllBytes((Join-Path $brandingPath 'bisu-seal.png'), (Convert-SealToPngBytes 96))
+    # Welcome and sign-in panels show the seal at up to 160 CSS pixels; 320 keeps it sharp at 2x.
+    [System.IO.File]::WriteAllBytes((Join-Path $brandingPath 'bisu-seal-large.png'), (Convert-SealToPngBytes 320))
     [System.IO.File]::WriteAllBytes((Join-Path $publicPath 'favicon.png'), (Convert-SealToPngBytes 64))
     [System.IO.File]::WriteAllBytes((Join-Path $publicPath 'apple-touch-icon.png'), (Convert-SealToPngBytes 180))
 
@@ -71,4 +73,4 @@ try {
 } finally {
     $sourceImage.Dispose()
 }
-Write-Host 'Generated local BISU seal (96px), favicon (64px, ICO 16/32/48px) and touch icon (180px).'
+Write-Host 'Generated local BISU seal (96px and 320px), favicon (64px, ICO 16/32/48px) and touch icon (180px).'

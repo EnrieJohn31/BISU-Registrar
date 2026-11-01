@@ -14,4 +14,4 @@ Regenerate the committed display/browser assets on Windows from the repository r
 powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/build-brand-icons.ps1
 ```
 
-This uses Windows `System.Drawing` to resize and encode the original, preserving its proportions, colors and transparency. It requires no downloaded image tool, runtime CDN or application package. Generated assets are committed; Linux CI does not need to run this maintenance script.
+It writes the 96px and 320px display seals (`public/branding/`), the favicons and the touch icon. This uses Windows `System.Drawing` to resize and encode the original, preserving its proportions, colors and transparency. It requires no downloaded image tool, runtime CDN or application package. Generated assets are committed; Linux CI does not need to run this maintenance script.
