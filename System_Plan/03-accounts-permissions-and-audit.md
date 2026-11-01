@@ -403,6 +403,8 @@ Implemented 2026-10-17; published with browser fixes in [PR #7](https://github.c
 
 The later [browser review](#slice-1-browser-review-and-follow-up-fixes) completed the visual/keyboard checks and follow-up fixes; this remains developer QA, not office acceptance.
 
+**Development-only two-factor email (C22, DEV-10, 2026-11-01):** on a local development stack, the sign-in challenge and the setup dialog offer "Email me the code", which sends the current TOTP code to Mailpit. It does not change this part's rules: the code still comes from the account's authenticator secret, sensitive roles still need confirmed TOTP, and the endpoints return 404 outside `APP_ENV=local`. The setup route is on the two-factor enrollment allow-list. See the [DEV-10 report](../docs/DEV-10-DEV-TWO-FACTOR-EMAIL.md).
+
 ## Privacy program items (added 2026-10-17; confirm with the BISU Data Protection Officer)
 
 - The university DPO is the owner of [D09](90-decisions-and-open-questions.md).
